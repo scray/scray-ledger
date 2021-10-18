@@ -1,7 +1,7 @@
 # Create Kubernetes cluster in Microsoft Azure cloud
 
 ## Deploy - portal
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fscray%2Fscray%2Ffeature%2Fcloud-env%2Fprojects%2Finvoice-hyperledger-fabric%2Fdeployment-environments%2Fmicrosoft-azure%2Faks-template.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fscray%2Fscray-ledger%2Fdevelop%2Fdeployment-environments%2Fmicrosoft-azure%2Faks-template.json)
 
 ## Deploy - CLI
 * Install [Azure CLI](https://docs.microsoft.com/de-de/cli/azure/install-azure-cli)
