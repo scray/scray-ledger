@@ -5,7 +5,7 @@ ORDERER_PORT=$4
 CHANNEL_ID=$5
 
 #export PKGID=basic_1.0:5a294a12a1a89cd4eed3d4234fbc79f42eab2ac20cd176bc8ebbc07c597cd0ee
-export PKGID=basic_1.0:21ee1256844f847e196af6aec17c5cafa76d8bd652d6ef42c3058e52571030b4
+export PKGID=basic_1.0:27256d95e55ff855dffe6685141fcf6dd3530e4859e8621ec3476f9a69065cd5
 
 echo $ORDERER_IP $ORDERER_HOSTNAME >> /etc/hosts
 # Set hostname of external chaincode node
