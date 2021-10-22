@@ -1,4 +1,15 @@
 # Start external chaincode 
+### Create Service
+```
+
+```
+
+### Get configuration
+```
+CC_PORT=$(kubectl get service hl-fabric-cc-external-invoice-net -o jsonpath="{.spec.ports[?(@.name=='chaincode ')].nodePort}")
+```
+
+
 ```kubectl apply -f https://raw.githubusercontent.com/scray/scray/feature/k8s-peer/projects/invoice-hyperledger-fabric/chaincode/chaincode-external/k8s-external-chaincode.yaml```
 
 # Install external chaincode on k8s peer

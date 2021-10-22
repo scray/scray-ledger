@@ -5,14 +5,19 @@
 		 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<!-- parent pom -->
     <groupId>org.scray</groupId>
     <artifactId>scray-ledger-parent</artifactId>
     <packaging>pom</packaging>
 	<version>1.0</version>
 
-	<!-- sub modules -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+    </properties>
+
 	<modules>
+        <module>chaincode/tools/hlf-chaincode-definition-creator</module>
     </modules>
 	
 </project>
