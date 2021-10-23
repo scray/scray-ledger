@@ -4,7 +4,8 @@ ORDERER_HOSTNAME=$3
 ORDERER_PORT=$4
 CHANNEL_ID=$5
 
-export PKGID=basic_1.0:5a294a12a1a89cd4eed3d4234fbc79f42eab2ac20cd176bc8ebbc07c597cd0ee
+#export PKGID=basic_1.0:5a294a12a1a89cd4eed3d4234fbc79f42eab2ac20cd176bc8ebbc07c597cd0ee
+export PKGID=basic_1.0:27256d95e55ff855dffe6685141fcf6dd3530e4859e8621ec3476f9a69065cd5
 
 echo $ORDERER_IP $ORDERER_HOSTNAME >> /etc/hosts
 # Set hostname of external chaincode node
@@ -17,7 +18,8 @@ export CORE_PEER_MSPCONFIGPATH=/mnt/conf/organizations/peerOrganizations/$HOSTNA
 export CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS
 
 # Get chaincode description
-curl https://mft.seeburger.de:443/portal-seefx/~public/MDI0Mjk4ZTQtZGQ3ZS00M2Y4LWIyMDktZjY1YzljN2MwMTlm?download > chaincode_description.tgz
+#curl https://mft.seeburger.de:443/portal-seefx/~public/MDI0Mjk4ZTQtZGQ3ZS00M2Y4LWIyMDktZjY1YzljN2MwMTlm?download > chaincode_description.tgz
+curl --user scray:scray http://10.15.136.41:30080/chaincode_description.tgz > chaincode_description.tgz
 peer lifecycle chaincode install chaincode_description.tgz
 
 peer lifecycle chaincode queryinstalled
