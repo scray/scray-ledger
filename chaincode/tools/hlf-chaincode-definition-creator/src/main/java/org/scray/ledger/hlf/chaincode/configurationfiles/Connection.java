@@ -1,4 +1,5 @@
-package org.scray.ledger.hlf.chaincode;
+package org.scray.ledger.hlf.chaincode.configurationfiles;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

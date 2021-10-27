@@ -28,10 +28,9 @@ public class ConnectionJsonCreatorTests {
         var connection = cr.createConnectionDescription("example.com", 4711);
 
         try {
-            cr.writeConnectionToFile("target/connection.json", connection);
+            cr.writeConnectionToFile("cc1", ".", connection);
         } catch (IOException e) {
-            Assert.fail("IOException occurred");
-            e.printStackTrace();
+            Assert.fail("IOException occurred\n" + e);
         }
 
     }
