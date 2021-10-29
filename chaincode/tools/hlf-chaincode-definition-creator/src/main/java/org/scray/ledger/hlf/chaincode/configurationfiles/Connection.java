@@ -4,14 +4,14 @@ package org.scray.ledger.hlf.chaincode.configurationfiles;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Connection {
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
 
     @JsonProperty("dial_timeout")
-    private String dialTimeout = "10s";
+    private final String dialTimeout = "10s";
 
     @JsonProperty("tls_required")
-    private boolean tlsRequired = false;
+    private final boolean tlsRequired = false;
 
     @JsonProperty("address")
     private String address;

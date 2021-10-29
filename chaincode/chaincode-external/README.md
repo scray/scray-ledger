@@ -6,23 +6,26 @@
 
 ### Get configuration
 ```
-CC_PORT=$(kubectl get service hl-fabric-cc-external-invoice-net -o jsonpath="{.spec.ports[?(@.name=='chaincode ')].nodePort}")
+CC_PORT=$(kubectl get service hl-fabric-cc-external-invoice -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
 ```
 
 
-```kubectl apply -f https://raw.githubusercontent.com/scray/scray/feature/k8s-peer/projects/invoice-hyperledger-fabric/chaincode/chaincode-external/k8s-external-chaincode.yaml```
+```
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-external-chaincode.yaml
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-eternal-chaincode.yaml
+```
 
 # Install external chaincode on k8s peer
 ```
 PEER_NAME=peer48
 CHANNEL_NAME=mychannel
 ORDERER_NAME=orderer.example.com
-IP_CC_SERVICE=10.14.128.38         # Host where the chaincode is running
+IP_CC_SERVICE=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")         # Host where the chaincode is running
 PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 ORDERER_LISTEN_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_HOST=orderer.example.com
-EXT_PEER_IP=10.14.128.38
+EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}") 
 ```
 
 ```

@@ -8,7 +8,7 @@ public class Metadata {
     private String type;
 
     @JsonProperty("label")
-    private String label;
+    private final String label;
 
     public Metadata(String label) {
         this.label = label;

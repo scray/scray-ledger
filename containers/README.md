@@ -13,7 +13,7 @@ kubectl apply -f k8s-hl-fabric-data-share.yaml
 ```
 PEER_NAME=peer48
 PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de 
-EXT_PEER_IP=10.15.136.41
+EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
 ./configure-deployment.sh -n $PEER_NAME
 ```
