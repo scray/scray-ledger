@@ -21,3 +21,11 @@
   ```
   az aks get-credentials --overwrite-existing  --resource-group Scray-Blockchain-Test --name Scray-Blockchain-Test
   ```
+* Provide public access
+  ```
+  az network public-ip create --resource-group MC_Scray-Blockchain-Dev_Scray-Blockchain-Test_eastus --name scrayLedgerAKSPublicIP --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv
+  ```
+* Apply service
+  ```
+  kubectl apply -f k8s-ds-cloud-service.yaml
+  ```

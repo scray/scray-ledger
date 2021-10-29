@@ -64,3 +64,5 @@ pip-delete-this-directory.txt
 
 # IntelliJ
 *.iml
+/chaincode/tools/hlf-chaincode-definition-creator/chainecode_description.tgz
+/chaincode/tools/hlf-chaincode-definition-creator/connection.json

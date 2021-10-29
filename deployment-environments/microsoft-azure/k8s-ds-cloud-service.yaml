@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hl-fabric-data-share-service-cloud
+  labels:
+    run: hl-fabric-data-share-service-cloud
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 104.41.135.45
+  selector:
+    app: hl-fabric-data-share
+  ports:
+    - name: webdav-port
+      port: 30080
+      targetPort: 80
+      protocol: TCP

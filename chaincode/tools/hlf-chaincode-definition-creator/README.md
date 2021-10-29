@@ -14,7 +14,8 @@ kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/creat
 ```
 
 ### Deployment description location
-Location where the chaincode description (``chainecode_description.tgz`` and ``ccid.json``) can be downloaded from.
+Location where the chaincode description (``chainecode_description.tgz`` and ``ccid.json``) can be downloaded from.  
+
 ``
 http://$SHARED_FS/cc_descriptions/${HOSTNAME}_$LABEL
 ``
