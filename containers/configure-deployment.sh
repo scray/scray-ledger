@@ -24,11 +24,19 @@ dowloadYqBin() {
   if [[ ! -f "./bin/yq" ]]
   then
     echo "yq does not exists"
-    echo "download linux_amd64 yq binary"
-    
-    mkdir bin
-    curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 -o ./bin/yq
-    chmod u+x ./bin/yq
+    if [ "$OSTYPE" == "linux-gnu" ]
+    then
+      echo "download linux_amd64 yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 -o ./bin/yq
+      chmod u+x ./bin/yq
+    elif [ "$OSTYPE" == "msys" ]
+    then
+      echo "download yq_windows_amd64  yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_windows_amd64.exe -o ./bin/yq
+      chmod u+x ./bin/yq
+    fi
   fi
 }
 
