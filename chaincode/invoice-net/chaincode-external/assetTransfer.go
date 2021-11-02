@@ -97,7 +97,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	asset := Asset{
 		ID:                 id,
 		Owner:              clientID,
-		Buyer:              clientID,
+		Buyer:              buyer,
 		Hash:               hash,
 		InvoiceNumber:      invoiceNumber,
 		Vat:                vat,
