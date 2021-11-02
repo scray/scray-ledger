@@ -29,6 +29,7 @@ type SmartContract struct {
 type Asset struct {
 	ID                 string  `json:"ID"`
 	Owner              string  `json:"owner"`
+	Buyer              string  `json:"buyer"`
 	Hash               int     `json:"hash"`
 	InvoiceNumber      string  `json:"invoiceNumber"`
 	Vat                float32 `json:"vat"`
@@ -96,6 +97,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	asset := Asset{
 		ID:                 id,
 		Owner:              clientID,
+		Buyer:              clientID,
 		Hash:               hash,
 		InvoiceNumber:      invoiceNumber,
 		Vat:                vat,
@@ -120,7 +122,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+func (s *SmartContract) ReadAssetTest(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
@@ -136,6 +138,36 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 	}
 
 	return &asset, nil
+}
+
+// ReadAsset returns the asset stored in the world state with given id.
+func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+
+	assetJSON, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
+	}
+	if assetJSON == nil {
+		return nil, fmt.Errorf("the asset %s does not exist", id)
+	}
+
+	var asset Asset
+	err = json.Unmarshal(assetJSON, &asset)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if clientID == asset.Owner || clientID == asset.Buyer {
+		return &asset, nil
+	} else {
+		return nil, fmt.Errorf("Only InvoiceOwner or ProductBuyer are allow to read this invoice ")
+	}
 }
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
