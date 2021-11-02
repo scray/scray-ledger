@@ -24,5 +24,5 @@ curl --user scray:scray http://10.15.136.41:30080/chaincode_description.tgz > ch
 peer lifecycle chaincode install chaincode_description.tgz
 
 peer lifecycle chaincode queryinstalled
-peer lifecycle chaincode approveformyorg      -o $ORDERER_HOSTNAME:$ORDERER_PORT --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --package-id $PKGID --sequence 1
-peer lifecycle chaincode checkcommitreadiness -o $ORDERER_HOSTNAME:$ORDERER_PORT --ordererTLSHostnameOverride orderer.example.com --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --sequence 1
+peer lifecycle chaincode approveformyorg      -o $ORDERER_HOSTNAME:$ORDERER_PORT --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --package-id $PKGID --sequence $SEQUENCE
+peer lifecycle chaincode checkcommitreadiness -o $ORDERER_HOSTNAME:$ORDERER_PORT --ordererTLSHostnameOverride orderer.example.com --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --sequence $SEQUENCE
