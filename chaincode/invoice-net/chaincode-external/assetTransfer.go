@@ -73,7 +73,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 }
 
 // CreateAsset issues a new asset to the world state with given details.
-func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, hash int,
+func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
 	invoiceNumber string, vat float32, netto float32, countryOrigin string, countryReceiver string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool,
 ) error {
