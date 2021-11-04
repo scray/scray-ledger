@@ -5,6 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -26,21 +27,22 @@ type SmartContract struct {
 
 // Asset describes basic details of what makes up a simple asset
 type Asset struct {
-	ID                  string `json:"ID"`
-	Owner               string `json:"owner"`
-	Hash                int    `json:"hash"` 
-    InvoiceNumber       string `json:"invoiceNumber"`
-    Vat                 float32 `json:"vat"`
-    Netto               float32 `json:"netto"`
-    CountryOrigin       string `json:"countryOrigin"`
-    CountryReceiver     string `json:"countryReceiver"`
-    Received            bool   `json:"received"`
-    ReceivedOrder       bool   `json:"receivedOrder"`
-	Sold                bool   `json:"sold"`
-    ClaimPaid           bool   `json:"claimPaid"`
-	ClaimPaidBy         string `json:"claimPaidBy"`
-	TaxExemptionReason  string `json:"taxExemptionReason"`
-	TaxReceived         bool   `json:"taxReceived"`
+	ID                 string  `json:"ID"`
+	Owner              string  `json:"owner"`
+	Buyer              string  `json:"buyer"`
+	Hash               int     `json:"hash"`
+	InvoiceNumber      string  `json:"invoiceNumber"`
+	Vat                float32 `json:"vat"`
+	Netto              float32 `json:"netto"`
+	CountryOrigin      string  `json:"countryOrigin"`
+	CountryReceiver    string  `json:"countryReceiver"`
+	Received           bool    `json:"received"`
+	ReceivedOrder      bool    `json:"receivedOrder"`
+	Sold               bool    `json:"sold"`
+	ClaimPaid          bool    `json:"claimPaid"`
+	ClaimPaidBy        string  `json:"claimPaidBy"`
+	TaxExemptionReason string  `json:"taxExemptionReason"`
+	TaxReceived        bool    `json:"taxReceived"`
 }
 
 // QueryResult structure used for handling result of query
@@ -52,9 +54,9 @@ type QueryResult struct {
 // InitLedger adds a base set of cars to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Vat: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryReceiver: "DE", Received: false, 
-		ReceivedOrder: false, Sold: false, ClaimPaid: false, ClaimPaidBy: "", TaxExemptionReason: "", TaxReceived: false},
-		}
+		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Vat: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryReceiver: "DE", Received: false,
+			ReceivedOrder: false, Sold: false, ClaimPaid: false, ClaimPaidBy: "", TaxExemptionReason: "", TaxReceived: false},
+	}
 	for _, asset := range assets {
 		assetJSON, err := json.Marshal(asset)
 		if err != nil {
@@ -71,10 +73,10 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 }
 
 // CreateAsset issues a new asset to the world state with given details.
-func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string,  hash int,
+func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
 	invoiceNumber string, vat float32, netto float32, countryOrigin string, countryReceiver string, received bool,
-        receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string,taxReceived bool,
-	) error {
+	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool,
+) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
 		return err
@@ -82,26 +84,33 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	if exists {
 		return fmt.Errorf("the asset %s already exists", id)
 	}
-	
+
 	// test
-	clientOrgID, err := ctx.GetClientIdentity().GetMSPID()
+	//clientOrgID, err := ctx.GetClientIdentity().GetMSPID()
+
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
 
 	asset := Asset{
-		ID:             id,
-		Owner:          clientOrgID,
-		Hash:           hash, 
-    	InvoiceNumber:  invoiceNumber,
-    	Vat:            vat,
-    	Netto:          netto,
-    	CountryOrigin:  countryOrigin,
-    	CountryReceiver: countryReceiver,
-    	Received:        received,
-    	ReceivedOrder:   receivedOrder,
-	Sold: sold,
-    	ClaimPaid: claimPaid,
-	ClaimPaidBy:   claimPaidBy,
-	TaxExemptionReason:  taxExemptionReason,
-	TaxReceived: taxReceived,
+		ID:                 id,
+		Owner:              clientID,
+		Buyer:              buyer,
+		Hash:               hash,
+		InvoiceNumber:      invoiceNumber,
+		Vat:                vat,
+		Netto:              netto,
+		CountryOrigin:      countryOrigin,
+		CountryReceiver:    countryReceiver,
+		Received:           received,
+		ReceivedOrder:      receivedOrder,
+		Sold:               sold,
+		ClaimPaid:          claimPaid,
+		ClaimPaidBy:        claimPaidBy,
+		TaxExemptionReason: taxExemptionReason,
+		TaxReceived:        taxReceived,
 	}
 
 	assetJSON, err := json.Marshal(asset)
@@ -113,7 +122,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+func (s *SmartContract) ReadAssetTest(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
@@ -131,10 +140,40 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 	return &asset, nil
 }
 
+// ReadAsset returns the asset stored in the world state with given id.
+func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+
+	assetJSON, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
+	}
+	if assetJSON == nil {
+		return nil, fmt.Errorf("the asset %s does not exist", id)
+	}
+
+	var asset Asset
+	err = json.Unmarshal(assetJSON, &asset)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if clientID == asset.Owner || clientID == asset.Buyer {
+		return &asset, nil
+	} else {
+		return nil, fmt.Errorf("Only InvoiceOwner or ProductBuyer are allow to read this invoice ")
+	}
+}
+
 // UpdateAsset updates an existing asset in the world state with provided parameters.
-func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id, owner string,  hash int,
+func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id, owner string, hash int,
 	invoiceNumber string, vat float32, netto float32, countryOrigin string, countryReceiver string, received bool,
-    receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string,taxReceived bool) error {
+	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
 		return err
@@ -145,21 +184,21 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 
 	// overwritting original asset with new asset
 	asset := Asset{
-		ID:             id,
-		Owner:          owner,
-		Hash:           hash, 
-    	InvoiceNumber:  invoiceNumber,
-    	Vat:            vat,
-    	Netto:          netto,
-    	CountryOrigin:  countryOrigin,
-    	CountryReceiver: countryReceiver,
-    	Received:        received,
-    	ReceivedOrder:   receivedOrder,
-		Sold: sold,
-    	ClaimPaid: claimPaid,
-		ClaimPaidBy:   claimPaidBy,
-		TaxExemptionReason:  taxExemptionReason,
-		TaxReceived: taxReceived,
+		ID:                 id,
+		Owner:              owner,
+		Hash:               hash,
+		InvoiceNumber:      invoiceNumber,
+		Vat:                vat,
+		Netto:              netto,
+		CountryOrigin:      countryOrigin,
+		CountryReceiver:    countryReceiver,
+		Received:           received,
+		ReceivedOrder:      receivedOrder,
+		Sold:               sold,
+		ClaimPaid:          claimPaid,
+		ClaimPaidBy:        claimPaidBy,
+		TaxExemptionReason: taxExemptionReason,
+		TaxReceived:        taxReceived,
 	}
 
 	assetJSON, err := json.Marshal(asset)
@@ -239,6 +278,19 @@ func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 	}
 
 	return results, nil
+}
+
+func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionContextInterface) (string, error) {
+
+	b64ID, err := ctx.GetClientIdentity().GetID()
+	if err != nil {
+		return "", fmt.Errorf("Failed to read clientID: %v", err)
+	}
+	decodeID, err := base64.StdEncoding.DecodeString(b64ID)
+	if err != nil {
+		return "", fmt.Errorf("failed to base64 decode clientID: %v", err)
+	}
+	return string(decodeID), nil
 }
 
 func main() {
