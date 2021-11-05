@@ -306,6 +306,7 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 
 func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, role int, name string) error {
 
+	println(role, name)
 	//roles[name] = role
 	//return string(roles[name])
 	return nil
