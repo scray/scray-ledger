@@ -32,10 +32,10 @@ type Asset struct {
 	Buyer              string  `json:"buyer"`
 	Hash               int     `json:"hash"`
 	InvoiceNumber      string  `json:"invoiceNumber"`
-	Vat                float32 `json:"vat"`
+	Tax                float32 `json:"tax"`
 	Netto              float32 `json:"netto"`
 	CountryOrigin      string  `json:"countryOrigin"`
-	CountryReceiver    string  `json:"countryReceiver"`
+	CountryBuyer       string  `json:"countryBuyer"`
 	Received           bool    `json:"received"`
 	ReceivedOrder      bool    `json:"receivedOrder"`
 	Sold               bool    `json:"sold"`
@@ -44,6 +44,17 @@ type Asset struct {
 	TaxExemptionReason string  `json:"taxExemptionReason"`
 	TaxReceived        bool    `json:"taxReceived"`
 }
+
+type Role int
+
+const (
+	Buyer Role = iota
+	Seller
+	Factor
+	TaxInspector
+)
+
+var roles map[string]Role = make(map[string]Role)
 
 // QueryResult structure used for handling result of query
 type QueryResult struct {
@@ -54,7 +65,7 @@ type QueryResult struct {
 // InitLedger adds a base set of cars to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Vat: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryReceiver: "DE", Received: false,
+		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Tax: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryBuyer: "DE", Received: false,
 			ReceivedOrder: false, Sold: false, ClaimPaid: false, ClaimPaidBy: "", TaxExemptionReason: "", TaxReceived: false},
 	}
 	for _, asset := range assets {
@@ -74,7 +85,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 
 // CreateAsset issues a new asset to the world state with given details.
 func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
-	invoiceNumber string, vat float32, netto float32, countryOrigin string, countryReceiver string, received bool,
+	invoiceNumber string, tax float32, netto float32, countryOrigin string, CountryBuyer string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool,
 ) error {
 	exists, err := s.AssetExists(ctx, id)
@@ -100,10 +111,10 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		Buyer:              buyer,
 		Hash:               hash,
 		InvoiceNumber:      invoiceNumber,
-		Vat:                vat,
+		Tax:                tax,
 		Netto:              netto,
 		CountryOrigin:      countryOrigin,
-		CountryReceiver:    countryReceiver,
+		CountryBuyer:       CountryBuyer,
 		Received:           received,
 		ReceivedOrder:      receivedOrder,
 		Sold:               sold,
@@ -172,7 +183,7 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
 func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id, owner string, hash int,
-	invoiceNumber string, vat float32, netto float32, countryOrigin string, countryReceiver string, received bool,
+	invoiceNumber string, Tax float32, netto float32, countryOrigin string, CountryBuyer string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
@@ -188,10 +199,10 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 		Owner:              owner,
 		Hash:               hash,
 		InvoiceNumber:      invoiceNumber,
-		Vat:                vat,
+		Tax:                Tax,
 		Netto:              netto,
 		CountryOrigin:      countryOrigin,
-		CountryReceiver:    countryReceiver,
+		CountryBuyer:       CountryBuyer,
 		Received:           received,
 		ReceivedOrder:      receivedOrder,
 		Sold:               sold,
@@ -291,6 +302,12 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 		return "", fmt.Errorf("failed to base64 decode clientID: %v", err)
 	}
 	return string(decodeID), nil
+}
+
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, role Role, name string) string {
+
+	roles[name] = role
+	return string(roles[name])
 }
 
 func main() {
