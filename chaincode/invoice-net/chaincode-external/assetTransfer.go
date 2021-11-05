@@ -304,12 +304,12 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 	return string(decodeID), nil
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, role int, name string) (string, error) {
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, role int, name string) (string, int, error) {
 
 	println(role, name)
 	//roles[name] = role
 	//return string(roles[name])
-	return name, nil
+	return name, role, nil
 }
 
 func main() {
