@@ -310,7 +310,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	roles["test"] = Seller
 	//roles[name] = role
 	//return string(roles[name])
-	return "ok", nil
+	return string(roles["test"]), nil
 }
 
 func main() {
