@@ -313,6 +313,11 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	return string(roles["test"]), nil
 }
 
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
+
+	return string(roles["test"]), nil
+}
+
 func main() {
 	// See chaincode.env.example
 	config := serverConfig{
