@@ -67,6 +67,17 @@ func Conv(e Role) string {
 	}
 }
 
+func String2Role(e string) Role {
+	switch e {
+	case "Buyer":
+		return Buyer
+	case "TaxInspector":
+		return TaxInspector
+	default:
+		return Buyer
+	}
+}
+
 type RoleResult struct {
 	Role string
 }
@@ -319,14 +330,14 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 	return string(decodeID), nil
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string) (string, error) {
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
 
 	//println(role, name)
-	roles["test"] = TaxInspector
-	println(name, roles["test"])
+	roles[name] = String2Role(role)
+	//println(name, roles["test"])
 	//roles[name] = role
 	//return string(roles[name])
-	return string(roles["test"]), nil
+	return nil
 }
 
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
@@ -336,16 +347,6 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (s
 	if err != nil {
 		return "", err
 	}
-
-	//println(role, name)
-	//roles["test"] = TaxInspector
-	//println(name, roles["test"])
-	//roles[name] = role
-	//return string(roles[name])
-
-	//var result = "{'Role': " + roles["test"] + "}"
-	//result := fmt.Sprintf("{'Role': " + string(int(roles["test"])) + "}")
-	println(string(b))
 
 	return string(b), nil
 }
