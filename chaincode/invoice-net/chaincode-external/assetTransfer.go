@@ -316,9 +316,6 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
 
-	println("hallo", roles["test"])
-	//return "test", nil
-
 	b64ID, err := ctx.GetClientIdentity().GetID()
 	if err != nil {
 		return "", fmt.Errorf("Failed to read clientID: %v", err)
