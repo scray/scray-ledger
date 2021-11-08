@@ -314,35 +314,14 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	return string(roles["test"]), nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
-	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
-	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, name string) (string, error) {
 
-	if err != nil {
-		return nil, err
-	}
-	defer resultsIterator.Close()
-
-	var results []QueryResult
-
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-
-		if err != nil {
-			return nil, err
-		}
-
-		var asset Asset
-		err = json.Unmarshal(queryResponse.Value, &asset)
-		if err != nil {
-			return nil, err
-		}
-
-		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
-		results = append(results, queryResult)
-	}
-
-	return results, nil
+	//println(role, name)
+	//roles["test"] = TaxInspector
+	println(name, roles["test"])
+	//roles[name] = role
+	//return string(roles[name])
+	return string(roles["test"]), nil
 }
 
 func main() {
