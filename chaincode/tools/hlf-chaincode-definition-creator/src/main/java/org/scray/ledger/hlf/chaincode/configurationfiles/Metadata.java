@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Metadata {
 
     @JsonProperty("type")
-    private String type;
+    private String type = "external";
 
     @JsonProperty("label")
     private final String label;
