@@ -334,7 +334,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 
 	//println(role, name)
 	roles[name] = String2Role(role)
-	//println(name, roles["test"])
+	println(name, roles[name])
 	//roles[name] = role
 	//return string(roles[name])
 	return nil
