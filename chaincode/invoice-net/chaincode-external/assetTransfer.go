@@ -56,6 +56,21 @@ const (
 
 var roles map[string]Role = make(map[string]Role)
 
+func Conv(e Role) string {
+	switch e {
+	case Buyer:
+		return "Buyer"
+	case TaxInspector:
+		return "TaxInspector"
+	default:
+		return fmt.Sprintf("%d", int(e))
+	}
+}
+
+type RoleResult struct {
+	Role string
+}
+
 // QueryResult structure used for handling result of query
 type QueryResult struct {
 	Key    string `json:"Key"`
@@ -316,6 +331,12 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
 
+	result := &RoleResult{Role: Conv(roles["test"])}
+	b, err := json.Marshal(result)
+	if err != nil {
+		return "", err
+	}
+
 	//println(role, name)
 	//roles["test"] = TaxInspector
 	//println(name, roles["test"])
@@ -323,10 +344,10 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (s
 	//return string(roles[name])
 
 	//var result = "{'Role': " + roles["test"] + "}"
-	result := fmt.Sprintf("{'Role': " + string(int(roles["test"])) + "}")
-	println(result)
+	//result := fmt.Sprintf("{'Role': " + string(int(roles["test"])) + "}")
+	println(string(b))
 
-	return result, nil
+	return string(b), nil
 }
 
 func main() {
