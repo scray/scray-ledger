@@ -321,7 +321,11 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (s
 	//println(name, roles["test"])
 	//roles[name] = role
 	//return string(roles[name])
-	return string(roles["test"]), nil
+
+	//var result = "{'Role': " + roles["test"] + "}"
+	result := fmt.Sprintf("{'Role': " + string(roles["test"]) + "}")
+
+	return result, nil
 }
 
 func main() {
