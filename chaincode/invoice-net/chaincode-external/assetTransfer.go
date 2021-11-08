@@ -317,7 +317,17 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
 
 	println("hallo", roles["test"])
-	return "test", nil
+	//return "test", nil
+
+	b64ID, err := ctx.GetClientIdentity().GetID()
+	if err != nil {
+		return "", fmt.Errorf("Failed to read clientID: %v", err)
+	}
+	decodeID, err := base64.StdEncoding.DecodeString(b64ID)
+	if err != nil {
+		return "", fmt.Errorf("failed to base64 decode clientID: %v", err)
+	}
+	return string(decodeID), nil
 }
 
 func main() {
