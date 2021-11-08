@@ -314,7 +314,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	return string(roles["test"]), nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, name string) (string, error) {
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
 
 	//println(role, name)
 	//roles["test"] = TaxInspector
