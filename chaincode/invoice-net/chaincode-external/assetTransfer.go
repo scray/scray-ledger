@@ -314,17 +314,35 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	return string(roles["test"]), nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
+	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
 
-	b64ID, err := ctx.GetClientIdentity().GetID()
 	if err != nil {
-		return "", fmt.Errorf("Failed to read clientID: %v", err)
+		return nil, err
 	}
-	decodeID, err := base64.StdEncoding.DecodeString(b64ID)
-	if err != nil {
-		return "", fmt.Errorf("failed to base64 decode clientID: %v", err)
+	defer resultsIterator.Close()
+
+	var results []QueryResult
+
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+
+		if err != nil {
+			return nil, err
+		}
+
+		var asset Asset
+		err = json.Unmarshal(queryResponse.Value, &asset)
+		if err != nil {
+			return nil, err
+		}
+
+		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+		results = append(results, queryResult)
 	}
-	return string(decodeID), nil
+
+	return results, nil
 }
 
 func main() {
