@@ -317,7 +317,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
 
 	println("hallo", roles["test"])
-	return string(roles["test"]), nil
+	return "test", nil
 }
 
 func main() {
