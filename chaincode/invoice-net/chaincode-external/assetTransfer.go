@@ -351,6 +351,24 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (s
 	return string(b), nil
 }
 
+func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]string, error) {
+
+	var results []string
+
+	for key, value := range roles { // Order not specified
+		fmt.Println(key, value)
+
+		result := &RoleResult{Role: Conv(roles[key])}
+		b, err := json.Marshal(result)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, string(b))
+	}
+
+	return results, nil
+}
+
 func main() {
 	// See chaincode.env.example
 	config := serverConfig{
