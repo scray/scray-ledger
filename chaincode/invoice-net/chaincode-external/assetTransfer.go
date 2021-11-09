@@ -27,22 +27,23 @@ type SmartContract struct {
 
 // Asset describes basic details of what makes up a simple asset
 type Asset struct {
-	ID                 string  `json:"ID"`
-	Owner              string  `json:"owner"`
-	Buyer              string  `json:"buyer"`
-	Hash               int     `json:"hash"`
-	InvoiceNumber      string  `json:"invoiceNumber"`
-	Tax                float32 `json:"tax"`
-	Netto              float32 `json:"netto"`
-	CountryOrigin      string  `json:"countryOrigin"`
-	CountryBuyer       string  `json:"countryBuyer"`
-	Received           bool    `json:"received"`
-	ReceivedOrder      bool    `json:"receivedOrder"`
-	Sold               bool    `json:"sold"`
-	ClaimPaid          bool    `json:"claimPaid"`
-	ClaimPaidBy        string  `json:"claimPaidBy"`
-	TaxExemptionReason string  `json:"taxExemptionReason"`
-	TaxReceived        bool    `json:"taxReceived"`
+	ID            string  `json:"ID"`
+	Owner         string  `json:"owner"`
+	Buyer         string  `json:"buyer"`
+	Hash          int     `json:"hash"`
+	InvoiceNumber string  `json:"invoiceNumber"`
+	Tax           float32 `json:"tax"`
+	Netto         float32 `json:"netto"`
+	CountryOrigin string  `json:"countryOrigin"`
+	CountryBuyer  string  `json:"countryBuyer"`
+	//Status             string  `json:"status"`
+	Received           bool   `json:"received"`
+	ReceivedOrder      bool   `json:"receivedOrder"`
+	Sold               bool   `json:"sold"`
+	ClaimPaid          bool   `json:"claimPaid"`
+	ClaimPaidBy        string `json:"claimPaidBy"`
+	TaxExemptionReason string `json:"taxExemptionReason"`
+	TaxReceived        bool   `json:"taxReceived"`
 }
 
 type Role int
@@ -80,6 +81,11 @@ func String2Role(e string) Role {
 
 type RoleResult struct {
 	Role string
+}
+
+type RoleResult2 struct {
+	Name  string   `json:"name"`
+	Roles []string `json:"roles"`
 }
 
 // QueryResult structure used for handling result of query
@@ -340,7 +346,17 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	return nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (string, error) {
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (*RoleResult2, error) {
+
+	var result RoleResult2
+
+	result.Name = "test"
+	result.Roles = []string{Conv(roles["test"])}
+
+	return &result, nil
+}
+
+func (s *SmartContract) GetRoles1(ctx contractapi.TransactionContextInterface) (string, error) {
 
 	result := &RoleResult{Role: Conv(roles["test"])}
 	b, err := json.Marshal(result)
