@@ -370,6 +370,29 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, na
 	return &result, nil
 }
 
+func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
+
+	var results []RoleResult2
+
+	for key, value := range roles { // Order not specified
+		fmt.Println(key, value)
+
+		var rolesStringList []string
+
+		for _, element := range roles[key] {
+			rolesStringList = append(rolesStringList, Role2String(element))
+		}
+
+		var result1 RoleResult2
+		result1.Name = key
+		result1.Roles = rolesStringList
+
+		results = append(results, result1)
+	}
+
+	return results, nil
+}
+
 /* func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]string, error) {
 
 	var results []string
