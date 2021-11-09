@@ -55,16 +55,20 @@ const (
 	TaxInspector
 )
 
-var roles map[string]Role = make(map[string]Role)
+var roles map[string][]Role = make(map[string][]Role)
 
-func Conv(e Role) string {
+func Role2String(e Role) string {
 	switch e {
 	case Buyer:
 		return "Buyer"
+	case Seller:
+		return "Seller"
+	case Factor:
+		return "Factor"
 	case TaxInspector:
 		return "TaxInspector"
 	default:
-		return fmt.Sprintf("%d", int(e))
+		return "Buyer"
 	}
 }
 
@@ -72,6 +76,10 @@ func String2Role(e string) Role {
 	switch e {
 	case "Buyer":
 		return Buyer
+	case "Seller":
+		return Seller
+	case "Factor":
+		return Factor
 	case "TaxInspector":
 		return TaxInspector
 	default:
@@ -339,35 +347,30 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
 
 	//println(role, name)
-	roles[name] = String2Role(role)
+	roles[name] = append(roles[name], String2Role(role))
+	//roles[name] = String2Role(role)
 	println(name, roles[name])
 	//roles[name] = role
 	//return string(roles[name])
 	return nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (*RoleResult2, error) {
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, name string) (*RoleResult2, error) {
 
 	var result RoleResult2
+	var rolesStringList []string
 
-	result.Name = "test"
-	result.Roles = []string{Conv(roles["test"])}
+	for _, element := range roles[name] {
+		rolesStringList = append(rolesStringList, Role2String(element))
+	}
+
+	result.Name = name
+	result.Roles = rolesStringList
 
 	return &result, nil
 }
 
-func (s *SmartContract) GetRoles1(ctx contractapi.TransactionContextInterface) (string, error) {
-
-	result := &RoleResult{Role: Conv(roles["test"])}
-	b, err := json.Marshal(result)
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
-}
-
-func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]string, error) {
+/* func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]string, error) {
 
 	var results []string
 
@@ -383,7 +386,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	}
 
 	return results, nil
-}
+} */
 
 func main() {
 	// See chaincode.env.example
