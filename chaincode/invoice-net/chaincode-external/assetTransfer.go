@@ -27,23 +27,23 @@ type SmartContract struct {
 
 // Asset describes basic details of what makes up a simple asset
 type Asset struct {
-	ID            string  `json:"ID"`
-	Owner         string  `json:"owner"`
-	Buyer         string  `json:"buyer"`
-	Hash          int     `json:"hash"`
-	InvoiceNumber string  `json:"invoiceNumber"`
-	Tax           float32 `json:"tax"`
-	Netto         float32 `json:"netto"`
-	CountryOrigin string  `json:"countryOrigin"`
-	CountryBuyer  string  `json:"countryBuyer"`
-	//Status             string  `json:"status"`
-	Received           bool   `json:"received"`
-	ReceivedOrder      bool   `json:"receivedOrder"`
-	Sold               bool   `json:"sold"`
-	ClaimPaid          bool   `json:"claimPaid"`
-	ClaimPaidBy        string `json:"claimPaidBy"`
-	TaxExemptionReason string `json:"taxExemptionReason"`
-	TaxReceived        bool   `json:"taxReceived"`
+	ID                 string  `json:"ID"`
+	Owner              string  `json:"owner"`
+	Buyer              string  `json:"buyer"`
+	Hash               int     `json:"hash"`
+	InvoiceNumber      string  `json:"invoiceNumber"`
+	Tax                float32 `json:"tax"`
+	Netto              float32 `json:"netto"`
+	CountryOrigin      string  `json:"countryOrigin"`
+	CountryBuyer       string  `json:"countryBuyer"`
+	Status             string  `json:"status"`
+	Received           bool    `json:"received"`
+	ReceivedOrder      bool    `json:"receivedOrder"`
+	Sold               bool    `json:"sold"`
+	ClaimPaid          bool    `json:"claimPaid"`
+	ClaimPaidBy        string  `json:"claimPaidBy"`
+	TaxExemptionReason string  `json:"taxExemptionReason"`
+	TaxReceived        bool    `json:"taxReceived"`
 }
 
 type Role int
@@ -68,7 +68,7 @@ func Role2String(e Role) string {
 	case TaxInspector:
 		return "TaxInspector"
 	default:
-		return "Buyer"
+		return ""
 	}
 }
 
@@ -83,7 +83,7 @@ func String2Role(e string) Role {
 	case "TaxInspector":
 		return TaxInspector
 	default:
-		return Buyer
+		return -1
 	}
 }
 
@@ -105,7 +105,7 @@ type QueryResult struct {
 // InitLedger adds a base set of cars to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Tax: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryBuyer: "DE", Received: false,
+		{ID: "asset1", Owner: "company", Hash: 0, InvoiceNumber: "0", Tax: 0.0, Netto: 0.0, CountryOrigin: "DE", CountryBuyer: "DE", Status: "", Received: false,
 			ReceivedOrder: false, Sold: false, ClaimPaid: false, ClaimPaidBy: "", TaxExemptionReason: "", TaxReceived: false},
 	}
 	for _, asset := range assets {
@@ -125,7 +125,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 
 // CreateAsset issues a new asset to the world state with given details.
 func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
-	invoiceNumber string, tax float32, netto float32, countryOrigin string, CountryBuyer string, received bool,
+	invoiceNumber string, tax float32, netto float32, countryOrigin string, CountryBuyer string, status string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool,
 ) error {
 	exists, err := s.AssetExists(ctx, id)
@@ -155,6 +155,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		Netto:              netto,
 		CountryOrigin:      countryOrigin,
 		CountryBuyer:       CountryBuyer,
+		Status:             status,
 		Received:           received,
 		ReceivedOrder:      receivedOrder,
 		Sold:               sold,
@@ -223,7 +224,7 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
 func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id, owner string, hash int,
-	invoiceNumber string, Tax float32, netto float32, countryOrigin string, CountryBuyer string, received bool,
+	invoiceNumber string, Tax float32, netto float32, countryOrigin string, CountryBuyer string, status string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
@@ -243,6 +244,7 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 		Netto:              netto,
 		CountryOrigin:      countryOrigin,
 		CountryBuyer:       CountryBuyer,
+		Status:             status,
 		Received:           received,
 		ReceivedOrder:      receivedOrder,
 		Sold:               sold,
@@ -346,12 +348,8 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 
 func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
 
-	//println(role, name)
 	roles[name] = append(roles[name], String2Role(role))
-	//roles[name] = String2Role(role)
 	println(name, roles[name])
-	//roles[name] = role
-	//return string(roles[name])
 	return nil
 }
 
