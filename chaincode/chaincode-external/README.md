@@ -1,19 +1,12 @@
 # Start external chaincode 
 ### Create Service
 ```
-
-```
-
-### Get configuration
-```
-CC_PORT=$(kubectl get service hl-fabric-cc-external-invoice -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
-```
-
-
-```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-external-chaincode.yaml
 kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-eternal-chaincode.yaml
 ```
+
+### Publish chaincode definition
+[How to publish a cc definition](../tools/hlf-chaincode-definition-creator/README.md)
+
 
 # Install external chaincode on k8s peer
 ```
@@ -32,7 +25,30 @@ EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.typ
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
+
+SHARED_FS=kubernetes.research.dev.seeburger.de:30080
+PKGID=basic_1.0:7161fb3f2623e8d8eadd7c13cf0f40283e1f20526b2214c5681898ac627825eb
+CC_HOSTNAME=asset-transfer-basic.org1.example.com
+CC_LABEL=basic_1.0
+
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
+    /mnt/conf/install_and_approve_cc.sh\
+        $IP_CC_SERVICE \
+        $ORDERER_IP \
+        $ORDERER_HOST \
+        $ORDERER_PORT \
+        $CHANNEL_NAME \
+        $PKGID \
+        $CC_HOSTNAME \
+        $CC_LABEL \
+        $SHARED_FS
+
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/install_and_approve_cc.sh $IP_CC_SERVICE $ORDERER_IP $ORDERER_HOST $ORDERER_PORT $CHANNEL_NAME 
+```
+
+Install chaincode
+```
+
 ```
 
 Commit chaincode

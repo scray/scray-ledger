@@ -5,8 +5,9 @@ This tool creates a chaincode description and publishes it to a http data share.
 ### Publish deployment description
 ```
 SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-HOSTNAME=asset-transfer-basic.org6.example.com
-CC_PORT=$(kubectl get service hl-fabric-cc-external-invoice -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
+HOSTNAME=asset-transfer-basic.org1.example.com
+CC_SERVICE_NAME=hl-fabric-cc-external-invoice
+CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
 LABEL=basic_1.0
 
 CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
