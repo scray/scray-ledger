@@ -27,12 +27,13 @@ ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 
 SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-PKGID=basic_1.0:7161fb3f2623e8d8eadd7c13cf0f40283e1f20526b2214c5681898ac627825eb
+# .../cc_descriptions/.../description-hash.json
+PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
-    /mnt/conf/install_and_approve_cc.sh\
+    /mnt/conf/install_and_approve_cc.sh \
         $IP_CC_SERVICE \
         $ORDERER_IP \
         $ORDERER_HOST \
@@ -42,18 +43,11 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
         $CC_HOSTNAME \
         $CC_LABEL \
         $SHARED_FS
-
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/install_and_approve_cc.sh $IP_CC_SERVICE $ORDERER_IP $ORDERER_HOST $ORDERER_PORT $CHANNEL_NAME 
-```
-
-Install chaincode
-```
-
 ```
 
 Commit chaincode
 ```
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID
 ```
 
 Call init method in chaincode
