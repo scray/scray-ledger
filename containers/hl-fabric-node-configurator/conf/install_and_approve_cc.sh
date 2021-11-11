@@ -7,7 +7,7 @@ PKGID=$6
 CC_HOSTNAME=$7
 CC_LABEL=$8
 SHARED_FS_HOST=$9
-
+SEQUENCE_ID=$10
 
 export PKGID=$PKGID
 
@@ -30,5 +30,5 @@ curl --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS_HOST/cc_descriptions
 peer lifecycle chaincode install chaincode_description.tgz
 
 peer lifecycle chaincode queryinstalled
-peer lifecycle chaincode approveformyorg      -o $ORDERER_HOSTNAME:$ORDERER_PORT --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --package-id $PKGID --sequence 1
-peer lifecycle chaincode checkcommitreadiness -o $ORDERER_HOSTNAME:$ORDERER_PORT --ordererTLSHostnameOverride orderer.example.com --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0  --sequence 1
+peer lifecycle chaincode approveformyorg      -o $ORDERER_HOSTNAME:$ORDERER_PORT --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --package-id $PKGID --sequence $SEQUENCE_ID
+peer lifecycle chaincode checkcommitreadiness -o $ORDERER_HOSTNAME:$ORDERER_PORT --ordererTLSHostnameOverride orderer.example.com --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0  --sequence $SEQUENCE_ID
