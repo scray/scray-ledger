@@ -55,7 +55,7 @@ Install chaincode
 
 Commit chaincode
 ```
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $SEQUENCED_ID
 ```
 
 Call init method in chaincode
