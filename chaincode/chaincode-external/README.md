@@ -31,6 +31,7 @@ SHARED_FS=kubernetes.research.dev.seeburger.de:30080
 PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
+SEQUENCED_ID=1
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
     /mnt/conf/install_and_approve_cc.sh \
@@ -43,7 +44,10 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
         $CC_HOSTNAME \
         $CC_LABEL \
         $SHARED_FS
+
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/install_and_approve_cc.sh $IP_CC_SERVICE $ORDERER_IP $ORDERER_HOST $ORDERER_PORT $CHANNEL_NAME 
 ```
+
 
 Commit chaincode
 ```
