@@ -18,6 +18,5 @@ spec:
       containers:
         - name: cc-deployer
           image: scrayorg/cc-deployer:1.0
-          imagePullPolicy: Always
           workingDir: /opt
 

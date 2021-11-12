@@ -8,6 +8,30 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 [How to publish a cc definition](../tools/hlf-chaincode-definition-creator/README.md)
 
 
+### Get hash code form share [for testing]
+```
+SHARED_FS=kubernetes.research.dev.seeburger.de:30080
+CC_HOSTNAME=h2.example.com
+CC_LABEL=basic_1.0
+
+SHARED_FS_USER=scray
+SHARED_FS_PW=scray
+PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
+```
+
+### Start chaincode container
+Create configuration 
+```
+kubectl delete configmap invoice-chaincode-external
+kubectl create configmap invoice-chaincode-external \
+ --from-literal=chaincode_id=$PKGID
+```
+
+Start chaincode
+```
+kubectl apply -f k8s-external-chaincode.yaml
+```
+
 # Install external chaincode on k8s peer
 ```
 PEER_NAME=peer48
@@ -21,17 +45,16 @@ ORDERER_HOST=orderer.example.com
 EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}") 
 ```
 
+
+
 ```
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 
-SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-# .../cc_descriptions/.../description-hash.json
-PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
+# PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
-SEQUENCED_ID=1
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
     /mnt/conf/install_and_approve_cc.sh \
@@ -44,8 +67,6 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
         $CC_HOSTNAME \
         $CC_LABEL \
         $SHARED_FS
-
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/install_and_approve_cc.sh $IP_CC_SERVICE $ORDERER_IP $ORDERER_HOST $ORDERER_PORT $CHANNEL_NAME 
 ```
 
 

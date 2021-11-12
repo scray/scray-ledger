@@ -56,7 +56,7 @@ kubectl create configmap hl-fabric-peer-$PEER_NAME \
   ORDERER_IP=10.14.128.30 # Internal IP of orderer
   ORDERER_HOSTNAME=orderer.example.com 
   CHANNEL_NAME=mychannel
-  ORG_ID=peer42
+  ORG_ID=peer48
   ```
 
 ### Endorse new peer data:

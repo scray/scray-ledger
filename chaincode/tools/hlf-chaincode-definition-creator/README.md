@@ -2,16 +2,21 @@
 
 This tool creates a chaincode description and publishes it to a http data share.
 
+### Start container
+```
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
+```
+
 ### Publish deployment description
 ```
 SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-HOSTNAME=asset-transfer-basic.org1.example.com
+CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_SERVICE_NAME=hl-fabric-cc-external-invoice
 CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
 LABEL=basic_1.0
 
 CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
-kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $HOSTNAME $CC_PORT $LABEL $SHARED_FS
+kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $LABEL $SHARED_FS
 ```
 
 ### Deployment description location
