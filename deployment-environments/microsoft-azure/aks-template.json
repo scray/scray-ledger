@@ -13,6 +13,10 @@
     "userAssignedIdentities_Scray_Blockchain_Test_agentpool_externalid": {
       "defaultValue": "/subscriptions/233518b7-2787-4d0c-a046-2759cc4fca5a/resourceGroups/MC_Scray-Blockchain-Dev_Scray-Blockchain-Test_eastus/providers/Microsoft.ManagedIdentity/userAssignedIdentities/Scray-Blockchain-Test-agentpool",
       "type": "String"
+    },
+    "publicIPAddresses_scrayLedgerAKSPublicIP_name": {
+      "defaultValue": "scrayLedgerAKSPublicIP",
+      "type": "String"
     }
   },
   "variables": {},
@@ -110,6 +114,23 @@
         "osType": "Linux",
         "osSKU": "Ubuntu",
         "enableFIPS": false
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2020-11-01",
+      "name": "[parameters('publicIPAddresses_scrayLedgerAKSPublicIP_name')]",
+      "location": "eastus",
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      },
+      "properties": {
+        "ipAddress": "20.120.80.77",
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Static",
+        "idleTimeoutInMinutes": 4,
+        "ipTags": []
       }
     }
   ]

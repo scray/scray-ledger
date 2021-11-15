@@ -21,3 +21,7 @@
   ```
   az aks get-credentials --overwrite-existing  --resource-group Scray-Blockchain-Test --name Scray-Blockchain-Test
   ```
+* Apply service
+  ```
+  kubectl apply -f k8s-ds-cloud-service.yaml
+  ```
