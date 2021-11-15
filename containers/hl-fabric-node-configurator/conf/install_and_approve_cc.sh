@@ -30,8 +30,7 @@ curl --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS_HOST/cc_descriptions
 peer lifecycle chaincode install chaincode_description.tgz
 
 # Find next sequence number
-SEQUENCE_NUMBER=$(peer lifecycle chaincode queryapproved -C $CHANNEL_ID  -n basic --output json | jq -r '.sequence')
-NEXT_SEQUENCE=$(($SEQUENCE_NUMBER+1))
+NEXT_SEQUENCE=$(peer lifecycle chaincode queryapproved -C $CHANNEL_ID  -n basic --output json | jq -r '.sequence')
 
 
 peer lifecycle chaincode queryinstalled
