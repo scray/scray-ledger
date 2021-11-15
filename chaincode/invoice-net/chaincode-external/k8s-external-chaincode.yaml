@@ -24,7 +24,10 @@ spec:
           - name: FABRIC_LOGGING_SPEC 
             value: "DEBUG"
           - name: CHAINCODE_ID
-            value: "basic_1.0:27256d95e55ff855dffe6685141fcf6dd3530e4859e8621ec3476f9a69065cd5"
+            valueFrom:
+              configMapKeyRef:
+                name: invoice-chaincode-external
+                key: chaincode_id
           - name: CHAINCODE_SERVER_ADDRESS
             value: "0.0.0.0:9999"
 ---
