@@ -11,7 +11,7 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 ### Get hash code form share [for testing]
 ```
 SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-CC_HOSTNAME=h2.example.com
+CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
 
 SHARED_FS_USER=scray
