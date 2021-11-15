@@ -9,8 +9,8 @@ echo Installed chaincode
 peer lifecycle chaincode queryinstalled
 
 NEXT_SEQUENCE=$(peer lifecycle chaincode queryapproved -C $CHANNEL_ID  -n basic --output json | jq -r '.sequence')
-# NEXT_SEQUENCE=$(($NEXT_SEQUENCE+1))
-
 peer lifecycle chaincode checkcommitreadiness -o orderer.example.com:30081 --ordererTLSHostnameOverride orderer.example.com --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --sequence $NEXT_SEQUENCE
+
+NEXT_SEQUENCE=$(($NEXT_SEQUENCE+1))
 
 peer lifecycle chaincode commit -o orderer.example.com:30081 --tls  --cafile /tmp/tlsca.example.com-cert.pem --channelID $CHANNEL_ID --name basic --version 1.0 --sequence $NEXT_SEQUENCE
