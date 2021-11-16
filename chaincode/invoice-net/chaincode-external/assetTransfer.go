@@ -361,30 +361,33 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, na
 	return &result, nil
 }
 
-func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
+//func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
+func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
 
 	// trial
 	var id = "roles"
 	rolesJSON, err := ctx.GetStub().GetState(id)
+	var roles1 RoleResult2
 	if err != nil {
-		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
+		return roles1, fmt.Errorf("failed to read from world state. %s", err.Error())
 	}
 	if rolesJSON == nil {
-		return nil, fmt.Errorf("the asset %s does not exist", id)
+		return roles1, fmt.Errorf("the asset %s does not exist", id)
 	}
 
 	//var roles1 map[string][]Role
-	var roles1 RoleResult2
 
 	err = json.Unmarshal(rolesJSON, &roles1)
 	if err != nil {
-		return nil, err
+		return roles1, err
 	}
 
 	print("roles:", roles1.Name)
+	return roles1, nil
+
 	// trial
 
-	var results []RoleResult2
+	/* var results []RoleResult2
 	for key, value := range roles { // Order not specified
 		fmt.Println(key, value)
 
@@ -401,7 +404,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 		results = append(results, result1)
 	}
 
-	return results, nil
+	return results, nil */
 }
 
 func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
