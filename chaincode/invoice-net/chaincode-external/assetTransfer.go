@@ -373,6 +373,7 @@ func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (Ro
 	var id = "roles_" + name
 	rolesJSON, err := ctx.GetStub().GetState(id)
 	var roles1 RoleResult2
+
 	if err != nil {
 		return roles1, fmt.Errorf("failed to read from world state. %s", err.Error())
 	}
@@ -437,8 +438,12 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	println(name, roles[name])
 
 	var result, error = LocalGetRoles(ctx, name)
+
+	if error != nil {
+		print("error")
+	}
 	print("halloo", error)
-	print(result.Name)
+	print("hi", result.Name)
 
 	/// trial
 	//var results []RoleResult2
