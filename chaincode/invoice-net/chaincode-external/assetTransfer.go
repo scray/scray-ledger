@@ -437,7 +437,8 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	println(name, roles[name])
 
 	var result, error = LocalGetRoles(ctx, name)
-	print(result.Name, error)
+	print("halloo", error)
+	print(result.Name)
 
 	/// trial
 	//var results []RoleResult2
