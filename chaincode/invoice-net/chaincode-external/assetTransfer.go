@@ -393,8 +393,16 @@ func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (Ro
 func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
 
 	// trial
-	var id = "roles"
-	rolesJSON, err := ctx.GetStub().GetState(id)
+	//var id = "roles"
+	var roles1 RoleResult2
+	var clientID, err = s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return roles1, err
+	}
+
+	return LocalGetRoles(ctx, clientID)
+
+	/* rolesJSON, err := ctx.GetStub().GetState(id)
 	var roles1 RoleResult2
 	if err != nil {
 		return roles1, fmt.Errorf("failed to read from world state. %s", err.Error())
@@ -408,7 +416,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 		return roles1, err
 	}
 
-	return roles1, nil
+	return roles1, nil */
 
 	// trial
 
