@@ -441,9 +441,9 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 
 	if error != nil {
 		print("error")
+	} else {
+		print("hi", result.Name)
 	}
-	print("halloo", error)
-	print("hi", result.Name)
 
 	/// trial
 	//var results []RoleResult2
@@ -466,7 +466,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 			return err1
 		}
 
-		var err = ctx.GetStub().PutState("roles", a)
+		var err = ctx.GetStub().PutState("roles_"+name, a)
 		if err != nil {
 			return fmt.Errorf("failed to put to world state: %v", err)
 		}
