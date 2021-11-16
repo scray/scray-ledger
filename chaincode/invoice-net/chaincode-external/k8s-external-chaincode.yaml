@@ -4,41 +4,29 @@ kind: Deployment
 metadata:
   name: invoice-net-chaincode-external
   labels:
-    app: invoice-net-chaincode-external 
+    app: invoice-net-chaincode-external
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: invoice-net-chaincode-external 
+      app: invoice-net-chaincode-external
   template:
     metadata:
       labels:
-        app: invoice-net-chaincode-external 
+        app: invoice-net-chaincode-external
     spec:
       containers:
-        - name: invoice-net-chaincode-external 
-          image: scrayorg/chaincode-invoice-net:1.0 
+        - name: invoice-net-chaincode-external
+          image: scrayorg/chaincode-invoice-net:1.0
           imagePullPolicy: Always
-          workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external 
+          workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
           env:
-          - name: FABRIC_LOGGING_SPEC 
+          - name: FABRIC_LOGGING_SPEC
             value: "DEBUG"
           - name: CHAINCODE_ID
-            value: "basic_1.0:27256d95e55ff855dffe6685141fcf6dd3530e4859e8621ec3476f9a69065cd5"
+            valueFrom:
+              configMapKeyRef:
+                name: invoice-chaincode-external
+                key: chaincode_id
           - name: CHAINCODE_SERVER_ADDRESS
             value: "0.0.0.0:9999"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: hl-fabric-cc-external-invoice-net 
-  labels:
-    run: hl-fabric-cc-external-invoice-net 
-spec:
-  type: NodePort
-  selector:
-    app: invoice-net-chaincode-external 
-  ports:
-  - name: chaincode 
-    port: 9999 
-    protocol: TCP

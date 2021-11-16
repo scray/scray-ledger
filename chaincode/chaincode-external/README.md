@@ -1,29 +1,78 @@
 # Start external chaincode 
-```kubectl apply -f https://raw.githubusercontent.com/scray/scray/feature/k8s-peer/projects/invoice-hyperledger-fabric/chaincode/chaincode-external/k8s-external-chaincode.yaml```
+### Create Service
+```
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-eternal-chaincode.yaml
+```
+
+### Publish chaincode definition
+[How to publish a cc definition](../tools/hlf-chaincode-definition-creator/README.md)
+
+
+### Get hash code form share [for testing]
+```
+SHARED_FS=kubernetes.research.dev.seeburger.de:30080
+CC_HOSTNAME=asset-transfer-basic.org1.example.com
+CC_LABEL=basic_1.0
+
+SHARED_FS_USER=scray
+SHARED_FS_PW=scray
+PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
+```
+
+### Start chaincode container
+Create configuration 
+```
+kubectl delete configmap invoice-chaincode-external
+kubectl create configmap invoice-chaincode-external \
+ --from-literal=chaincode_id=$PKGID
+```
+
+Start chaincode
+```
+kubectl apply -f k8s-external-chaincode.yaml
+```
 
 # Install external chaincode on k8s peer
 ```
 PEER_NAME=peer48
 CHANNEL_NAME=mychannel
 ORDERER_NAME=orderer.example.com
-IP_CC_SERVICE=10.14.128.38         # Host where the chaincode is running
+IP_CC_SERVICE=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")         # Host where the chaincode is running
 PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 ORDERER_LISTEN_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_HOST=orderer.example.com
-EXT_PEER_IP=10.14.128.38
+EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}") 
 ```
+
+
 
 ```
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/install_and_approve_cc.sh $IP_CC_SERVICE $ORDERER_IP $ORDERER_HOST $ORDERER_PORT $CHANNEL_NAME 
+
+# PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
+CC_HOSTNAME=asset-transfer-basic.org1.example.com
+CC_LABEL=basic_1.0
+
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
+    /mnt/conf/install_and_approve_cc.sh \
+        $IP_CC_SERVICE \
+        $ORDERER_IP \
+        $ORDERER_HOST \
+        $ORDERER_PORT \
+        $CHANNEL_NAME \
+        $PKGID \
+        $CC_HOSTNAME \
+        $CC_LABEL \
+        $SHARED_FS
 ```
+
 
 Commit chaincode
 ```
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID
 ```
 
 Call init method in chaincode

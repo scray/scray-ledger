@@ -13,7 +13,7 @@ kubectl apply -f k8s-hl-fabric-data-share.yaml
 ```
 PEER_NAME=peer48
 PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de 
-EXT_PEER_IP=10.15.136.41
+EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
 ./configure-deployment.sh -n $PEER_NAME
 ```
@@ -56,7 +56,7 @@ kubectl create configmap hl-fabric-peer-$PEER_NAME \
   ORDERER_IP=10.14.128.30 # Internal IP of orderer
   ORDERER_HOSTNAME=orderer.example.com 
   CHANNEL_NAME=mychannel
-  ORG_ID=peer42
+  ORG_ID=peer48
   ```
 
 ### Endorse new peer data:
