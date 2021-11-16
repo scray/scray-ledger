@@ -374,14 +374,14 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	}
 
 	//var roles1 map[string][]Role
-	var roles1 []RoleResult2
+	var roles1 RoleResult2
 
 	err = json.Unmarshal(rolesJSON, &roles1)
 	if err != nil {
 		return nil, err
 	}
 
-	print("roles:", roles1)
+	//print("roles:", roles1)
 	// trial
 
 	var results []RoleResult2
@@ -410,7 +410,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	println(name, roles[name])
 
 	/// trial
-	var results []RoleResult2
+	//var results []RoleResult2
 	for key, value := range roles { // Order not specified
 		fmt.Println(key, value)
 
@@ -424,22 +424,23 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 		result1.Name = key
 		result1.Roles = rolesStringList
 
-		results = append(results, result1)
-	}
+		//results = append(results, result1)
 
-	a, err1 := json.Marshal(results)
-	if err1 != nil {
-		return err1
-	}
+		a, err1 := json.Marshal(result1)
+		if err1 != nil {
+			return err1
+		}
 
-	print(a)
+		print(a)
 
-	//key, value := s.GetAllRoles()
-	//print(json.Marshal(key),value)
+		//key, value := s.GetAllRoles()
+		//print(json.Marshal(key),value)
 
-	var err = ctx.GetStub().PutState("roles", a)
-	if err != nil {
-		return fmt.Errorf("failed to put to world state: %v", err)
+		var err = ctx.GetStub().PutState("roles", a)
+		if err != nil {
+			return fmt.Errorf("failed to put to world state: %v", err)
+		}
+
 	}
 
 	return nil
