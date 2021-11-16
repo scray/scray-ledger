@@ -368,9 +368,9 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (*
 	return &result, nil
 }
 
-func LocalGetAllRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
+func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (RoleResult2, error) {
 	// trial
-	var id = "roles"
+	var id = "roles_" + name
 	rolesJSON, err := ctx.GetStub().GetState(id)
 	var roles1 RoleResult2
 	if err != nil {
@@ -435,6 +435,9 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 
 	roles[name] = append(roles[name], String2Role(role))
 	println(name, roles[name])
+
+	var result, error = LocalGetRoles(ctx, name)
+	print(result.Name, error)
 
 	/// trial
 	//var results []RoleResult2
