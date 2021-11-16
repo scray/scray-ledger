@@ -365,6 +365,24 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 
 	var results []RoleResult2
 
+	// trial
+	rolesJSON, err := ctx.GetStub().GetState("roles")
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
+	}
+	if rolesJSON == nil {
+		return nil, fmt.Errorf("the asset %s does not exist", id)
+	}
+
+	var roles1 map[string][]Role
+	err = json.Unmarshal(rolesJSON, &roles1)
+	if err != nil {
+		return nil, err
+	}
+
+	print("roles:", roles1)
+	// trial
+
 	for key, value := range roles { // Order not specified
 		fmt.Println(key, value)
 
@@ -394,7 +412,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 		return err1
 	}
 
-	print(a)
+	//print(a)
 
 	//key, value := s.GetAllRoles()
 	//print(json.Marshal(key),value)
