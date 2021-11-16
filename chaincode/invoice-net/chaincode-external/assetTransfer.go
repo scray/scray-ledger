@@ -381,7 +381,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 		return nil, err
 	}
 
-	//print("roles:", roles1)
+	print("roles:", roles1.Name)
 	// trial
 
 	var results []RoleResult2
