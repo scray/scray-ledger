@@ -442,7 +442,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	if error != nil {
 		print("error")
 	} else {
-		print("hi", result.Name)
+		print("hi", result.Name, result.Roles)
 	}
 
 	/// trial
