@@ -384,7 +384,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	print("roles:", roles1)
 	// trial
 
-	for key, value := range roles { // Order not specified
+	for key, value := range roles1 { // Order not specified
 		fmt.Println(key, value)
 
 		var rolesStringList []string
