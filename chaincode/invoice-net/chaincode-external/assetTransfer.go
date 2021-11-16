@@ -363,8 +363,6 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, na
 
 func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
 
-	var results []RoleResult2
-
 	// trial
 	var id = "roles"
 	rolesJSON, err := ctx.GetStub().GetState(id)
@@ -375,7 +373,9 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 		return nil, fmt.Errorf("the asset %s does not exist", id)
 	}
 
-	var roles1 map[string][]Role
+	//var roles1 map[string][]Role
+	var roles1 []RoleResult2
+
 	err = json.Unmarshal(rolesJSON, &roles1)
 	if err != nil {
 		return nil, err
@@ -384,7 +384,8 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	print("roles:", roles1)
 	// trial
 
-	for key, value := range roles1 { // Order not specified
+	var results []RoleResult2
+	for key, value := range roles { // Order not specified
 		fmt.Println(key, value)
 
 		var rolesStringList []string
@@ -408,12 +409,30 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	roles[name] = append(roles[name], String2Role(role))
 	println(name, roles[name])
 
-	a, err1 := json.Marshal(roles)
+	/// trial
+	var results []RoleResult2
+	for key, value := range roles { // Order not specified
+		fmt.Println(key, value)
+
+		var rolesStringList []string
+
+		for _, element := range roles[key] {
+			rolesStringList = append(rolesStringList, Role2String(element))
+		}
+
+		var result1 RoleResult2
+		result1.Name = key
+		result1.Roles = rolesStringList
+
+		results = append(results, result1)
+	}
+
+	a, err1 := json.Marshal(results)
 	if err1 != nil {
 		return err1
 	}
 
-	//print(a)
+	print(a)
 
 	//key, value := s.GetAllRoles()
 	//print(json.Marshal(key),value)
