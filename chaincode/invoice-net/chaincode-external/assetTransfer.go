@@ -366,7 +366,8 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	var results []RoleResult2
 
 	// trial
-	rolesJSON, err := ctx.GetStub().GetState("roles")
+	var id = "roles"
+	rolesJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read from world state. %s", err.Error())
 	}
