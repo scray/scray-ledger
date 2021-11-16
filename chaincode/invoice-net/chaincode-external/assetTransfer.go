@@ -346,11 +346,18 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 	return string(decodeID), nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, name string) (*RoleResult2, error) {
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (*RoleResult2, error) {
 
 	var result RoleResult2
 	var rolesStringList []string
 
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var name = clientID
 	for _, element := range roles[name] {
 		rolesStringList = append(rolesStringList, Role2String(element))
 	}
@@ -359,6 +366,26 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, na
 	result.Roles = rolesStringList
 
 	return &result, nil
+}
+
+func LocalGetAllRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
+	// trial
+	var id = "roles"
+	rolesJSON, err := ctx.GetStub().GetState(id)
+	var roles1 RoleResult2
+	if err != nil {
+		return roles1, fmt.Errorf("failed to read from world state. %s", err.Error())
+	}
+	if rolesJSON == nil {
+		return roles1, fmt.Errorf("the asset %s does not exist", id)
+	}
+
+	err = json.Unmarshal(rolesJSON, &roles1)
+	if err != nil {
+		return roles1, err
+	}
+
+	return roles1, nil
 }
 
 //func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
@@ -375,14 +402,11 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 		return roles1, fmt.Errorf("the asset %s does not exist", id)
 	}
 
-	//var roles1 map[string][]Role
-
 	err = json.Unmarshal(rolesJSON, &roles1)
 	if err != nil {
 		return roles1, err
 	}
 
-	print("roles:", roles1.Name)
 	return roles1, nil
 
 	// trial
@@ -423,21 +447,15 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 			rolesStringList = append(rolesStringList, Role2String(element))
 		}
 
+		// store role in blockchain
 		var result1 RoleResult2
 		result1.Name = key
 		result1.Roles = rolesStringList
-
-		//results = append(results, result1)
 
 		a, err1 := json.Marshal(result1)
 		if err1 != nil {
 			return err1
 		}
-
-		print(a)
-
-		//key, value := s.GetAllRoles()
-		//print(json.Marshal(key),value)
 
 		var err = ctx.GetStub().PutState("roles", a)
 		if err != nil {
