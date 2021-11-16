@@ -346,13 +346,6 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 	return string(decodeID), nil
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
-
-	roles[name] = append(roles[name], String2Role(role))
-	println(name, roles[name])
-	return nil
-}
-
 func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface, name string) (*RoleResult2, error) {
 
 	var result RoleResult2
@@ -389,6 +382,29 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	}
 
 	return results, nil
+}
+
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
+
+	roles[name] = append(roles[name], String2Role(role))
+	println(name, roles[name])
+
+	a, err1 := json.Marshal(roles)
+	if err1 != nil {
+		return err1
+	}
+
+	print(a)
+
+	//key, value := s.GetAllRoles()
+	//print(json.Marshal(key),value)
+
+	var err = ctx.GetStub().PutState("roles", a)
+	if err != nil {
+		return fmt.Errorf("failed to put to world state: %v", err)
+	}
+
+	return nil
 }
 
 /* func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]string, error) {
