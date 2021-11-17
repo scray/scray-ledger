@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -320,6 +321,10 @@ func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 			return nil, err
 		}
 
+		if strings.HasPrefix(queryResponse.Key, "roles_") {
+			continue
+		}
+
 		var asset Asset
 		err = json.Unmarshal(queryResponse.Value, &asset)
 		if err != nil {
@@ -346,28 +351,6 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 	return string(decodeID), nil
 }
 
-func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (*RoleResult2, error) {
-
-	var result RoleResult2
-	var rolesStringList []string
-
-	// Get ID of submitting client identity
-	clientID, err := s.GetSubmittingClientIdentity(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	var name = clientID
-	for _, element := range roles[name] {
-		rolesStringList = append(rolesStringList, Role2String(element))
-	}
-
-	result.Name = name
-	result.Roles = rolesStringList
-
-	return &result, nil
-}
-
 func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (RoleResult2, error) {
 	// trial
 	var id = "roles_" + name
@@ -387,6 +370,36 @@ func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (Ro
 	}
 
 	return roles1, nil
+}
+
+func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
+
+	var roles1 RoleResult2
+	var clientID, err = s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return roles1, err
+	}
+
+	return LocalGetRoles(ctx, clientID)
+
+	/* var result RoleResult2
+	var rolesStringList []string
+
+
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var name = clientID
+	for _, element := range roles[name] {
+		rolesStringList = append(rolesStringList, Role2String(element))
+	}
+
+	result.Name = name
+	result.Roles = rolesStringList
+
+	return &result, nil */
 }
 
 //func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
