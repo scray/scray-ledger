@@ -402,55 +402,40 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (R
 	return &result, nil */
 }
 
-//func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
-func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) (RoleResult2, error) {
+// GetAllAssets returns all assets found in world state
+func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface) ([]RoleResult2, error) {
+	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
 
-	// trial
-	//var id = "roles"
-	var roles1 RoleResult2
-	var clientID, err = s.GetSubmittingClientIdentity(ctx)
 	if err != nil {
-		return roles1, err
+		return nil, err
 	}
+	defer resultsIterator.Close()
 
-	return LocalGetRoles(ctx, clientID)
+	var results []RoleResult2
 
-	/* rolesJSON, err := ctx.GetStub().GetState(id)
-	var roles1 RoleResult2
-	if err != nil {
-		return roles1, fmt.Errorf("failed to read from world state. %s", err.Error())
-	}
-	if rolesJSON == nil {
-		return roles1, fmt.Errorf("the asset %s does not exist", id)
-	}
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
 
-	err = json.Unmarshal(rolesJSON, &roles1)
-	if err != nil {
-		return roles1, err
-	}
-
-	return roles1, nil */
-
-	// trial
-
-	/* var results []RoleResult2
-	for key, value := range roles { // Order not specified
-		fmt.Println(key, value)
-
-		var rolesStringList []string
-
-		for _, element := range roles[key] {
-			rolesStringList = append(rolesStringList, Role2String(element))
+		if err != nil {
+			return nil, err
 		}
 
-		var result1 RoleResult2
-		result1.Name = key
-		result1.Roles = rolesStringList
+		if !strings.HasPrefix(queryResponse.Key, "roles_") {
+			continue
+		}
 
-		results = append(results, result1)
+		var roles RoleResult2
+		err = json.Unmarshal(queryResponse.Value, &roles)
+		if err != nil {
+			return nil, err
+		}
+
+		//queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+		results = append(results, roles)
 	}
 
-	return results, nil */
+	return results, nil
 }
 
 func contains(s []string, str string) bool {
