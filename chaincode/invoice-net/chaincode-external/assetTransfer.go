@@ -440,22 +440,57 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 	return results, nil */
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
 
-	roles[name] = append(roles[name], String2Role(role))
-	println(name, roles[name])
+	return false
+}
+
+// store role in blockchain
+func LocalStoreRoles(ctx contractapi.TransactionContextInterface, name string, result1 RoleResult2) error {
+
+	a, err1 := json.Marshal(result1)
+	if err1 != nil {
+		return err1
+	}
+
+	var err = ctx.GetStub().PutState("roles_"+name, a)
+	if err != nil {
+		return fmt.Errorf("failed to put to world state: %v", err)
+	}
+
+	return nil
+}
+
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
 
 	var result, error = LocalGetRoles(ctx, name)
 
 	if error != nil {
 		print("error")
+		result.Name = name
 	} else {
 		print("hi", result.Name, result.Roles)
 	}
 
+	print("OUT", result.Name, result.Roles)
+
+	if !contains(result.Roles, role) {
+		result.Roles = append(result.Roles, role)
+		LocalStoreRoles(ctx, name, result)
+	}
+
+	/* roles[name] = append(roles[name], String2Role(role))
+	println(name, roles[name]) */
+
 	/// trial
 	//var results []RoleResult2
-	for key, value := range roles { // Order not specified
+	// Order not specified
+	/* for key, value := range roles {
 		fmt.Println(key, value)
 
 		var rolesStringList []string
@@ -464,22 +499,12 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 			rolesStringList = append(rolesStringList, Role2String(element))
 		}
 
-		// store role in blockchain
+		//store role
 		var result1 RoleResult2
 		result1.Name = key
 		result1.Roles = rolesStringList
-
-		a, err1 := json.Marshal(result1)
-		if err1 != nil {
-			return err1
-		}
-
-		var err = ctx.GetStub().PutState("roles_"+name, a)
-		if err != nil {
-			return fmt.Errorf("failed to put to world state: %v", err)
-		}
-
-	}
+		LocalStoreRoles(ctx, key, result1)
+	} */
 
 	return nil
 }
