@@ -214,7 +214,7 @@ func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterf
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) GetRoleTransactionse(ctx contractapi.TransactionContextInterface) (*RoleTransactionsResult, error) {
+func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextInterface) (*RoleTransactionsResult, error) {
 
 	var transactions RoleTransactionsResult
 	transactions.RoleTransactions = roleTransactions
