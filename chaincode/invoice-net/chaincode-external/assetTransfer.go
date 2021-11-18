@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
+	"runtime"
 	"strings"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
@@ -55,6 +57,8 @@ const (
 	Factor
 	TaxInspector
 )
+
+var roleTransactions map[string][]string = make(map[string][]string)
 
 var roles map[string][]Role = make(map[string][]Role)
 
@@ -125,7 +129,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 }
 
 // CreateAsset issues a new asset to the world state with given details.
-func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
+func (s *SmartContract) CreateInvoice(ctx contractapi.TransactionContextInterface, id, owner string, buyer string, hash int,
 	invoiceNumber string, tax float32, netto float32, countryOrigin string, CountryBuyer string, status string, received bool,
 	receivedOrder bool, sold bool, claimPaid bool, claimPaidBy string, taxExemptionReason string, taxReceived bool,
 ) error {
@@ -157,13 +161,13 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		CountryOrigin:      countryOrigin,
 		CountryBuyer:       CountryBuyer,
 		Status:             status,
-		Received:           received,
-		ReceivedOrder:      receivedOrder,
-		Sold:               sold,
+		Received:           false,
+		ReceivedOrder:      false,
+		Sold:               false,
 		ClaimPaid:          claimPaid,
 		ClaimPaidBy:        claimPaidBy,
 		TaxExemptionReason: taxExemptionReason,
-		TaxReceived:        taxReceived,
+		TaxReceived:        false,
 	}
 
 	assetJSON, err := json.Marshal(asset)
@@ -194,7 +198,7 @@ func (s *SmartContract) ReadAssetTest(ctx contractapi.TransactionContextInterfac
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+func (s *SmartContract) ListInvoice(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
 
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
@@ -221,6 +225,42 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 	} else {
 		return nil, fmt.Errorf("Only InvoiceOwner or ProductBuyer are allow to read this invoice ")
 	}
+}
+
+// GetAllAssets returns all assets found in world state
+func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
+	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var results []QueryResult
+
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+
+		if err != nil {
+			return nil, err
+		}
+
+		if strings.HasPrefix(queryResponse.Key, "roles_") {
+			continue
+		}
+
+		var asset Asset
+		err = json.Unmarshal(queryResponse.Value, &asset)
+		if err != nil {
+			return nil, err
+		}
+
+		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+		results = append(results, queryResult)
+	}
+
+	return results, nil
 }
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
@@ -263,6 +303,68 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 	return ctx.GetStub().PutState(id, assetJSON)
 }
 
+func LocalStoreAsset(ctx contractapi.TransactionContextInterface, id string, asset *Asset) error {
+	assetJSON, err := json.Marshal(asset)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(id, assetJSON)
+}
+
+func (s *SmartContract) ReceivedInvoice(ctx contractapi.TransactionContextInterface, id string) error {
+
+	var asset, err = s.ListInvoice(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	asset.Received = true
+
+	return LocalStoreAsset(ctx, id, asset)
+}
+
+func (s *SmartContract) ReceivedOrder(ctx contractapi.TransactionContextInterface, id string) error {
+
+	var asset, err = s.ListInvoice(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	asset.ReceivedOrder = true
+
+	return LocalStoreAsset(ctx, id, asset)
+}
+
+func (s *SmartContract) ReceivedPayment(ctx contractapi.TransactionContextInterface, id string, payer string) error {
+
+	var asset, err = s.ListInvoice(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	asset.ClaimPaid = true
+	asset.ClaimPaidBy = payer
+
+	return LocalStoreAsset(ctx, id, asset)
+}
+
+func (s *SmartContract) TaxReceived(ctx contractapi.TransactionContextInterface, id string) error {
+
+	var asset, err = s.ListInvoice(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	asset.TaxReceived = true
+
+	return LocalStoreAsset(ctx, id, asset)
+}
+
 // DeleteAsset deletes an given asset from the world state.
 func (s *SmartContract) DeleteAsset(ctx contractapi.TransactionContextInterface, id string) error {
 	exists, err := s.AssetExists(ctx, id)
@@ -287,8 +389,8 @@ func (s *SmartContract) AssetExists(ctx contractapi.TransactionContextInterface,
 }
 
 // TransferAsset updates the owner field of asset with given id in world state.
-func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterface, id string, newOwner string) error {
-	asset, err := s.ReadAsset(ctx, id)
+func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterface, id string, newOwner string) error {
+	asset, err := s.ListInvoice(ctx, id)
 	if err != nil {
 		return err
 	}
@@ -300,42 +402,6 @@ func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterfac
 	}
 
 	return ctx.GetStub().PutState(id, assetJSON)
-}
-
-// GetAllAssets returns all assets found in world state
-func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
-	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
-	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
-
-	if err != nil {
-		return nil, err
-	}
-	defer resultsIterator.Close()
-
-	var results []QueryResult
-
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-
-		if err != nil {
-			return nil, err
-		}
-
-		if strings.HasPrefix(queryResponse.Key, "roles_") {
-			continue
-		}
-
-		var asset Asset
-		err = json.Unmarshal(queryResponse.Value, &asset)
-		if err != nil {
-			return nil, err
-		}
-
-		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
-		results = append(results, queryResult)
-	}
-
-	return results, nil
 }
 
 func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionContextInterface) (string, error) {
@@ -448,6 +514,28 @@ func contains(s []string, str string) bool {
 	return false
 }
 
+func getFunctionNameByInterface(i interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
+}
+
+func getFunctionName() string {
+	fpcs := make([]uintptr, 1)
+
+	// Skip 2 levels to get the caller
+	n := runtime.Callers(2, fpcs)
+	if n == 0 {
+		return "MSG: NO CALLER"
+	}
+
+	caller := runtime.FuncForPC(fpcs[0] - 1)
+	if caller == nil {
+		return "MSG CALLER WAS NIL"
+	}
+
+	// Print the name of the function
+	return caller.Name()
+}
+
 // store role in blockchain
 func LocalStoreRoles(ctx contractapi.TransactionContextInterface, name string, result1 RoleResult2) error {
 
@@ -526,6 +614,35 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 } */
 
 func main() {
+
+	//var roleTransactions map[string][]string = make(map[string][]string)
+
+	roleTransactions := map[string][]string{
+		"Buyer": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+			getFunctionNameByInterface((*SmartContract).ListInvoices),
+			getFunctionNameByInterface((*SmartContract).ReceivedInvoice),
+			getFunctionNameByInterface((*SmartContract).ReceivedOrder)},
+
+		"Seller": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+			getFunctionNameByInterface((*SmartContract).ListInvoices),
+			getFunctionNameByInterface((*SmartContract).CreateInvoice),
+			getFunctionNameByInterface((*SmartContract).TransferInvoice),
+			getFunctionNameByInterface((*SmartContract).ReceivedPayment)},
+
+		"Factor": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+			getFunctionNameByInterface((*SmartContract).ListInvoices),
+			getFunctionNameByInterface((*SmartContract).TransferInvoice),
+			getFunctionNameByInterface((*SmartContract).ReceivedPayment)},
+
+		"TaxInspector": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+			getFunctionNameByInterface((*SmartContract).ListInvoices),
+			getFunctionNameByInterface((*SmartContract).TaxReceived)},
+	}
+
+	//(s *SmartContract).LocalGetRoles()
+
+	print(roleTransactions)
+
 	// See chaincode.env.example
 	config := serverConfig{
 		CCID:    os.Getenv("CHAINCODE_ID"),
