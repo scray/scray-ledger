@@ -179,7 +179,8 @@ func (s *SmartContract) CreateInvoice(ctx contractapi.TransactionContextInterfac
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterface) (*Asset, error) {
+
 	var asset Asset
 
 	asset = Asset{
