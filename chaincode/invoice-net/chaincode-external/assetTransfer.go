@@ -566,6 +566,8 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 			return nil, err
 		}
 
+		print("GetAllRoles", queryResponse.Key)
+
 		if !strings.HasPrefix(queryResponse.Key, "roles_") {
 			continue
 		}
