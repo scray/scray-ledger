@@ -58,7 +58,27 @@ const (
 	TaxInspector
 )
 
-var roleTransactions map[string][]string
+var roleTransactions map[string][]string = map[string][]string{
+	"Buyer": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+		getFunctionNameByInterface((*SmartContract).ListInvoices),
+		getFunctionNameByInterface((*SmartContract).ReceivedInvoice),
+		getFunctionNameByInterface((*SmartContract).ReceivedOrder)},
+
+	"Seller": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+		getFunctionNameByInterface((*SmartContract).ListInvoices),
+		getFunctionNameByInterface((*SmartContract).CreateInvoice),
+		getFunctionNameByInterface((*SmartContract).TransferInvoice),
+		getFunctionNameByInterface((*SmartContract).ReceivedPayment)},
+
+	"Factor": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+		getFunctionNameByInterface((*SmartContract).ListInvoices),
+		getFunctionNameByInterface((*SmartContract).TransferInvoice),
+		getFunctionNameByInterface((*SmartContract).ReceivedPayment)},
+
+	"TaxInspector": {getFunctionNameByInterface((*SmartContract).ListInvoice),
+		getFunctionNameByInterface((*SmartContract).ListInvoices),
+		getFunctionNameByInterface((*SmartContract).TaxReceived)},
+}
 
 //= make(map[string][]string)
 
@@ -695,6 +715,19 @@ func main() {
 		"TaxInspector": {getFunctionNameByInterface((*SmartContract).ListInvoice),
 			getFunctionNameByInterface((*SmartContract).ListInvoices),
 			getFunctionNameByInterface((*SmartContract).TaxReceived)},
+	}
+
+	for key, value := range roleTransactions {
+
+		fmt.Println(key, value)
+
+		var stringList []string
+
+		for _, element := range roleTransactions[key] {
+			stringList = append(stringList, element)
+		}
+
+		fmt.Println(key, stringList)
 	}
 
 	//(s *SmartContract).LocalGetRoles()
