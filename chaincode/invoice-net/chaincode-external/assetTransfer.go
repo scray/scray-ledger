@@ -58,13 +58,15 @@ const (
 	TaxInspector
 )
 
-var roleTransactions map[string][]string = make(map[string][]string)
+var roleTransactions map[string][]string
+
+//= make(map[string][]string)
 
 var roles map[string][]Role = make(map[string][]Role)
 
 // QueryResult structure used for handling result of query
 type RoleTransactionsResult struct {
-	roleTransactions map[string][]string `json:"RoleTransactions"`
+	RoleTransactions map[string][]string `json:"RoleTransactions"`
 }
 
 func Role2String(e Role) string {
@@ -215,7 +217,7 @@ func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterf
 func (s *SmartContract) GetRoleTransactionse(ctx contractapi.TransactionContextInterface) (*RoleTransactionsResult, error) {
 
 	var transactions RoleTransactionsResult
-	transactions.roleTransactions = roleTransactions
+	transactions.RoleTransactions = roleTransactions
 
 	return &transactions, nil
 }
