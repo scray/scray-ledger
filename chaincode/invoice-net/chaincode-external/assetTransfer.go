@@ -240,6 +240,7 @@ func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextIn
 	for key, value := range roleTransactions {
 		fmt.Println(key, value)
 
+		print(key, value)
 		var stringList []string
 
 		for _, element := range roleTransactions[key] {
