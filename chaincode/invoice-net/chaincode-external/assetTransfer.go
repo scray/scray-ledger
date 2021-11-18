@@ -64,9 +64,9 @@ var roleTransactions map[string][]string
 
 var roles map[string][]Role = make(map[string][]Role)
 
-// QueryResult structure used for handling result of query
-type RoleTransactionsResult struct {
-	RoleTransactions map[string][]string `json:"RoleTransactions"`
+type RoleTransactions struct {
+	Role         string   `json:"role"`
+	Transactions []string `json:"transactions"`
 }
 
 func Role2String(e Role) string {
@@ -214,14 +214,26 @@ func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterf
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextInterface) (RoleTransactionsResult, error) {
+func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextInterface) ([]RoleTransactions, error) {
 
-	var transactions RoleTransactionsResult
-	transactions.RoleTransactions = roleTransactions
+	var results []RoleTransactions
+	for key, value := range roleTransactions {
+		fmt.Println(key, value)
 
-	print(transactions)
+		var stringList []string
 
-	return transactions, nil
+		for _, element := range roleTransactions[key] {
+			stringList = append(stringList, element)
+		}
+
+		//store role
+		var result RoleTransactions
+		result.Role = key
+		result.Transactions = stringList
+		results = append(results, result)
+	}
+
+	return results, nil
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
