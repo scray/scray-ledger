@@ -219,6 +219,8 @@ func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextIn
 	var transactions RoleTransactionsResult
 	transactions.RoleTransactions = roleTransactions
 
+	print(transactions)
+
 	return transactions, nil
 }
 
