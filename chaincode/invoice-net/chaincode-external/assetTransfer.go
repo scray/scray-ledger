@@ -179,6 +179,33 @@ func (s *SmartContract) CreateInvoice(ctx contractapi.TransactionContextInterfac
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
+func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
+	var asset Asset
+
+	asset = Asset{
+		ID:                 "",
+		Owner:              "",
+		Buyer:              "",
+		Hash:               0,
+		InvoiceNumber:      "",
+		Tax:                0,
+		Netto:              0,
+		CountryOrigin:      "",
+		CountryBuyer:       "",
+		Status:             "",
+		Received:           false,
+		ReceivedOrder:      false,
+		Sold:               false,
+		ClaimPaid:          false,
+		ClaimPaidBy:        "",
+		TaxExemptionReason: "",
+		TaxReceived:        false,
+	}
+
+	return &asset, nil
+}
+
+// ReadAsset returns the asset stored in the world state with given id.
 func (s *SmartContract) ReadAssetTest(ctx contractapi.TransactionContextInterface, id string) (*Asset, error) {
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
