@@ -236,14 +236,14 @@ func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterf
 // ReadAsset returns the asset stored in the world state with given id.
 func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextInterface) ([]RoleTransactions, error) {
 
+	print(getFunctionName())
+
 	var results []RoleTransactions
 	for key, value := range roleTransactions {
-		fmt.Println(key, value)
 
-		print(key, value)
 		var stringList []string
-
-		for _, element := range roleTransactions[key] {
+		//roleTransactions[key]
+		for _, element := range value {
 			stringList = append(stringList, element)
 		}
 
