@@ -233,6 +233,13 @@ func (s *SmartContract) GetEmptyInvoice(ctx contractapi.TransactionContextInterf
 	return &asset, nil
 }
 
+func (s *SmartContract) GetMSPID(ctx contractapi.TransactionContextInterface) (string, error) {
+
+	var clientOrgID, err = ctx.GetClientIdentity().GetMSPID()
+
+	return clientOrgID, err
+}
+
 // ReadAsset returns the asset stored in the world state with given id.
 func (s *SmartContract) GetRoleTransactions(ctx contractapi.TransactionContextInterface) ([]RoleTransactions, error) {
 
