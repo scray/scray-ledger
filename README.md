@@ -10,6 +10,7 @@ and provides tooling to interact with the blockchain network.
 With features like:
 * [Creating a channel](containers/orderer/README.md#create-new-channel) 
 * [Adding peers to the network](containers/README.md#integrate-new-peer-to-scray-k8s-network)
+* [Updating policies for CC](docs/use-cases/update-channel-policy/README.md)
 * [Create a wallet from local X509 CSR](tools/wallet-creator#create-user-wallet-for-a-given-ca)
 * [Export monitoring data](containers/README.md#export-data)
 * [Reading and write using the Hyper Ledger Fabric Gateway](applications/asset-reader-writer-app#application-to-interact-with-blockchain)

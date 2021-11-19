@@ -25,7 +25,7 @@ Commit changes
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID $NEW_POLICY
 ```
 
-It is now necessary approve an operation by members of peer90MSP AND peer91MSP
+It is now necessary to approve an operation by members of peer90MSP AND peer91MSP 
 Pseudocode: 
 ```bash
 peer chaincode invoke -o orderer.example.com:30081 --tls --cafile /tmp/tlsca.example.com-cert.pem -C $CHANNEL_ID
