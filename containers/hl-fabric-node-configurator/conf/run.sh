@@ -3,6 +3,7 @@ INPUT_PARAMETERS=$@
 DOMAINE=org1.fabric.hyperledger.projects.scray.org
 ORG_NAME=OrgScrayMSP
 CHANNEL_NAME=mychannel
+GROUP=000
 SHARED_FS_HOST=hl-fabric-data-share-service:30080
 SHARED_FS_USER=scray
 SHARED_FS_PW=scray
@@ -53,10 +54,12 @@ createPeerConfig() {
     curl --user $SHARED_FS_USER:$SHARED_FS_PW -X DELETE http://$SHARED_FS_HOST/newmemberrequests/$CHANNEL_NAME/${ORG_NAME}.json
     curl --user $SHARED_FS_USER:$SHARED_FS_PW -T organizations/peerOrganizations/$DOMAINE/${ORG_NAME}.json http://$SHARED_FS_HOST/newmemberrequests/$CHANNEL_NAME/${ORG_NAME}.json
     
-    # Upload CA
+    # Upload CA cert
+    # TODO sign uploaded files
     curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/ca
-    curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/ca/$CHANNEL_NAME
-    curl --user $SHARED_FS_USER:$SHARED_FS_PW -T organizations/peerOrganizations/$DOMAINE/users/User1@$DOMAINE/tls/ca.crt http://$SHARED_FS_HOST/ca/$CHANNEL_NAME/$ORG_NAME-$DOMAINE-ca.crt
+    curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/ca/$GROUP
+    curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/ca/$GROUP/$ORG_NAME
+    curl --user $SHARED_FS_USER:$SHARED_FS_PW -T organizations/peerOrganizations/$DOMAINE/users/User1@$DOMAINE/tls/ca.crt http://$SHARED_FS_HOST/ca/$GROUP/$ORG_NAME/$ORG_NAME-$DOMAINE-ca.crt
 }
 
 usage()
