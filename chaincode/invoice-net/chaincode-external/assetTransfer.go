@@ -342,6 +342,38 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 	return results, nil
 }
 
+// GetAllAssets returns all assets found in world state
+func (s *SmartContract) GetAllKeys(ctx contractapi.TransactionContextInterface) ([]string, error) {
+	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var results []string
+
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+
+		if err != nil {
+			return nil, err
+		}
+
+		var asset Asset
+		err = json.Unmarshal(queryResponse.Value, &asset)
+		if err != nil {
+			return nil, err
+		}
+
+		//queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+		results = append(results, queryResponse.Key)
+	}
+
+	return results, nil
+}
+
 // UpdateAsset updates an existing asset in the world state with provided parameters.
 func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id, owner string, hash int,
 	invoiceNumber string, Tax float32, netto float32, countryOrigin string, CountryBuyer string, status string, received bool,
