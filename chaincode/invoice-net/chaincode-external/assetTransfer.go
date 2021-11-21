@@ -325,6 +325,12 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 
 	var results []QueryResult
 
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
+
 	for resultsIterator.HasNext() {
 		queryResponse, err := resultsIterator.Next()
 
@@ -342,8 +348,11 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 			return nil, err
 		}
 
-		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
-		results = append(results, queryResult)
+		if clientID == asset.Owner || clientID == asset.Buyer {
+			queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+			results = append(results, queryResult)
+		}
+
 	}
 
 	return results, nil
@@ -511,6 +520,16 @@ func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterf
 	asset, err := s.ListInvoice(ctx, id)
 	if err != nil {
 		return err
+	}
+
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
+
+	if clientID != asset.Owner {
+		return fmt.Errorf("submitting client not authorized to send invoice")
 	}
 
 	asset.Owner = newOwner
