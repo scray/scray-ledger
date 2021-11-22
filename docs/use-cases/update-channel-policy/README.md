@@ -22,7 +22,7 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
 
 Commit changes
 ```bash
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID $NEW_POLICY
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit_custom_policy.sh  $CHANNEL_NAME $PKGID $NEW_POLICY
 ```
 
 It is now necessary to approve an operation by members of peer90MSP AND peer91MSP 
