@@ -351,6 +351,7 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 		print("ListInvoices: ", queryResponse.Key, " : ", clientID, "-->", asset.Owner, "-->", asset.Buyer, "\n")
 
 		if clientID == asset.Owner || clientID == asset.Buyer {
+			print("ListInvoices: ", queryResponse.Key, "found \n")
 			queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
 			results = append(results, queryResult)
 		}
