@@ -90,6 +90,9 @@ kubectl exec --stdin --tty $ORDERER_POD -c scray-orderer-cli  -- /bin/sh /mnt/co
   kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/conf/peer_join.sh $ORDERER_IP  $ORDERER_HOSTNAME $ORDERER_PORT $CHANNEL_NAME $SHARED_FS_HOST $EXT_PEER_IP
 ```
 
+
+#
+
 # Export data
 ### Export channel configuration
 Channel configuration can be found here after after the export: ```$SHARED_FS_HOST/channel/configuration/$CHANNEL_NAME/config.json```  
