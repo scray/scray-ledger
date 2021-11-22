@@ -328,7 +328,7 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 	// Get ID of submitting client identity
 	clientID, err := s.GetSubmittingClientIdentity(ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	for resultsIterator.HasNext() {
@@ -347,6 +347,8 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 		if err != nil {
 			return nil, err
 		}
+
+		print("ListInvoices: ", clientID, "-->", asset.Owner, "-->", asset.Buyer, "\n")
 
 		if clientID == asset.Owner || clientID == asset.Buyer {
 			queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
