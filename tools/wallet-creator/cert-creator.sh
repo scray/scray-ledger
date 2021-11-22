@@ -36,6 +36,8 @@ pushCsr() {
   echo $SHARED_FS_HOST
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/csrs_to_sign/
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME
+  echo "Replace " http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME/user.csr " if exits"
+  curl --user $SHARED_FS_USER:$SHARED_FS_PW -X DELETE http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME/user.csr
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -T crt_target/$NEW_CERT_COMMON_NAME/user.csr http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME/user.csr
 }
 
@@ -54,6 +56,8 @@ pushCrt() {
 
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/signed_certs/
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/signed_certs/$NEW_CERT_COMMON_NAME
+  echo "Replace " $NEW_CERT_COMMON_NAME.crt " if exists"
+  curl --user $SHARED_FS_USER:$SHARED_FS_PW -X DELETE http://$SHARED_FS_HOST/signed_certs/$NEW_CERT_COMMON_NAME/$NEW_CERT_COMMON_NAME.crt
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -T $NEW_CERT_COMMON_NAME.crt http://$SHARED_FS_HOST/signed_certs/$NEW_CERT_COMMON_NAME/$NEW_CERT_COMMON_NAME.crt
 }
 
