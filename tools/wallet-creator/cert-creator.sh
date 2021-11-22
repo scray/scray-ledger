@@ -26,7 +26,7 @@ createKeyAndCsr() {
 	NEW_CERT_TARGET_PATH=crt_target/$NEW_CERT_COMMON_NAME
 	mkdir -p $NEW_CERT_TARGET_PATH
 	openssl ecparam -name prime256v1 -genkey -noout -out $NEW_CERT_TARGET_PATH/key.pem
-	openssl req -new -sha256 -key $NEW_CERT_TARGET_PATH/key.pem -out $NEW_CERT_TARGET_PATH/user.csr  -subj  "/CN=$NEW_CERT_COMMON_NAME /O=kubernetes.research.dev.seeburger.de /OU=$ORGANIZATIONAL_UNIT"
+	openssl req -new -sha256 -key $NEW_CERT_TARGET_PATH/key.pem -out $NEW_CERT_TARGET_PATH/user.csr  -subj  "/CN=$NEW_CERT_COMMON_NAME/O=kubernetes.research.dev.seeburger.de/OU=$ORGANIZATIONAL_UNIT"
 }
 
 pushCsr() {
