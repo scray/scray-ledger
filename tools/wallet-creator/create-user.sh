@@ -35,7 +35,6 @@ mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME
 mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/signcerts
 mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/tlscacerts
 
-cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/User1@$HOSTNAME/msp/cacerts /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/cacerts/
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/User1@$HOSTNAME/msp/cacerts/* /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/cacerts/
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.key  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/keystore/
 
