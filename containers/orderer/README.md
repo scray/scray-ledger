@@ -5,7 +5,7 @@
 ```
 ORDERER_NAME=orderer
 HOST_NAME=example.com
-cd scray/projects/invoice-hyperledger-fabric/containers/orderer
+cd scray-ledger/containers/orderer/
 ```
 
 
