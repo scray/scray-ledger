@@ -1,0 +1,38 @@
+[
+    {
+        "role": "Buyer",
+        "transactions": [
+            "main.(*SmartContract).ListInvoice",
+            "main.(*SmartContract).ListInvoices",
+            "main.(*SmartContract).ReceivedInvoice",
+            "main.(*SmartContract).ReceivedOrder"
+        ]
+    },
+    {
+        "role": "Seller",
+        "transactions": [
+            "main.(*SmartContract).ListInvoice",
+            "main.(*SmartContract).ListInvoices",
+            "main.(*SmartContract).CreateInvoice",
+            "main.(*SmartContract).TransferInvoice",
+            "main.(*SmartContract).ReceivedPayment"
+        ]
+    },
+    {
+        "role": "Factor",
+        "transactions": [
+            "main.(*SmartContract).ListInvoice",
+            "main.(*SmartContract).ListInvoices",
+            "main.(*SmartContract).TransferInvoice",
+            "main.(*SmartContract).ReceivedPayment"
+        ]
+    },
+    {
+        "role": "TaxInspector",
+        "transactions": [
+            "main.(*SmartContract).ListInvoice",
+            "main.(*SmartContract).ListInvoices",
+            "main.(*SmartContract).TaxReceived"
+        ]
+    }
+]

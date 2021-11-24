@@ -1,0 +1,112 @@
+[
+    {
+        "Key": "asset14",
+        "Record": {
+            "ID": "asset14",
+            "owner": "x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "buyer": "x509::CN=Stephanie.Hoarau@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "hash": -3344848581644188280,
+            "invoiceNumber": "FA-2017-0009",
+            "tax": 0,
+            "netto": 530.75,
+            "countryOrigin": "FR",
+            "countryBuyer": "RE",
+            "status": "",
+            "received": false,
+            "receivedOrder": false,
+            "sold": false,
+            "claimPaid": false,
+            "claimPaidBy": "",
+            "taxExemptionReason": "Exoneration de TVA selon article 262 I du Code general des impots",
+            "taxReceived": false
+        }
+    },
+    {
+        "Key": "asset16",
+        "Record": {
+            "ID": "asset16",
+            "owner": "x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "buyer": "x509::CN=Pedro.Sanchez@babby-2.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-2.kubernetes.research.dev.seeburger.de,O=babby-2.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "hash": -1288978081679803368,
+            "invoiceNumber": "FA-2017-0008",
+            "tax": 0,
+            "netto": 2076.76,
+            "countryOrigin": "FR",
+            "countryBuyer": "ES",
+            "status": "",
+            "received": false,
+            "receivedOrder": false,
+            "sold": false,
+            "claimPaid": false,
+            "claimPaidBy": "",
+            "taxExemptionReason": "French VAT exemption according to articles 262 ter I (for products) and/or 283-2 (for services) of CGI",
+            "taxReceived": false
+        }
+    },
+    {
+        "Key": "asset17",
+        "Record": {
+            "ID": "asset17",
+            "owner": "x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "buyer": "x509::CN=Alexandre.Payet@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "hash": -2923879829837918372,
+            "invoiceNumber": "AV-2017-0005",
+            "tax": -14.99,
+            "netto": -218.48,
+            "countryOrigin": "FR",
+            "countryBuyer": "FR",
+            "status": "",
+            "received": false,
+            "receivedOrder": false,
+            "sold": false,
+            "claimPaid": false,
+            "claimPaidBy": "",
+            "taxExemptionReason": "",
+            "taxReceived": false
+        }
+    },
+    {
+        "Key": "asset3",
+        "Record": {
+            "ID": "asset3",
+            "owner": "x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "buyer": "x509::CN=Alexandre.Payet@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "hash": 1946281448453785039,
+            "invoiceNumber": "AV-2017-0005",
+            "tax": 14.99,
+            "netto": 218.48,
+            "countryOrigin": "FR",
+            "countryBuyer": "FR",
+            "status": "",
+            "received": false,
+            "receivedOrder": false,
+            "sold": false,
+            "claimPaid": false,
+            "claimPaidBy": "",
+            "taxExemptionReason": "",
+            "taxReceived": false
+        }
+    },
+    {
+        "Key": "asset6",
+        "Record": {
+            "ID": "asset6",
+            "owner": "x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "buyer": "x509::CN=Alexandre.Payet@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+            "hash": 8856936673140304143,
+            "invoiceNumber": "FA-2017-0010",
+            "tax": 46.25,
+            "netto": 624.9,
+            "countryOrigin": "FR",
+            "countryBuyer": "FR",
+            "status": "",
+            "received": false,
+            "receivedOrder": false,
+            "sold": false,
+            "claimPaid": false,
+            "claimPaidBy": "",
+            "taxExemptionReason": "",
+            "taxReceived": false
+        }
+    }
+]

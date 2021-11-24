@@ -1,0 +1,40 @@
+[
+    {
+        "name": "(x509::CN=Alexandre.Payet@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "Buyer"
+        ]
+    },
+    {
+        "name": "(x509::CN=Auguste.Boucher@babby-3.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-3.kubernetes.research.dev.seeburger.de,O=babby-3.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "TaxInspector"
+        ]
+    },
+    {
+        "name": "(x509::CN=Emma.Steiner@babby-1.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-1.kubernetes.research.dev.seeburger.de,O=babby-1.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "Factor"
+        ]
+    },
+    {
+        "name": "(x509::CN=Pedro.Sanchez@babby-2.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-2.kubernetes.research.dev.seeburger.de,O=babby-2.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "Buyer",
+            "Seller"
+        ]
+    },
+    {
+        "name": "(x509::CN=Stephanie.Hoarau@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "Buyer"
+        ]
+    },
+    {
+        "name": "(x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "roles": [
+            "Buyer",
+            "Seller"
+        ]
+    }
+]
