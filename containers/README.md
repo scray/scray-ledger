@@ -4,7 +4,7 @@
 
 ```
 git clone https://github.com/scray/scray.git
-cd scray/projects/invoice-hyperledger-fabric/containers
+cd scray-ledger/containers
 kubectl apply -f k8s-hl-fabric-data-share.yaml
 ```
 
