@@ -1,39 +1,38 @@
 [
     {
-        "name": "(x509::CN=Alexandre.Payet@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Alexandre.Payet@majolieboutique.net,OU=admin,O=majolieboutique.net::CN=ca.majolieboutique.net,O=majolieboutique.net,L=Lyon,ST=Auvergne-Rhone-Alpes,C=FR",
         "roles": [
             "Buyer"
         ]
     },
     {
-        "name": "(x509::CN=Auguste.Boucher@babby-3.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-3.kubernetes.research.dev.seeburger.de,O=babby-3.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Auguste.Boucher@lyon-impots.gouv.fr,OU=admin,O=lyon-impots.gouv.fr::CN=ca.impots.gouv.fr,O=lyon-impots.gouv.fr,L=Lyon,ST=Auvergne-Rhone-Alpes,C=FR",
         "roles": [
             "TaxInspector"
         ]
     },
     {
-        "name": "(x509::CN=Emma.Steiner@babby-1.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-1.kubernetes.research.dev.seeburger.de,O=babby-1.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Emma.Steiner@austriafactor.at,OU=admin,O=austriafactor.at::CN=ca.austriafactor.at,O=austriafactor.at,L=Graz,ST=Steiermark,C=AT",
         "roles": [
             "Factor"
         ]
     },
     {
-        "name": "(x509::CN=Pedro.Sanchez@babby-2.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-2.kubernetes.research.dev.seeburger.de,O=babby-2.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Pedro.Sanchez@megustaolive.es,OU=admin,O=megustaolive.es::CN=ca.megustaolive.es,O=megustaolive.es,L=Dos Hermanas,ST=Andalusia,C=ES",
         "roles": [
             "Buyer",
             "Seller"
         ]
     },
     {
-        "name": "(x509::CN=Stephanie.Hoarau@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Stephanie.Hoarau@hotelsaintdenis.re,OU=admin,O=hotelsaintdenis.re::CN=ca.hotelsaintdenis.re,O=hotelsaintdenis.re,L=Saint Denis,ST=Reunion,C=FR",
         "roles": [
             "Buyer"
         ]
     },
     {
-        "name": "(x509::CN=Tony.Dubois@babby-0.kubernetes.research.dev.seeburger.de,OU=admin,O=kubernetes.research.dev.seeburger.de::CN=ca.babby-0.kubernetes.research.dev.seeburger.de,O=babby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DEn,)",
+        "name": "x509::CN=Tony.Dubois@aubonmoulin.fr,OU=admin,O=aubonmoulin.fr::CN=ca.aubonmoulin.fr,O=aubonmoulin.fr,L=Malaucene,ST=Provence-Alpes-Cote d'Azur,C=FR",
         "roles": [
-            "Buyer",
             "Seller"
         ]
     }
