@@ -63,7 +63,7 @@ readParameters "$@"
 
 if [ -z "$SHARED_FS_HOST" ]
 then
-  ""
+  echo "" > /dev/null
 else
   publish
 fi

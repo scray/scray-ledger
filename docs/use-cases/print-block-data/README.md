@@ -36,3 +36,9 @@ kubectl exec --stdin --tty $PEER_POD_NAME -c scray-peer-cli -- /bin/sh \
   /mnt/conf/peer/block-operator.sh fetch --channel $CHANNEL_ID   --block $BLOCK_NUMBER  --publish $SHARED_FS_HOST
 ```
 
+### Path to block content
+
+* Key  
+  ``x.data.data[0].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key``
+* Value  
+  ``x.data.data[0].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].value``
