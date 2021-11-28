@@ -4,7 +4,7 @@
         "Record": {
             "ID": "asset14",
             "owner": "x509::CN=Tony.Dubois@aubonmoulin.fr,OU=admin,O=aubonmoulin.fr::CN=ca.aubonmoulin.fr,O=aubonmoulin.fr,L=Malaucene,ST=Provence-Alpes-Cote d'Azur,C=FR",
-            "buyer": "Stephanie.Hoarau@hotelsaintdenis.re,OU=admin,O=hotelsaintdenis.re::CN=ca.hotelsaintdenis.re,O=hotelsaintdenis.re,L=Saint Denis,ST=Reunion,C=FR",
+            "buyer": "x509::CN=Stephanie.Hoarau@hotelsaintdenis.re,OU=admin,O=hotelsaintdenis.re::CN=ca.hotelsaintdenis.re,O=hotelsaintdenis.re,L=Saint Denis,ST=Reunion,C=FR",
             "hash": -3344848581644188280,
             "invoiceNumber": "FA-2017-0009",
             "tax": 0,
