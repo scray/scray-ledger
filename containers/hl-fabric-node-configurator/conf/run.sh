@@ -39,7 +39,7 @@ dowloadYqBin() {
 createPeerConfig() {
     
     export PATH=~/git/fabric-samples/test-network/fabric-samples/bin:$PATH
-    ./configure_crypto.sh $ORG_NAME $DOMAINE
+    ./configure_crypto.sh --org_name $ORG_NAME --domain $DOMAINE
     cryptogen generate --config=crypto.yaml --output=./organizations
     export FABRIC_CFG_PATH=$PWD
     
