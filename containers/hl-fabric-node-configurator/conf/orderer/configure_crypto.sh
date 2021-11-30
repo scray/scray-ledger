@@ -9,8 +9,13 @@ DEBUG=false
 
 
 yq() {
+  $BASE_PATH/bin/yq-${YQ_VERSON} $1 $2 $3 $4 $5
+}
+
+yq_path() {
   echo $BASE_PATH/bin/yq-${YQ_VERSON} $1 $2 $3 $4 $5
 }
+
 
 # Check if yq exists
 checkYqVersion() {
@@ -53,7 +58,7 @@ customozeConfigFile() {
 	# Add SANS
 	echo "source ../yq_lib.sh" > update_SANS.sh
 	YQ_CHANGE_COMMAND=$(echo \''.OrdererOrgs[0].Specs[0].SANS += '\"$DOMAINE\"\') 
-	echo "../bin/yq  -i eval $YQ_CHANGE_COMMAND crypto-config-orderer.yaml " >> update_SANS.sh
+	echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto-config-orderer.yaml " >> update_SANS.sh
 	chmod u+x update_SANS.sh
 	./update_SANS.sh
 
