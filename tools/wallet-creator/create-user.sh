@@ -5,7 +5,7 @@
 #HOSTNAME="babby-1.kubernetes.research.dev.seeburger.de"
 USER=$1
 HOSTNAME=$2
-HOSTNAME2=$2
+HOSTNAME2=$3
 CN=$USER@$HOSTNAME
 
 /tmp/cert-creator.sh create_csr --common-name $CN
