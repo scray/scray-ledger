@@ -22,18 +22,18 @@ CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk
 openssl x509 -in /tmp/crt_target/$CN/user.crt -out /tmp/crt_target/$CN/user.pem -outform PEM
 
 
-mkdir /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/
-mkdir /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls
+mkdir -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/
+mkdir -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls
 cp  /tmp/crt_target/$CN/key.pem /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.key
 cp  /tmp/crt_target/$CN/user.crt  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.crt
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/User1@$HOSTNAME/tls/ca.crt /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/
 
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/admincerts
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/cacerts
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/keystore
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/signcerts
-mkdir  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/tlscacerts
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/admincerts
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/cacerts
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/keystore
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/signcerts
+mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/tlscacerts
 
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/User1@$HOSTNAME/msp/cacerts/* /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/cacerts/
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.key  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/msp/keystore/
