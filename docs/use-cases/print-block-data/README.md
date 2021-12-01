@@ -3,7 +3,7 @@
 PEER_NAME=peer99
 CHANNEL_NAME=c92
 PEER_POD_NAME=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
-SHARED_FS_HOST=10.11.8.156:30080
+SHARED_FS_HOST=hl-fabric-data-share-service:80
 ```
 
 ### Get channel informations
