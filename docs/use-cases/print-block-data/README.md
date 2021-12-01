@@ -1,7 +1,7 @@
 
 ```bash
 PEER_NAME=peer99
-CHANNEL_ID=c92
+CHANNEL_NAME=c92
 PEER_POD_NAME=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
 SHARED_FS_HOST=10.11.8.156:30080
 ```
@@ -10,7 +10,7 @@ SHARED_FS_HOST=10.11.8.156:30080
 
 ```bash
  kubectl exec --stdin --tty $PEER_POD_NAME -c scray-peer-cli -- /bin/sh \
-  /mnt/conf/peer/block-operator.sh info --channel $CHANNEL_ID 
+  /mnt/conf/peer/block-operator.sh info --channel $CHANNEL_NAME
 ```
 
 Output:  
@@ -19,21 +19,21 @@ Output:
 
 ### Get block as JSON
 
-Fetch newest bock and publish it to http://$SHARED_FS_HOST/blocks/$CHANNEL_ID/$CHANNEL_ID-block-$BLOCK_NUMBER.block.json
+Fetch newest bock and publish it to http://$SHARED_FS_HOST/blocks/$CHANNEL_NAME/$CHANNEL_NAME-block-$BLOCK_NUMBER.block.json
 ```bash
 BLOCK_NUMBER=newest
 kubectl exec --stdin --tty $PEER_POD_NAME -c scray-peer-cli -- /bin/sh \
-  /mnt/conf/peer/block-operator.sh fetch --channel $CHANNEL_ID   --block $BLOCK_NUMBER  --publish $SHARED_FS_HOST
+  /mnt/conf/peer/block-operator.sh fetch --channel $CHANNEL_NAME   --block $BLOCK_NUMBER  --publish $SHARED_FS_HOST
 ```
 
 Output:  
-``$CHANNEL_ID-block-$BLOCK_NUMBER.block.json``
+``$CHANNEL_NAME-block-$BLOCK_NUMBER.block.json``
 
-Fetch bock 5 and publish it to http://$SHARED_FS_HOST/blocks/$CHANNEL_ID/$CHANNEL_ID-block-$BLOCK_NUMBER.block.json
+Fetch bock 5 and publish it to http://$SHARED_FS_HOST/blocks/$CHANNEL_NAME/$CHANNEL_NAME-block-$BLOCK_NUMBER.block.json
 ```bash
 BLOCK_NUMBER=5
 kubectl exec --stdin --tty $PEER_POD_NAME -c scray-peer-cli -- /bin/sh \
-  /mnt/conf/peer/block-operator.sh fetch --channel $CHANNEL_ID   --block $BLOCK_NUMBER  --publish $SHARED_FS_HOST
+  /mnt/conf/peer/block-operator.sh fetch --channel $CHANNEL_NAME   --block $BLOCK_NUMBER  --publish $SHARED_FS_HOST
 ```
 
 ### Path to block content
