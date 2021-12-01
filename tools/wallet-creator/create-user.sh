@@ -41,5 +41,5 @@ cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls
 
 cp /tmp/crt_target/$CN/user.pem   /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/signcerts/$CN-cert.pem
 
-cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME2/users/User1@$HOSTNAME2/msp/tlscacerts/tlsca.$HOSTNAME-cert.pem /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/tlscacerts
+cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME2/users/User1@$HOSTNAME2/msp/tlscacerts/tlsca.$HOSTNAME2-cert.pem /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/tlscacerts
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME2/users/User1@$HOSTNAME2/msp/config.yaml /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/
