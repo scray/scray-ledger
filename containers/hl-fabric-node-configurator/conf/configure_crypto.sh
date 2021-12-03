@@ -1,9 +1,5 @@
 #!/bin/bash
-NEW_ORG=$1
-DOMAIN=$2
-ORG_CRYPTO_CONFIG_FILE=crypto.yaml.org
-CRYPTO_CONFIG_FILE="crypto.yaml"
-BASE_PATH=$PWD
+
 
 yq() {
   $BASE_PATH/bin/yq $1 $2 $3 $4 $5
@@ -18,23 +14,90 @@ dowloadYqBin() {
   if [[ ! -f "./bin/yq" ]]
   then
     echo "yq does not exists"
-    echo "download linux_amd64 yq binary"
-    
-    mkdir bin
-    curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 -o ./bin/yq
-    chmod u+x ./bin/yq
+    if [ "$OSTYPE" == "linux-gnu" ]
+    then
+      echo "download linux_amd64 yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 -o ./bin/yq
+      chmod u+x ./bin/yq
+    elif [ "$OSTYPE" == "msys" ]
+    then
+      echo "download yq_windows_amd64  yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_windows_amd64.exe -o ./bin/yq
+      chmod u+x ./bin/yq
+    fi
   fi
 }
 
+
+readParameters()
+{
+  ORG_CRYPTO_CONFIG_FILE=crypto.yaml.org
+  CRYPTO_CONFIG_FILE="crypto.yaml"
+  BASE_PATH=$PWD
+
+
+  while [ "$1" != "" ]; do
+      case $1 in
+           --org_name)	shift
+                        NEW_ORG=$1
+                        ;;
+          --domain)  shift
+                      DOMAIN=$1
+                      ;;
+          --ca_country )  shift
+                          COUNTRY=$1
+                          ;;
+          --ca_province ) shift
+                          PROVICE=$1
+                          ;;
+          --ca_locality)	shift
+                  LOCALITY=$1
+                            ;;
+          --upload) shift
+            CURL_UPLOAD_URL=$1
+                          ;;
+      esac
+      shift
+  done
+}
+
+readParameters "$@"
+
+
+# Set default parameters for some parameters
+
+if [ -z "$COUNTRY" ]
+then
+      COUNTRY="DE"
+fi
+
+if [ -z "$PROVICE" ]
+then
+      PROVICE="Baden"
+fi
+
+if [ -z "$LOCALITY" ]
+then
+      LOCALITY="Bretten"
+fi
+
+
 checkYqVersion
 
-cp $ORG_CRYPTO_CONFIG_FILE $CRYPTO_CONFIG_FILE 
+cp $ORG_CRYPTO_CONFIG_FILE $CRYPTO_CONFIG_FILE
 echo $CRYPTO_CONFIG_FILE
 echo $ORG_CRYPTO_CONFIG_FILE
+echo Country:  $COUNTRY
+echo Province: $PROVICE
+echo Locality: $LOCALITY
 
 # Update name
-yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].Name" $NEW_ORG 
-# Update Domain 
+yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].Name" $NEW_ORG
+# Update Domain
 yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].Domain" $DOMAIN
 
-
+yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Country"  $COUNTRY
+yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Province" $PROVICE
+yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Locality" $LOCALITY

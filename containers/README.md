@@ -35,6 +35,9 @@ kubectl create configmap hl-fabric-peer-$PEER_NAME \
  --from-literal=hostname=$PEER_HOST_NAME \
  --from-literal=org_name=$PEER_NAME \
  --from-literal=data_share=hl-fabric-data-share-service:80 \
+ --from-literal=ca_country=DE \
+ --from-literal=ca_province=Baden \
+ --from-literal=ca_locality=Bretten \
  --from-literal=CORE_PEER_ADDRESS=peer0.$PEER_HOST_NAME:$PEER_LISTEN_PORT \
  --from-literal=CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.$PEER_HOST_NAME:$GOSSIP_PORT \
  --from-literal=CORE_PEER_LOCALMSPID=${PEER_NAME}MSP

@@ -39,11 +39,11 @@ dowloadYqBin() {
 createPeerConfig() {
     
     export PATH=~/git/fabric-samples/test-network/fabric-samples/bin:$PATH
-    ./configure_crypto.sh  $ORG_NAME $DOMAINE
+    ./configure_crypto.sh --org_name $ORG_NAME --domain $DOMAINE --ca_country "$CA_COUNTRY" --ca_province "$CA_PROVINCE" --ca_locality "$CA_LOCALITY"
     cryptogen generate --config=crypto.yaml --output=./organizations
     export FABRIC_CFG_PATH=$PWD
-    
-    ./configure_configtx.sh $ORG_NAME $DOMAINE
+
+    ./configure_configtx.sh  $ORG_NAME  $DOMAINE
     configtxgen -configPath $PWD  -printOrg ${ORG_NAME}MSP > organizations/peerOrganizations/$DOMAINE/${ORG_NAME}.json
     zip -q -r $ORG_NAME.zip organizations/
     
@@ -73,14 +73,23 @@ while [ "$1" != "" ]; do
         -o | --organization )   shift
                                 ORG_NAME=$1
                                 ;;
-        -d | --domain )   	shift
+        -d | --domain )    shift
 	       			DOMAINE=$1	
                                 ;;
-        -t | --node-type )         shift
-                                NODE_TYPE=$1
+        --ca_country )   	  shift
+                  CA_COUNTRY=$1
+                                ;;
+        --ca_province)   	  shift
+                  CA_PROVINCE=$1
+                                ;;
+        --ca_locality)   	  shift
+                  CA_LOCALITY=$1
+                                ;;
+        -t | --node-type )  shift
+                  NODE_TYPE=$1
                                 ;;	
-        -s | --data-share )     shift
-                                SHARED_FS_HOST=$1
+        -s | --data-share ) shift
+                  SHARED_FS_HOST=$1
                                 ;;				
         -h | --help )		
                  		usage
