@@ -160,8 +160,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: hl-fabric-peer
-                  key: data_share     
-                  
+                  key: data_share
+            - name: CA_COUNTRY
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-peer
+                  key: ca_country
+            - name: CA_PROVINCE
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-peer
+                  key: ca_province
+            - name: CA_LOCALITY
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-peer
+                  key: ca_locality
           # command: ['/bin/sh', '-c']
           # args: ['cd /mnt/hl-fabric-conf/ && wget https://mft.seeburger.de:443/portal-seefx/~public/ZDEwZTlmMTEtYjg2NC00NWVlLWE1YWEtNWI2OGZhM2NjMDg2?download -O config.zip &&  unzip config.zip']
           volumeMounts:
