@@ -450,6 +450,10 @@ func (s *SmartContract) ReceivedInvoice(ctx contractapi.TransactionContextInterf
 		return err
 	}
 
+	if asset.Received == true {
+		return nil
+	}
+
 	asset.Received = true
 
 	return LocalStoreAsset(ctx, id, asset)
@@ -461,6 +465,10 @@ func (s *SmartContract) ReceivedOrder(ctx contractapi.TransactionContextInterfac
 
 	if err != nil {
 		return err
+	}
+
+	if asset.ReceivedOrder == true {
+		return nil
 	}
 
 	asset.ReceivedOrder = true
@@ -476,6 +484,10 @@ func (s *SmartContract) ReceivedPayment(ctx contractapi.TransactionContextInterf
 		return err
 	}
 
+	if asset.ClaimPaid == true {
+		return nil
+	}
+
 	asset.ClaimPaid = true
 	asset.ClaimPaidBy = payer
 
@@ -488,6 +500,10 @@ func (s *SmartContract) TaxReceived(ctx contractapi.TransactionContextInterface,
 
 	if err != nil {
 		return err
+	}
+
+	if asset.TaxReceived == true {
+		return nil
 	}
 
 	asset.TaxReceived = true
@@ -704,11 +720,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	if error != nil {
 		print("error")
 		result.Name = name
-	} else {
-		print("hi", result.Name, result.Roles)
 	}
-
-	print("OUT", result.Name, result.Roles)
 
 	if !contains(result.Roles, role) {
 		result.Roles = append(result.Roles, role)
