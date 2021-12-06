@@ -538,6 +538,7 @@ func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterf
 	}
 
 	asset.Owner = newOwner
+	asset.Sold = true
 	assetJSON, err := json.Marshal(asset)
 	if err != nil {
 		return err
