@@ -124,8 +124,9 @@ type RoleResult struct {
 }
 
 type RoleResult2 struct {
-	Name  string   `json:"name"`
-	Roles []string `json:"roles"`
+	Name         string   `json:"name"`
+	Roles        []string `json:"roles"`
+	TaxInspector string   `json:"taxInspector"`
 }
 
 // QueryResult structure used for handling result of query
@@ -713,7 +714,7 @@ func LocalStoreRoles(ctx contractapi.TransactionContextInterface, name string, r
 	return nil
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string) error {
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string, taxInspector string) error {
 
 	var result, error = LocalGetRoles(ctx, name)
 
@@ -726,6 +727,8 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 		result.Roles = append(result.Roles, role)
 		LocalStoreRoles(ctx, name, result)
 	}
+
+	result.TaxInspector = taxInspector
 
 	/* roles[name] = append(roles[name], String2Role(role))
 	println(name, roles[name]) */
