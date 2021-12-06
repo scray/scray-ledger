@@ -525,6 +525,8 @@ func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterf
 		return err
 	}
 
+	print("TransferInvoice", newOwner)
+
 	// Get ID of submitting client identity
 	clientID, err := s.GetSubmittingClientIdentity(ctx)
 	if err != nil {
