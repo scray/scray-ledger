@@ -647,7 +647,7 @@ func (s *SmartContract) GetAllRoles(ctx contractapi.TransactionContextInterface)
 			return nil, err
 		}
 
-		print("GetAllRoles", queryResponse.Key)
+		//print("GetAllRoles", queryResponse.Key)
 
 		if !strings.HasPrefix(queryResponse.Key, "roles_") {
 			continue
@@ -721,6 +721,7 @@ func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, 
 	if error != nil {
 		print("error")
 		result.Name = name
+		result.TaxInspector = taxInspector
 	}
 
 	if !contains(result.Roles, role) {
