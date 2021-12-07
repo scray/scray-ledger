@@ -580,6 +580,8 @@ func (s *SmartContract) GetSubmittingClientIdentity(ctx contractapi.TransactionC
 func LocalGetRoles(ctx contractapi.TransactionContextInterface, name string) (RoleResult2, error) {
 	// trial
 	var id = "roles_" + name
+
+	print(id)
 	rolesJSON, err := ctx.GetStub().GetState(id)
 	var roles1 RoleResult2
 
@@ -608,24 +610,6 @@ func (s *SmartContract) GetRoles(ctx contractapi.TransactionContextInterface) (R
 
 	return LocalGetRoles(ctx, clientID)
 
-	/* var result RoleResult2
-	var rolesStringList []string
-
-
-	clientID, err := s.GetSubmittingClientIdentity(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	var name = clientID
-	for _, element := range roles[name] {
-		rolesStringList = append(rolesStringList, Role2String(element))
-	}
-
-	result.Name = name
-	result.Roles = rolesStringList
-
-	return &result, nil */
 }
 
 // GetAllAssets returns all assets found in world state
