@@ -311,7 +311,7 @@ func (s *SmartContract) ListInvoice(ctx contractapi.TransactionContextInterface,
 		return &asset, nil
 	} else {
 		var role RoleResult2
-		role, err = LocalGetRoles(ctx, clientID)
+		role, err = LocalGetRoles(ctx, asset.Owner)
 
 		if clientID == role.TaxInspector {
 			return &asset, nil
