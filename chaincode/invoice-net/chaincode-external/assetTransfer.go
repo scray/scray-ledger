@@ -310,6 +310,13 @@ func (s *SmartContract) ListInvoice(ctx contractapi.TransactionContextInterface,
 	if clientID == asset.Owner || clientID == asset.Buyer {
 		return &asset, nil
 	} else {
+		var role RoleResult2
+		role, err = LocalGetRoles(ctx, clientID)
+
+		if clientID == role.TaxInspector {
+			return &asset, nil
+		}
+
 		return nil, fmt.Errorf("Only InvoiceOwner or ProductBuyer are allow to read this invoice ")
 	}
 }
@@ -349,7 +356,7 @@ func (s *SmartContract) ListInvoices(ctx contractapi.TransactionContextInterface
 			return nil, err
 		}
 
-		print("ListInvoices: ", queryResponse.Key, " : ", clientID, "-->", asset.Owner, "-->", asset.Buyer, "\n")
+		//print("ListInvoices: ", queryResponse.Key, " : ", clientID, "-->", asset.Owner, "-->", asset.Buyer, "\n")
 
 		if clientID == asset.Owner || clientID == asset.Buyer {
 			print("ListInvoices: ", queryResponse.Key, "found \n")
