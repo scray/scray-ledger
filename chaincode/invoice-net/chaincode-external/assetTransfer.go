@@ -462,9 +462,18 @@ func (s *SmartContract) ReceivedInvoice(ctx contractapi.TransactionContextInterf
 		return nil
 	}
 
-	asset.Received = true
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
 
-	return LocalStoreAsset(ctx, id, asset)
+	if clientID == asset.Buyer {
+		asset.Received = true
+		return LocalStoreAsset(ctx, id, asset)
+	}
+
+	return fmt.Errorf("Only ProductBuyer are allowed to update the state")
 }
 
 func (s *SmartContract) ReceivedOrder(ctx contractapi.TransactionContextInterface, id string) error {
@@ -479,9 +488,18 @@ func (s *SmartContract) ReceivedOrder(ctx contractapi.TransactionContextInterfac
 		return nil
 	}
 
-	asset.ReceivedOrder = true
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
 
-	return LocalStoreAsset(ctx, id, asset)
+	if clientID == asset.Buyer {
+		asset.ReceivedOrder = true
+		return LocalStoreAsset(ctx, id, asset)
+	}
+
+	return fmt.Errorf("Only ProductBuyer are allowed to update the state")
 }
 
 func (s *SmartContract) ReceivedPayment(ctx contractapi.TransactionContextInterface, id string, payer string) error {
@@ -496,10 +514,19 @@ func (s *SmartContract) ReceivedPayment(ctx contractapi.TransactionContextInterf
 		return nil
 	}
 
-	asset.ClaimPaid = true
-	asset.ClaimPaidBy = payer
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
 
-	return LocalStoreAsset(ctx, id, asset)
+	if clientID == asset.Owner {
+		asset.ClaimPaid = true
+		asset.ClaimPaidBy = payer
+		return LocalStoreAsset(ctx, id, asset)
+	}
+
+	return fmt.Errorf("Only invoice owners are allowed to update the state")
 }
 
 func (s *SmartContract) TaxReceived(ctx contractapi.TransactionContextInterface, id string) error {
@@ -514,9 +541,21 @@ func (s *SmartContract) TaxReceived(ctx contractapi.TransactionContextInterface,
 		return nil
 	}
 
-	asset.TaxReceived = true
+	var role RoleResult2
+	role, err = LocalGetRoles(ctx, asset.Owner)
 
-	return LocalStoreAsset(ctx, id, asset)
+	// Get ID of submitting client identity
+	clientID, err := s.GetSubmittingClientIdentity(ctx)
+	if err != nil {
+		return err
+	}
+
+	if clientID == role.TaxInspector {
+		asset.TaxReceived = true
+		return LocalStoreAsset(ctx, id, asset)
+	}
+
+	return fmt.Errorf("Only the tax inspector is allowed to update the state")
 }
 
 // DeleteAsset deletes an given asset from the world state.
@@ -559,6 +598,10 @@ func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterf
 
 	if clientID != asset.Owner {
 		return fmt.Errorf("submitting client not authorized to send invoice")
+	}
+
+	if clientID == newOwner {
+		return fmt.Errorf("submitting client is the same as new owner")
 	}
 
 	asset.Owner = newOwner
