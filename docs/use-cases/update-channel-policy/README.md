@@ -12,7 +12,7 @@ PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.na
 Approve change on all peers
 ```bash
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
-    /mnt/conf/update-sig-policy.sh \
+    /mnt/conf/peer/update-sig-policy.sh \
         $ORDERER_HOST \
         $ORDERER_PORT \
         $CHANNEL_NAME \
