@@ -561,6 +561,10 @@ func (s *SmartContract) TransferInvoice(ctx contractapi.TransactionContextInterf
 		return fmt.Errorf("submitting client not authorized to send invoice")
 	}
 
+	if clientID == newOwner {
+		return fmt.Errorf("submitting client is the same as new owner")
+	}
+
 	asset.Owner = newOwner
 	asset.Sold = true
 	assetJSON, err := json.Marshal(asset)
