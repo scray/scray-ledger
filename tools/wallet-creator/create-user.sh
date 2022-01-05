@@ -37,7 +37,7 @@ mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/sign
 mkdir  -p /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/tlscacerts
 
 cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME2/users/User1@$HOSTNAME2/msp/cacerts/* /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/cacerts/
-cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.key  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/keystore/
+cp /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$USER@$HOSTNAME/tls/client.key  /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/keystore/priv_sk
 
 cp /tmp/crt_target/$CN/user.pem   /mnt/conf/organizations/peerOrganizations/$HOSTNAME/users/$CN/msp/signcerts/$CN-cert.pem
 
