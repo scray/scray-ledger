@@ -5,7 +5,7 @@ metadata:
   labels:
     run: hl-fabric-data-share-service
 spec:
-  type: NodePort
+  type: LoadBalancer 
   selector:
     app: hl-fabric-data-share
   ports:
