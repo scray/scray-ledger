@@ -15,6 +15,7 @@
   az group create --name Scray-Blockchain-Test --location "eastus"
   az deployment group create   --name Scray-Blockchain-Test   --resource-group Scray-Blockchain-Test   --template-file aks-template.json
   ```
+ 
 
 ## Access cluster 
 * Get kubernetes credentials
@@ -25,3 +26,9 @@
   ```
   kubectl apply -f k8s-ds-cloud-service.yaml
   ```
+  
+## Clean
+
+```
+az group delete  --name Scray-Blockchain-Test
+```
