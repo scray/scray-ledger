@@ -59,8 +59,6 @@ spec:
               value: "/var/hyperledger/orderer/tls/server.key"
             - name: ORDERER_GENERAL_CLUSTER_ROOTCAS
               value: "[/var/hyperledger/orderer/tls/ca.crt]"
-            - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
-              value: "/var/hyperledger/orderer/tls/server.crt"
             - name: CONFIGTX_ORDERER_ADDRESSES
           volumeMounts:
             - name: orderer-conf

@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hl-fabric-data-share-service
+  name: hl-fabric-data-share-service3
   labels:
-    run: hl-fabric-data-share-service
+    run: hl-fabric-data-share-service3
 spec:
   type: LoadBalancer 
   selector:
     app: hl-fabric-data-share
   ports:
     - name: webdav-port
-      port: 80
       protocol: TCP
+      port: 80
