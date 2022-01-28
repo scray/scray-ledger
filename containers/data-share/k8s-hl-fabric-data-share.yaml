@@ -30,4 +30,5 @@ spec:
             mountPath: /var/lib/dav
       volumes:
       - name: webdav-data
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: scray-ledger-data-share-pv-claim 
