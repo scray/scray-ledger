@@ -184,7 +184,20 @@ spec:
         - name: peer-conf
           emptyDir: {}
         - name: peer0-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: peer0-pv-claim
         - name: dockersocket
           hostPath:
             path: /var/run/docker.sock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peer0-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
