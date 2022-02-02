@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PEER_NAME=peer0.scray.org
+PEER_NAME=
 LOCAL_FILE_PATH=/tmp/
 BASE_PATH=$PWD
 
@@ -48,7 +48,7 @@ setValuesInLocalFile() {
 
 usage()
 {
-    echo "usage: Create peer K8s configuration [[[-n ] [-i]] | [-h]]"
+    echo "usage: Create local volum with a defined name and location "
 }
 
 
@@ -56,12 +56,9 @@ while [ "$1" != "" ]; do
     case $1 in
         -n | --name )   shift
 				PEER_NAME=$1
-				checkYqVersion
-				createEnvForNewConf
-				setValuesInLocalFile
                                 ;;
         -p | --local-path ) shift
-          LOCAL_FILE_PATH=$1
+          			LOCAL_FILE_PATH=$1
         ;;
         -i | --inplace )   	shift
 	       			PEER_NAME=$1
@@ -79,6 +76,12 @@ while [ "$1" != "" ]; do
     shift
 done
 
-checkYqVersion
-createEnvForNewConf
-setValuesInLocalFile
+if [ -z "$PEER_NAME" ]
+then
+ echo "peer name is missing" ${usage}
+ exit 1
+else
+  checkYqVersion
+  createEnvForNewConf
+  setValuesInLocalFile
+fi
