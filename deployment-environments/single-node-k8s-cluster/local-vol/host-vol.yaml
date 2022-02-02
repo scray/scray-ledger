@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/k8s-vol/"
+    path: "/mnt/vol"
