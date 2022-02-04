@@ -182,7 +182,8 @@ spec:
               mountPath: /mnt/peer-conf/
       volumes:
         - name: peer-conf
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: peer0-conf-pv-claim
         - name: peer0-data
           persistentVolumeClaim:
             claimName: peer0-pv-claim
@@ -194,10 +195,23 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: peer0-pv-claim
+  storageClassName: manual
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peer0-pv-claim
 spec:
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 200Mi
+      storage: 5Mi
+
