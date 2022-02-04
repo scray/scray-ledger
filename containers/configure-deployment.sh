@@ -12,7 +12,7 @@ createEnvForNewConf() {
 }
 
 yq() {
-  $BASE_PATH/bin/yq $1 $2 $3 $4 $5
+  $BASE_PATH/bin/yq $1 $2 $3 $4 $5 $6 $7 $8 $9
 }
 
 # Check if yq exists
