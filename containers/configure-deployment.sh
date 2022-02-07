@@ -65,7 +65,6 @@ setValuesInLocalFile() {
   yq  w -i k8s-peer.yaml "spec.template.spec.volumes(name==peer-conf).persistentVolumeClaim.claimName" $PEER_NAME-conf-pv-claim
   yq  w -i -d2  k8s-peer.yaml "metadata.name" $PEER_NAME-conf-pv-claim
 
-
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==scray-peer-cli).env(name==CORE_PEER_ID).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==scray-peer-cli).env(name==CORE_PEER_ADDRESS).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==scray-peer-cli).env(name==CORE_PEER_CHAINCODEADDRESS).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME
