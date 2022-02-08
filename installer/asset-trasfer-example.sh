@@ -151,10 +151,7 @@ while [ "$1" != "" ]; do
 		"$WORKDIR/commands/create-peer.sh" "${@}" 
 	;;
         create-channel) shift
-		CHANNEL_NAME=$1
-		shift
-	       	echo CHANNEL $CHANNEL_NAME	
-		createChannel $CHANNEL_NAME
+	        "$WORKDIR/commands/create-channel.sh" "${@}"
 	;;
 	add-peer) shift
 		PEER_NAME=$1
