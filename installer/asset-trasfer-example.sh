@@ -46,18 +46,6 @@ createOrderer() {
 
 }
 
-function createChannel() {
-# Create channel
-
-CHANNEL_NAME=$1
-
-ORDERER_POD=$(kubectl get pod -l app=orderer-org1-scray-org -o jsonpath="{.items[0].metadata.name}")
-ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
-ORDERER_PORT=30081
-kubectl exec --stdin --tty $ORDERER_POD -c scray-orderer-cli  -- /bin/sh /mnt/conf/orderer/scripts/create_channel.sh $CHANNEL_NAME orderer.example.com $ORDERER_PORT 
-# kubectl exec -i $ORDERER_POD -c scray-orderer-cli  -- //bin/bash //mnt/conf/orderer/scripts/create_channel.sh $CHANNEL_NAME orderer.example.com $ORDERER_PORT $EXT_PEER_IP $PEER_HOST_NAME
-
-}
 
 function addPeer() {
 
@@ -78,9 +66,13 @@ PEER_POD_NAME=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metada
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_PORT=30081
 PEER_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
+kubectl exec --stdin --tty $PEER_PO
+
 kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/conf/peer_join.sh $ORDERER_IP  $ORDERER_HOSTNAME $ORDERER_PORT $CHANNEL_NAME $SHARED_FS_HOST $EXT_PEER_IP 
 
+}
 
+function startExternalChaincode() {
 
 # Start external chaincode
 
@@ -128,7 +120,6 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 
 run() {
   $1
-  echo FFF
   if [ $? -ne 0 ]; then
     fatal "Error occured while executing command "
     exit 1
@@ -154,10 +145,7 @@ while [ "$1" != "" ]; do
 	        "$WORKDIR/commands/create-channel.sh" "${@}"
 	;;
 	add-peer) shift
-		PEER_NAME=$1
-		CHANNEL_NAME=$2
-		shift 2
-		addPeer $PEER_NAME $CHANNEL_NAME
+		"$WORKDIR/commands/add-peer.sh" "${@}"
 	;;
         * )                     # usage
                                 exit 1
