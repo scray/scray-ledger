@@ -68,7 +68,7 @@ while [ "$1" != "" ]; do
         -h | --help )           usage
                                 exit
                                 ;;
-	      -c| --check )		checkYqVersion
+      -c| --check )		checkYqVersion
 				;;
         * )                     usage
                                 exit 1
@@ -84,4 +84,6 @@ else
   checkYqVersion
   createEnvForNewConf
   setValuesInLocalFile
+  cd $BASE_PATH
+  kubectl apply -f target/$PEER_NAME-vol/host-vol.yaml
 fi

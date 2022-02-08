@@ -141,6 +141,32 @@ spec:
               mountPath: /mnt/peer-conf/
       volumes:
         - name: orderer-conf
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: orderer0-conf-pv-claim
         - name: orderer-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: orderer0-data-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orderer0-conf-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orderer0-data-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
