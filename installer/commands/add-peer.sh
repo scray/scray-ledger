@@ -24,8 +24,6 @@ function addPeer() {
   kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/conf/peer_join.sh $ORDERER_IP  $ORDERER_HOSTNAME $ORDERER_PORT $CHANNEL_NAME $SHARED_FS_HOST $EXT_PEER_IP
 }
 
-
-
 while [ "$1" != "" ]; do
     case $1 in
         --peer-name )   shift
@@ -48,7 +46,7 @@ then
  exit 1
 elif [ -z "$CHANNEL_NAME" ]
 then
-  echo "orderer name is missing" ${usage}
+  echo "channel name is missing" ${usage}
   exit 1
 else
  addPeer $PEER_NAME $CHANNEL_NAME $SHARED_FS_HOST 
