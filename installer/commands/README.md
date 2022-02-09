@@ -8,3 +8,7 @@
 ```bash
 ./install-chaincode.sh --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
 ```
+
+```bash
+./deploy-chaincode.sh --data-share 10.15.130.111
+```

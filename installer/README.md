@@ -20,7 +20,7 @@ CHANNEL_NAME=channel-1
 
 ### Add peer to channel
 ```bash
-PEER_NAME=peer403
+PEER_NAME=peer401
 CHANNEL_NAME=channel-1
 ```
 
@@ -28,9 +28,17 @@ CHANNEL_NAME=channel-1
 ./asset-trasfer-example.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
 ```
 
+### Deploy chaincode
+```bash
+DATA_SHARE=10.15.130.111
+```
+```bash
+./asset-trasfer-example.sh deploy-chaincode --data-share $DATA_SHARE
+```
+
 ### Install example-net chaincode on channel
 ```bash
-PEER_NAME=peer403
+PEER_NAME=peer401
 CHANNEL_NAME=channel-1
 ```
 
