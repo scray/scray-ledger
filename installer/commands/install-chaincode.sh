@@ -20,7 +20,7 @@ ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 
 CC_LABEL=basic_1.0
-PKGID=basic_1.0:ee12ea689d8dfd99d62b4ffe7f33ab8a10cd5a949fbf5c26199b851644f941ed
+PKGID=basic_1.0:2102539c8af4541532cce7bb776e3bc980a6e717e7144199a08c43ae8148a42e
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
     /mnt/conf/install_and_approve_cc.sh \

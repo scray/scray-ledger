@@ -1,6 +1,9 @@
-SHARED_FS=hl-fabric-data-share-service:80
+#!/bin/sh
 
-function deploy() {
+SHARED_FS=hl-fabric-data-share-service:80
+WORKDIR=$(cd $(dirname $0) && pwd)
+
+deploy() {
 
 	SHARED_FS=$1
 
@@ -21,27 +24,33 @@ kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/creat
 
 }
 
-function startChaincode() {
+startChaincode() {
 
 SHARED_FS=$1
 
 	# Get configuration
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
-
 SHARED_FS_USER=scray
 SHARED_FS_PW=scray
 PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
-PKGID=basic_1.0:ee12ea689d8dfd99d62b4ffe7f33ab8a10cd5a949fbf5c26199b851644f941ed
-
+echo $PKGID
 	kubectl delete configmap invoice-chaincode-external
 	kubectl create configmap invoice-chaincode-external \
 		 --from-literal=chaincode_id=$PKGID
 
-	kubectl apply -f ../../chaincode/chaincode-external/k8s-external-chaincode.yaml
+	kubectl apply -f $WORKDIR/../../chaincode/chaincode-external/k8s-external-chaincode.yaml
 
 }
 
-deploy $SHARED_FS_HOST
-startChaincode $SHARED_FS
+while [ "$1" != "" ]; do
+    case $1 in
+        --data-share )   shift
+ 	   SHARED_FS=$1
+	;;
+    esac
+    shift
+done
 
+deploy $SHARED_FS
+startChaincode $SHARED_FS

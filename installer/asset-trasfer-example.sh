@@ -147,6 +147,12 @@ while [ "$1" != "" ]; do
 	add-peer) shift
 		"$WORKDIR/commands/add-peer.sh" "${@}"
 	;;
+	deploy-chaincode) shift
+		"$WORKDIR/commands/deploy-chaincode.sh" "${@}"
+	;;
+	install-chaincode) shift
+		"$WORKDIR/commands/install-chaincode.sh" "${@}"
+	;;
         * )                     # usage
                                 exit 1
     esac
