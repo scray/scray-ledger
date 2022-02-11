@@ -5,6 +5,9 @@ function installChaincode() {
   CHANNEL_NAME=$2
   SHARED_FS=$3
 
+  SHARED_FS_USER=scray
+  SHARED_FS_PW=scray
+
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 
 ORDERER_NAME=orderer.example.com
@@ -20,7 +23,7 @@ ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 
 CC_LABEL=basic_1.0
-PKGID=basic_1.0:2102539c8af4541532cce7bb776e3bc980a6e717e7144199a08c43ae8148a42e
+PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
     /mnt/conf/install_and_approve_cc.sh \
@@ -45,7 +48,7 @@ while [ "$1" != "" ]; do
         --channel-name )   shift
            CHANNEL_NAME=$1
 	;;
-        --share )   shift
+        --data-share )   shift
 	   SHARED_FS=$1
         ;;
 
