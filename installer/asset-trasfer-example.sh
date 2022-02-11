@@ -47,29 +47,34 @@ createOrderer() {
 }
 
 
-function addPeer() {
+initAndRead() {
+  PEER_NAME=peer-$RANDOM
+  SHARED_FS=$1
+  CC_HOSTNAME=asset-transfer-basic.org1.example.com
+  CC_LABEL=basic_1.0
+  SHARED_FS_USER=scray
+  SHARED_FS_PW=scray
+  CHANNEL_NAME=channel-$RANDOM
 
-	PEER_NAME=$1
-	CHANNEL_NAME=$2
+  echo "Create peer $PEER_NAME"
+  ./asset-trasfer-example.sh create-peer -n $PEER_NAME
+  echo "Create channel $CHANNEL_NAME"
+  ./asset-trasfer-example.sh create-channel --name $CHANNEL_NAME
 
-# Add peer to channel
+  sleep 20s
+  echo "Add peer $PEER_NAME to channel $CHANNEL_NAME"
+  ./asset-trasfer-example.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
+ 
+ sleep 15s 
+  echo "Deploy chaincode "
+  invoice-chaincode-external
+  ./asset-trasfer-example.sh deploy-chaincode --data-share $SHARED_FS
+  echo "Install chaincode on peer $PEER_NAME"
+  ./asset-trasfer-example.sh install-chaincode --peer-name $PEER_NAME --channel-name $CHANNEL_NAME --data-share $SHARED_FS
 
-PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de 
-EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
-ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
-ORDERER_HOSTNAME=orderer.example.com 
-ORDERER_PORT=30081
-ORDERER_POD=$(kubectl get pod -l app=orderer-org1-scray-org -o jsonpath="{.items[0].metadata.name}")
-kubectl exec --stdin --tty $ORDERER_POD -c scray-orderer-cli  -- /bin/sh /mnt/conf/orderer/scripts/inform_existing_nodes.sh $ORDERER_IP $CHANNEL_NAME $PEER_NAME $SHARED_FS_HOST $EXT_PEER_IP $PEER_HOST_NAME 
 
-PEER_POD_NAME=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
-ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
-ORDERER_PORT=30081
-PEER_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
-kubectl exec --stdin --tty $PEER_PO
-
-kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/conf/peer_join.sh $ORDERER_IP  $ORDERER_HOSTNAME $ORDERER_PORT $CHANNEL_NAME $SHARED_FS_HOST $EXT_PEER_IP 
-
+  PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
+  $WORKDIR/commands/execute-example-interactions.sh --channel-name $CHANNEL_NAME --peer-name $PEER_NAME --package-id $PKGID
 }
 
 function startExternalChaincode() {
@@ -152,6 +157,9 @@ while [ "$1" != "" ]; do
 	;;
 	install-chaincode) shift
 		"$WORKDIR/commands/install-chaincode.sh" "${@}"
+	;;
+	setup-example-ledger) shift
+		initAndRead $1
 	;;
         * )                     # usage
                                 exit 1
