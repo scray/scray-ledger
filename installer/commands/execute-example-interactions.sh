@@ -24,7 +24,6 @@ while [ "$1" != "" ]; do
 	;;
 	--package-id )  shift
 	  PKGID=$1
-	  echo FFFFFF $PKGID
 	;;
     esac
     shift

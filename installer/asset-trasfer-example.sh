@@ -61,13 +61,12 @@ initAndRead() {
   echo "Create channel $CHANNEL_NAME"
   ./asset-trasfer-example.sh create-channel --name $CHANNEL_NAME
 
-  sleep 20s
+  sleep 10s
   echo "Add peer $PEER_NAME to channel $CHANNEL_NAME"
   ./asset-trasfer-example.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
  
- sleep 15s 
+ sleep 10s
   echo "Deploy chaincode "
-  invoice-chaincode-external
   ./asset-trasfer-example.sh deploy-chaincode --data-share $SHARED_FS
   echo "Install chaincode on peer $PEER_NAME"
   ./asset-trasfer-example.sh install-chaincode --peer-name $PEER_NAME --channel-name $CHANNEL_NAME --data-share $SHARED_FS
