@@ -28,6 +28,7 @@ startChaincode() {
 
 SHARED_FS=$1
 
+kubectl delete deployment invoice-chaincode-external
 	# Get configuration
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0

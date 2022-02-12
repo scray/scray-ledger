@@ -61,17 +61,21 @@ initAndRead() {
   echo "Create channel $CHANNEL_NAME"
   ./asset-trasfer-example.sh create-channel --name $CHANNEL_NAME
 
-  sleep 20s
+  sleep 30s
   echo "Add peer $PEER_NAME to channel $CHANNEL_NAME"
   ./asset-trasfer-example.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
  
- sleep 15s 
+  sleep 15s 
   echo "Deploy chaincode "
   invoice-chaincode-external
+  sleep 5s
   ./asset-trasfer-example.sh deploy-chaincode --data-share $SHARED_FS
+ 
+  sleep 15
   echo "Install chaincode on peer $PEER_NAME"
   ./asset-trasfer-example.sh install-chaincode --peer-name $PEER_NAME --channel-name $CHANNEL_NAME --data-share $SHARED_FS
 
+  sleep 5
 
   PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
   $WORKDIR/commands/execute-example-interactions.sh --channel-name $CHANNEL_NAME --peer-name $PEER_NAME --package-id $PKGID
