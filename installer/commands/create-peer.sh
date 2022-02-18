@@ -24,7 +24,7 @@ function createPeer() {
   GOSSIP_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
   PEER_LISTEN_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
   PEER_CHAINCODE_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-chaincode')].nodePort}")
-  kubectl delete configmap hl-fabric-peer-$PEER_NAME
+  kubectl delete --ignore-not-found=true  configmap hl-fabric-peer-$PEER_NAME 
   kubectl create configmap hl-fabric-peer-$PEER_NAME \
    --from-literal=hostname=$PEER_HOST_NAME \
    --from-literal=org_name=$PEER_NAME \
