@@ -61,5 +61,5 @@ PKGID=basic_1.0:321a837a7587dc3ffa6ee5a16c2af6d0163b4e2a60cd5dbeba6cabde797c5467
 ```
 
 ```bash
-./asset-trasfer-example.sh  --channel-name $CHANNEL_NAME --peer-name $PEER_NAME --package-id $PKGID
+./asset-trasfer-example.sh execute-example-interactions  --channel-name $CHANNEL_NAME --peer-name $PEER_NAME --package-id $PKGID
 ```

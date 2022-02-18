@@ -160,6 +160,9 @@ while [ "$1" != "" ]; do
 	install-chaincode) shift
 		"$WORKDIR/commands/install-chaincode.sh" "${@}"
 	;;
+	execute-example-interactions) shift
+		"$WORKDIR/commands/execute-example-interactions.sh" "${@}"
+	;;
 	setup-example-ledger) shift
 		initAndRead $1
 	;;
