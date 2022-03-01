@@ -1,4 +1,5 @@
 [![Github Actions](https://github.com/scray/scray-ledger/actions/workflows/maven-build-action.yaml/badge.svg)](https://github.com/scray/scray-ledger/actions/)
+[![Known Vulnerabilities](https://snyk.io/test/github/scray/scray-ledger/badge.svg)](https://snyk.io/test/github/scray/scray-ledger)
 
 # Hyperledger Fabric projects
 
