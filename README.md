@@ -1,3 +1,5 @@
+![java-build](https://github.com/scray/scray-ledger/actions/workflows/maven-build-action.yaml/badge.svg)
+
 # Hyperledger Fabric projects
 
 This project uses the [Hyperledger Fabric](https://www.hyperledger.org/use/fabric) to realize some POCs with this technology.  
