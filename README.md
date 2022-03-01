@@ -1,4 +1,4 @@
-![java-build](https://github.com/scray/scray-ledger/actions/workflows/maven-build-action.yaml/badge.svg)
+[![Github Actions](https://github.com/scray/scray-ledger/actions/workflows/maven-build-action.yaml/badge.svg)](https://github.com/scray/scray-ledger/actions/)
 
 # Hyperledger Fabric projects
 
