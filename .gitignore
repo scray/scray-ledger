@@ -68,3 +68,15 @@ pip-delete-this-directory.txt
 /chaincode/tools/hlf-chaincode-definition-creator/connection.json
 /containers/hl-fabric-node-configurator/conf/crypto/crypto.yaml
 /containers/target/
+
+# Eclipse
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.classpath
