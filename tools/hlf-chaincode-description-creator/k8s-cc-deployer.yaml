@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cc-deployer
+  labels:
+    app: cc-deployer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cc-deployer
+  template:
+    metadata:
+      labels:
+        app: cc-deployer
+    spec:
+      containers:
+        - name: cc-deployer
+          image: scrayorg/cc-deployer:1.0
+          workingDir: /opt
+
