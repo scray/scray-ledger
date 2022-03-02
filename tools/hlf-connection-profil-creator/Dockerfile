@@ -1,4 +1,4 @@
-FROM openjdk:11-jre
+FROM openjdk:17-ea-3-jdk-oraclelinux8
 
 RUN mkdir /opt/target/
 
