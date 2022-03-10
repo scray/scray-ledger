@@ -1,4 +1,4 @@
-/*
+/**
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -125,6 +125,7 @@ type RoleResult struct {
 
 type RoleResult2 struct {
 	Name         string   `json:"name"`
+	MSPID        string   `json:"mspid"`
 	Roles        []string `json:"roles"`
 	TaxInspector string   `json:"taxInspector"`
 }
@@ -748,13 +749,14 @@ func LocalStoreRoles(ctx contractapi.TransactionContextInterface, name string, r
 	return nil
 }
 
-func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, role string, taxInspector string) error {
+func (s *SmartContract) AppendRole(ctx contractapi.TransactionContextInterface, name string, mspid string, role string, taxInspector string) error {
 
 	var result, error = LocalGetRoles(ctx, name)
 
 	if error != nil {
 		print("error")
 		result.Name = name
+		result.MSPID = mspid
 		result.TaxInspector = taxInspector
 	}
 
