@@ -31,6 +31,7 @@ function createDatashare() {
 createOrderer() {
   ORDERER_NAME=orderer
   HOST_NAME=example.com
+  START_DIR=$PWD
   cd  ~/git/scray-ledger/containers/orderer/
 
   kubectl apply -f k8s-orderer-service.yaml
@@ -44,6 +45,7 @@ createOrderer() {
 
   kubectl apply -f k8s-orderer.yaml
 
+  cd $START_DIR
 }
 
 
@@ -55,6 +57,9 @@ initAndRead() {
   SHARED_FS_USER=scray
   SHARED_FS_PW=scray
   CHANNEL_NAME=channel-$RANDOM
+
+  echo "Create orderer"
+  createOrderer
 
   echo "Create peer $PEER_NAME"
   ./asset-trasfer-example.sh create-peer -n $PEER_NAME
