@@ -85,7 +85,8 @@ Commit chaincode
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID
 ```
 
-Mint token and show new balance
+# Mint token and show new balance
 ```
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/examples/cc-erc-721-mint-token.sh $CHANNEL_NAME $PKGID
 ```
+[Request details](../../containers/hl-fabric-node-configurator/conf/peer/examples/cc-erc-721-mint-token.sh)
