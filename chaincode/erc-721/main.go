@@ -35,12 +35,13 @@ func main() {
 	nftContract.Info.Contact.Name = "Matias Salimbene"
 
 	chaincode, err := contractapi.NewChaincode(nftContract)
-	chaincode.Info.Title = "ERC-721 chaincode"
-	chaincode.Info.Version = "0.0.1"
 
 	if err != nil {
 		panic("Could not create chaincode from TokenERC721Contract." + err.Error())
 	}
+
+	chaincode.Info.Title = "ERC-721 chaincode"
+	chaincode.Info.Version = "0.0.1"
 
 	server := &shim.ChaincodeServer{
 		CCID:    config.CCID,

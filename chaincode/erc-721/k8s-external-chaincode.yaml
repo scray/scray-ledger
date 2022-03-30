@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: erc-721-example 
+  name: hl-fabric-erc-721-example
   labels:
-    app: erc-721-example 
+    app: hl-fabric-erc-721-example 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: erc-721-example 
+      app: hl-fabric-erc-721-example 
   template:
     metadata:
       labels:
-        app: erc-721-example 
+        app: hl-fabric-erc-721-example 
     spec:
       containers:
-        - name: erc-721-example 
+        - name: hl-fabric-erc-721-example 
           image: scrayorg/hl-fabric-erc-721-example:1.2 
           imagePullPolicy: Always
           workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external 

@@ -6,7 +6,6 @@ metadata:
     run: hl-fabric-data-share-service-cloud
 spec:
   type: LoadBalancer
-  loadBalancerIP: 20.120.80.77
   selector:
     app: hl-fabric-data-share
   ports:

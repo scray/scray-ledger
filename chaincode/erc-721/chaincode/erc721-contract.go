@@ -617,3 +617,21 @@ func (c *TokenERC721Contract) ClientAccountID(ctx contractapi.TransactionContext
 
 	return clientAccount, nil
 }
+
+func (s *TokenERC721Contract) Init(ctx contractapi.TransactionContextInterface) error {
+	print("Init chaincode")
+
+	return nil
+}
+
+func (s *TokenERC721Contract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+	print("InitLedger chaincode")
+
+	return nil
+}
+
+func (s *TokenERC721Contract) Invoke() error {
+	print("Invoke chaincode ")
+
+	return nil
+}

@@ -5,13 +5,23 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 ```
 
 ### Publish chaincode definition
-[How to publish a cc definition](../tools/hlf-chaincode-definition-creator/README.md)
+[Start required container](../tools/hlf-chaincode-definition-creator/README.md#start-container)
+
+```
+CC_HOSTNAME=hl-fabric-erc-721-example.example.com
+CC_SERVICE_NAME=hl-fabric-erc-721-example
+CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
+CC_LABEL=basic_1.0
+
+CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
+kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
+```
 
 
 ### Get hash code form share [for testing]
 ```
-SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-CC_HOSTNAME=asset-transfer-basic.org1.example.com
+SHARED_FS=10.15.130.111
+CC_HOSTNAME=hl-fabric-erc-721-example.example.com
 CC_LABEL=basic_1.0
 
 SHARED_FS_USER=scray
@@ -53,7 +63,7 @@ ORDERER_PORT=30081
 ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
 
 # PKGID=basic_1.0:fd7a1dd538bca88611519d55085d7dcc59218bfcdfc32d1d1adc7f9359e69240
-CC_HOSTNAME=asset-transfer-basic.org1.example.com
+CC_HOSTNAME=hl-fabric-erc-721-example.example.com
 CC_LABEL=basic_1.0
 
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
