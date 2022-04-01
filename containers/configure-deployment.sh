@@ -17,10 +17,10 @@ yq() {
 
 # Check if yq exists
 checkYqVersion() {
-  dowloadYqBin
+  downloadYqBin
 }
 
-dowloadYqBin() {
+downloadYqBin() {
   if [[ ! -f "./bin/yq" ]]
   then
     echo "yq does not exists"

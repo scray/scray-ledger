@@ -80,3 +80,4 @@ local.properties
 .recommenders
 .project
 .classpath
+/chaincode/tools/cc-template/bin/
