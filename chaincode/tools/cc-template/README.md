@@ -12,7 +12,7 @@ This project contains an example implementation for a ERC-721 token scenario.
 The created project can be found at ./target/$CC_NAME
 Details for deploying this chaincode can be found in the provided README.md of the created project.
 
-## Convert chaincode to chaincode as external service
+## Convert local chaincode to chaincode as external service
 For details read the Hyperledger Fabric [docs](https://hyperledger-fabric.readthedocs.io/en/release-2.2/cc_service.html)  
 Most go chain codes can be converted by passing the chaincode instance to a chaincode server.
 
@@ -35,23 +35,23 @@ func main() {
 
     config := serverConfig{
       CCID:    os.Getenv("CHAINCODE_ID"),
-	  Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
+      Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
     }
 
     // FIXME create chaincode instance
     chaincode=...
     
-	server := &shim.ChaincodeServer{
-		CCID:    config.CCID,
-		Address: config.Address,
-		CC:      chaincode,
-		TLSProps: shim.TLSProperties{
-			Disabled: true,
-		},
-	}
+    server := &shim.ChaincodeServer{
+        CCID:    config.CCID,
+        Address: config.Address,
+        CC:      chaincode,
+        TLSProps: shim.TLSProperties{
+          Disabled: true,
+      },
+    }
 
-	if err := server.Start(); err != nil {
-		panic("Failed to start chaincode. " + err.Error())
-	}
+    if err := server.Start(); err != nil {
+      panic("Failed to start chaincode. " + err.Error())
+    }
 }
 ```
