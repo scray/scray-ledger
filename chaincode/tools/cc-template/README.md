@@ -9,13 +9,14 @@ This script creates a go chaincode project with components to deploy this chainc
 This project contains an example implementation for a ERC-721 token scenario.
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))  
 
-The created project can be found at ./target/$CC_NAME
+The created project can be found at ./target/$CC_NAME  
 Details for deploying this chaincode can be found in the provided README.md of the created project.
 
 ## Convert local chaincode to chaincode as external service
+Most go chain codes can be converted by passing the chaincode instance to the ```shim.ChaincodeServer```.
 For details read the Hyperledger Fabric [docs](https://hyperledger-fabric.readthedocs.io/en/release-2.2/cc_service.html)  
-Most go chain codes can be converted by passing the chaincode instance to a chaincode server.
 
+Main method example:
 ```go
 package main
 
