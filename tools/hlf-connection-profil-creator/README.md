@@ -9,7 +9,7 @@ DATA_SHARE=10.15.130.111
 SHARED_FS_USER=scray
 SHARED_FS_PW=scray
 
-PEER_NAME=peer1
+PEER_NAME=peer111
 PEER_HOSTNAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
 ```
 
@@ -22,7 +22,7 @@ kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/con
 
 #### Download Peer TLS CA cert
 ```
-curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$SHARED_FS_HOST/peer-tlsca-certs/"$PEER_HOSTNAME"/tlsca.pem
+curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$DATA_SHARE/peer-tlsca-certs/"$PEER_HOSTNAME"/tlsca.pem
 ```
 
 
