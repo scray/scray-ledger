@@ -33,6 +33,18 @@ pushCsr() {
   NEW_CERT_COMMON_NAME=$1
   SHARED_FS_HOST=$2
 
+  if [ -z "$NEW_CERT_COMMON_NAME" ]
+  then
+   echo "Cert common name is missing"
+   exit 1
+  elif [ -z "$SHARED_FS_HOST" ]
+  then
+    echo "Value of --shared-fs-host is missing"
+    exit 1
+  else
+   installChaincode $PEER_NAME $CHANNEL_NAME $SHARED_FS
+  fi
+
   echo $SHARED_FS_HOST
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/csrs_to_sign/
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME
@@ -71,10 +83,9 @@ compileWalletCreator() {
 }
 
 createWallet() {
-	echo $WALLET_CREATOR_JAR_PATH
-	if [ $WALLET_CREATOR_JAR_PATH = ./target ]
+	if [ ! -f "$WALLET_CREATOR_JAR_PATH/wallet-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar" ];
 	then
-		compileWalletCreator
+		echo "Wallet creator program does not exists. In path: $WALLET_CREATOR_JAR_PATH/" >&2
 	fi
 	java -jar $WALLET_CREATOR_JAR_PATH/wallet-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar crt_target/$NEW_CERT_COMMON_NAME/key.pem crt_target/$NEW_CERT_COMMON_NAME/user.crt $NEW_CERT_COMMON_NAME $MSP_ID
 }
@@ -129,12 +140,12 @@ readParameters()
 
 COMMAND=$1
 shift
-readParameters $@
+readParameters "$@"
 
 case $COMMAND in
   create_csr)
     echo  "create_csr"
-    readParameters $@
+    readParameters "$@"
     createKeyAndCsr
     ;;
   push_csr)

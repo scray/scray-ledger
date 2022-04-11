@@ -24,7 +24,6 @@ create_description_file() {
 upload_ccdescription() {
   SHARED_FS_USER=scray
   SHARED_FS_PW=scray
-  apk add curl
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL http://$SHARED_FS_HOST/cc_descriptions
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X DELETE http://$SHARED_FS_HOST/cc_descriptions/${HOSTNAME}_$CC_LABEL
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -X MKCOL  http://$SHARED_FS_HOST/cc_descriptions/${HOSTNAME}_$CC_LABEL

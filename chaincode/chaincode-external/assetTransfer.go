@@ -204,7 +204,7 @@ func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterfac
 }
 
 // GetAllAssets returns all assets found in world state
-func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
+func (s *SmartContract) GetOwnAssets(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
 
 	clientID, err := s.GetSubmittingClientIdentity(ctx)
 	if err != nil {
@@ -244,6 +244,39 @@ func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 			println("Expcted owner: " + asset.InvoiceOwner + " OR ")
 			println("Expcted product buyer: " + asset.ProductBuyer)
 		}
+	}
+
+	return results, nil
+}
+
+// GetAllAssets returns all assets found in world state
+func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
+
+	// range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var results []QueryResult
+
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+
+		if err != nil {
+			return nil, err
+		}
+
+		var asset Asset
+		err = json.Unmarshal(queryResponse.Value, &asset)
+		if err != nil {
+			return nil, err
+		}
+
+		queryResult := QueryResult{Key: queryResponse.Key, Record: &asset}
+		results = append(results, queryResult)
 	}
 
 	return results, nil

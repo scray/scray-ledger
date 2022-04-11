@@ -18,7 +18,7 @@ function createCryptos() {
     fi
 
     export PATH=~/git/fabric-samples/bin:$PATH
-    ./configure_crypto.sh -o org1 -d org1.example.com
+    ./configure_crypto.sh -o $ORG_NAME -d $DOMAINE
     cryptogen generate --config=./target/crypto-config-orderer.yaml --output="organizations"
 
     

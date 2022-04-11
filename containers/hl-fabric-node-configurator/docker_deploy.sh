@@ -7,13 +7,14 @@ pushDockerHub() {
 	echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 	echo "$DOCKER_TOKEN"
 	echo "$DOCKER_USERNAME"
-	docker build -t scrayorg/hl-fabric-node-configurator:$VERISON . 
+  cd ../../
+	docker build -t scrayorg/hl-fabric-node-configurator:$VERISON -f containers/hl-fabric-node-configurator/Dockerfile  .
 	docker push scrayorg/hl-fabric-node-configurator:$VERISON
 }
 
 pushLocal() {
-
-        docker build -t $REPO_URL/research/hl-fabric-node-configurator:$VERISON .
+        cd ../../
+        docker build -t $REPO_URL/research/hl-fabric-node-configurator:$VERISON -f containers/hl-fabric-node-configurator/Dockerfile .
         docker push $REPO_URL/research/hl-fabric-node-configurator:$VERISON
 
 }

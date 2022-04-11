@@ -59,8 +59,6 @@ spec:
               value: "/var/hyperledger/orderer/tls/server.key"
             - name: ORDERER_GENERAL_CLUSTER_ROOTCAS
               value: "[/var/hyperledger/orderer/tls/ca.crt]"
-            - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
-              value: "/var/hyperledger/orderer/tls/server.crt"
             - name: CONFIGTX_ORDERER_ADDRESSES
           volumeMounts:
             - name: orderer-conf
@@ -143,6 +141,32 @@ spec:
               mountPath: /mnt/peer-conf/
       volumes:
         - name: orderer-conf
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: orderer0-conf-pv-claim
         - name: orderer-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: orderer0-data-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orderer0-conf-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orderer0-data-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi

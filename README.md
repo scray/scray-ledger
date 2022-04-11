@@ -1,3 +1,6 @@
+[![Github Actions](https://github.com/scray/scray-ledger/actions/workflows/maven-build-action.yaml/badge.svg)](https://github.com/scray/scray-ledger/actions/)
+[![Known Vulnerabilities](https://snyk.io/test/github/scray/scray-ledger/badge.svg)](https://snyk.io/test/github/scray/scray-ledger)
+
 # Hyperledger Fabric projects
 
 This project uses the [Hyperledger Fabric](https://www.hyperledger.org/use/fabric) to realize some POCs with this technology.  
@@ -22,3 +25,7 @@ With features like:
 * [Peer](containers/README.md) Peer component. For details see [Hyperleder Fabric doc](https://hyperledger-fabric.readthedocs.io/en/release-2.3/orderer/ordering_service.html#)
 * [External Chaincode](chaincode/chaincode-external/README.md) Implementation of an chaincode which runns as a service
 * [Client App](applications/asset-reader-writer-app) Client application to read and write to the blockchain
+
+## Infrastructure
+* [Azure Environment](deployment-environments/microsoft-azure/README.md)
+* [Single node cluster](deployment-environments/single-node-k8s-cluster)

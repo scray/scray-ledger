@@ -1,28 +1,28 @@
-# Chaincode description creator
+## Connection Profile creator
+Tool to create a Hyperledger Fabric connection profile for clients which uses the Hyperledger Fabric gateway
 
-This tool creates a chaincode description and publishes it to a http data share.
+### Add peer
+#### Prerequisites
 
-### Start container
 ```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
-```
+DATA_SHARE=10.15.130.111
+SHARED_FS_USER=scray
+SHARED_FS_PW=scray
 
-### Publish deployment description
-```
-SHARED_FS=kubernetes.research.dev.seeburger.de:30080
-CC_HOSTNAME=asset-transfer-basic.org1.example.com
-CC_SERVICE_NAME=hl-fabric-cc-external-invoice
-CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
-CC_LABEL=basic_1.0
-
-CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
-kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
+PEER_NAME=peer111
+PEER_HOSTNAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
 ```
 
-### Deployment description location
-Location where the chaincode description (``chainecode_description.tgz`` and ``ccid.json``) can be downloaded from.  
+#### Publish Peer TLS CA cert
 
-``
-http://$SHARED_FS/cc_descriptions/${HOSTNAME}_$CC_LABEL
-``
+```
+PEER_POD_NAME=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
+kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/conf/peer/publish-tlsca.sh --shared-fs-host $DATA_SHARE
+```
+
+#### Download Peer TLS CA cert
+```
+curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$DATA_SHARE/peer-tlsca-certs/"$PEER_HOSTNAME"/tlsca.pem
+```
+
 

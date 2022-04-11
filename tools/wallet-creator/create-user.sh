@@ -6,18 +6,19 @@
 USER=$1
 HOSTNAME=$2
 HOSTNAME2=$3
+SHARED_HOST=$4
 CN=$USER@$HOSTNAME
 
 /tmp/cert-creator.sh create_csr --common-name $CN
-/tmp/cert-creator.sh push_csr --common-name $CN --shared-fs-host kubernetes.research.dev.seeburger.de:30080
+/tmp/cert-creator.sh push_csr --common-name $CN --shared-fs-host $SHARED_HOST
 
-/tmp/cert-creator.sh pull_csr --common-name $CN --shared-fs-host kubernetes.research.dev.seeburger.de:30080
+/tmp/cert-creator.sh pull_csr --common-name $CN --shared-fs-host $SHARED_HOST
 CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME2/ca/ca.*.pem
 CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME2/ca/priv_sk
 /tmp/cert-creator.sh sign_csr --common-name $CN --cacert $CA_CERT --cakey $CA_KEY
-/tmp/cert-creator.sh push_crt --common-name $CN --shared-fs-host kubernetes.research.dev.seeburger.de:30080
+/tmp/cert-creator.sh push_crt --common-name $CN --shared-fs-host $SHARED_HOST
 
-/tmp/cert-creator.sh pull_signed_crt --common-name $CN --shared-fs-host kubernetes.research.dev.seeburger.de:30080
+/tmp/cert-creator.sh pull_signed_crt --common-name $CN --shared-fs-host $SHARED_HOST
 #./cert-creator.sh create_wallet --common-name $CN --mspId peer2MSP -j /tmp
  
 openssl x509 -in /tmp/crt_target/$CN/user.crt -out /tmp/crt_target/$CN/user.pem -outform PEM
