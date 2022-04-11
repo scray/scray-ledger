@@ -1,0 +1,6 @@
+{
+    "class": "Organization",
+    "parameters": {
+        "name": "lyon-impots.gouv.fr",
+        "users": {
+            "Admin@lyon-impots.gouv.fr": 
