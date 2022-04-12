@@ -3,19 +3,18 @@
 source .env
 
 REPO_URL=scrayorg
-VERISON=0.1
 
 pushDockerHub() {
     echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
     echo "$DOCKER_TOKEN"
     echo "$DOCKER_USERNAME"
-    docker build -t  "$REPO_URL/$DOCKER_IMAGE_NAME:$VERISON" .
-    docker push  "$REPO_URL/$DOCKER_IMAGE_NAME:$VERISON"
+    docker build -t  "$DOCKER_IMAGE_TAG" .
+    docker push  "$DOCKER_IMAGE_TAG"
 }
 
 pushLocal() {
-    docker build -t "$REPO_URL/$DOCKER_IMAGE_NAME:$VERISON" .
-    docker push "$REPO_URL/$DOCKER_IMAGE_NAME:$VERISON"
+    docker build -t "$DOCKER_IMAGE_TAG" .
+    docker push "$DOCKER_IMAGE_TAG"
 }
 
 # Remove runtime data
@@ -37,12 +36,12 @@ while [ "$1" != "" ]; do
     case $1 in
         -l | --local )   shift
                                 REPO_URL=$1
-                                echo Build image  "$DOCKER_IMAGE_NAME"
+                                echo Build image  "$DOCKER_IMAGE_TAG"
                                 cleanUp
                                 pushLocal
                                 ;;
         -h | -docker-hub )      shift
-                                echo Build image  "$DOCKER_IMAGE_NAME"
+                                echo Build image  "$DOCKER_IMAGE_TAG"
                                 cleanUp
                                 pushDockerHub
                                 ;;

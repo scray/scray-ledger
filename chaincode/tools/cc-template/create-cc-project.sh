@@ -60,25 +60,41 @@ setValuesInLocalFile() {
   yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).env(name==CHAINCODE_ID).valueFrom.configMapKeyRef.name" "$CC_NAME"
   yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).name" "$CC_NAME"
 
-  echo DOCKER_IMAGE_NAME="$DOCKER_IMAGE_NAME" >> .env
+  echo DOCKER_IMAGE_TAG="$DOCKER_IMAGE_NAME" >> .env
 }
 
 
 while [ "$1" != "" ]; do
     case $1 in
         -n | --name )   shift
-				CC_NAME=$1
-				checkYqVersion
-				createEnvForNewConf "$CC_NAME" target
-				setValuesInLocalFile "$CC_NAME" "$CC_NAME"
+          CC_NAME=$1
+        ;;
+		    --docker-tag )   shift
+    				DOCKER_IMAGE_NAME=$1
                                 ;;
         -h | --help )           usage
                                 exit
                                 ;;
-	-c| --check )		checkYqVersion
+	    -c| --check )		checkYqVersion
 				;;
         * )                     usage
                                 exit 1
     esac
     shift
 done
+
+if [ -z "$DOCKER_IMAGE_NAME" ]
+then
+  >&2 "--docker-tag should not be empty. Example: --docker-tag repo1/cc-image1:0.1 "
+  exit 1
+fi
+
+if [ -z "$CC_NAME" ]
+then
+  >&2 "--name should not be empty. Example: --docker-tag org1/image1:0.1 "
+  exit 1
+fi
+
+checkYqVersion
+createEnvForNewConf "$CC_NAME" target
+setValuesInLocalFile "$CC_NAME" "$DOCKER_IMAGE_NAME"
