@@ -2,8 +2,8 @@
 
 source .env
 
-REPO_URL=$1
-VERISON=1.2
+REPO_URL=scrayorg
+VERISON=0.1
 
 pushDockerHub() {
     echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
