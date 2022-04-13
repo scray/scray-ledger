@@ -439,7 +439,7 @@ func (c *TokenERC721Contract) MintWithTokenURI(ctx contractapi.TransactionContex
 	}
 
 	if clientMSPID != "Org1MSP" {
-		return nil, fmt.Errorf("client is not authorized to set the name and symbol of the token")
+		return nil, fmt.Errorf("client is not authorized to set the name and symbol of the token" + clientMSPID)
 	}
 
 	// Get ID of submitting client identity
