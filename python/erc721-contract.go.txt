@@ -1,0 +1,19 @@
+func (c *TokenERC721Contract) BalanceOf(ctx contractapi.TransactionContextInterface, owner string) int {
+func (c *TokenERC721Contract) OwnerOf(ctx contractapi.TransactionContextInterface, tokenId string) (string, error) {
+func (c *TokenERC721Contract) Approve(ctx contractapi.TransactionContextInterface, operator string, tokenId string) (bool, error) {
+func (c *TokenERC721Contract) SetApprovalForAll(ctx contractapi.TransactionContextInterface, operator string, approved bool) (bool, error) {
+func (c *TokenERC721Contract) IsApprovedForAll(ctx contractapi.TransactionContextInterface, owner string, operator string) (bool, error) {
+func (c *TokenERC721Contract) GetApproved(ctx contractapi.TransactionContextInterface, tokenId string) (string, error) {
+func (c *TokenERC721Contract) TransferFrom(ctx contractapi.TransactionContextInterface, from string, to string, tokenId string) (bool, error) {
+func (c *TokenERC721Contract) Name(ctx contractapi.TransactionContextInterface) (string, error) {
+func (c *TokenERC721Contract) Symbol(ctx contractapi.TransactionContextInterface) (string, error) {
+func (c *TokenERC721Contract) TokenURI(ctx contractapi.TransactionContextInterface, tokenId string) (string, error) {
+func (c *TokenERC721Contract) TotalSupply(ctx contractapi.TransactionContextInterface) int {
+func (c *TokenERC721Contract) SetOption(ctx contractapi.TransactionContextInterface, name string, symbol string) (bool, error) {
+func (c *TokenERC721Contract) MintWithTokenURI(ctx contractapi.TransactionContextInterface, tokenId string, tokenURI string) (*Nft, error) {
+func (c *TokenERC721Contract) Burn(ctx contractapi.TransactionContextInterface, tokenId string) (bool, error) {
+func (c *TokenERC721Contract) ClientAccountBalance(ctx contractapi.TransactionContextInterface) (int, error) {
+func (c *TokenERC721Contract) ClientAccountID(ctx contractapi.TransactionContextInterface) (string, error) {
+func (s *TokenERC721Contract) Init(ctx contractapi.TransactionContextInterface) error {
+func (s *TokenERC721Contract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+func (s *TokenERC721Contract) Invoke() error {

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otest
+  labels:
+    app: otest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otest
+  template:
+    metadata:
+      labels:
+        app: otest
+    spec:
+      containers:
+        - name: otest
+          image: otest
+          imagePullPolicy: Always
+          workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
+          env:
+            - name: FABRIC_LOGGING_SPEC
+              value: "DEBUG"
+            - name: CHAINCODE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: otest
+                  key: chaincode_id
+            - name: CHAINCODE_SERVER_ADDRESS
+              value: "0.0.0.0:9999"
