@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	"github.com/scray/scray-ledger/usecase/invoice/chaincode/modules/roles"
 )
 
 // Define objectType names for prefix
