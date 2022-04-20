@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
-	"github.com/scray/scray-ledger/tree/usecase/invoice/chaincode/modules/roles"
+	//"github.com/scray/scray-ledger/blob/usecase/invoice/chaincode/modules/roles"
 )
 
 // Define objectType names for prefix
@@ -64,7 +64,7 @@ func (c *TokenERC721Contract) BalanceOf(ctx contractapi.TransactionContextInterf
 	// There is a key record for every non-fungible token in the format of balancePrefix.owner.tokenId.
 	// BalanceOf() queries for and counts all records matching balancePrefix.owner.*
 
-	roles.PrintHello()
+	//roles.PrintHello()
 
 	iterator, err := ctx.GetStub().GetStateByPartialCompositeKey(balancePrefix, []string{owner})
 	if err != nil {
