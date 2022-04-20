@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
-	"github.com/scray/scray-ledger/usecase/invoice/chaincode/modules/roles"
+	"github.com/scray/scray-ledger/tree/usecase/invoice/chaincode/modules/roles"
 )
 
 // Define objectType names for prefix
@@ -63,6 +63,8 @@ func _nftExists(ctx contractapi.TransactionContextInterface, tokenId string) boo
 func (c *TokenERC721Contract) BalanceOf(ctx contractapi.TransactionContextInterface, owner string) int {
 	// There is a key record for every non-fungible token in the format of balancePrefix.owner.tokenId.
 	// BalanceOf() queries for and counts all records matching balancePrefix.owner.*
+
+	roles.PrintHello()
 
 	iterator, err := ctx.GetStub().GetStateByPartialCompositeKey(balancePrefix, []string{owner})
 	if err != nil {
