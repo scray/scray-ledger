@@ -2,10 +2,9 @@ package org.scray.ledger.hlf.client.tools;
 
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.scray.ledger.hlf.connectionprofile.nodes.Peer;
-
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
@@ -30,10 +29,10 @@ public class ConnectionProfileCreatorTests {
 			mapper.configure(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE, true);
 
 			String updatedConfiguration = mapper.writeValueAsString(peerRawDoc);
-System.out.println(updatedConfiguration);
-			Assert.assertTrue(updatedConfiguration.contains("url: \"grpcs://peer0.hlf.ledger.scray.org:31060\""));
+
+			Assertions.assertTrue(updatedConfiguration.contains("url: \"grpcs://peer0.hlf.ledger.scray.org:31060\""));
 		} catch (Exception e) {
-			Assert.fail(e.getMessage());
+		    Assertions.fail(e.getMessage());
 		}
 	}
 

@@ -81,7 +81,6 @@ public class BlockchainOperations
                 // get the network and contract
                 Network network = gateway.getNetwork(channel);
                 Contract contract = network.getContract("basic");
-                System.out.println("FFF" + new String(contract.createTransaction(methodName).evaluate("")));
                 data = new String(contract.evaluateTransaction(methodName));
             }
             catch (Exception e)

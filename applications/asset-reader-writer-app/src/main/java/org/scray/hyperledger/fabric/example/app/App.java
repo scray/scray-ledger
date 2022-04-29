@@ -14,7 +14,7 @@ public class App {
 	public static void main(String[] args) throws Exception {
 		String walletPath = "C:\\Users\\st.obermeier\\git\\scray-ledger\\applications\\asset-reader-writer-app\\wallet";
 
-	    BlockchainOperations op = new BlockchainOperations("channel-6002", "basic", "otto", walletPath);
+	    BlockchainOperations op = new BlockchainOperations("channel111", "basic", "otto", walletPath);
 
 		//op.write("id5");
 	    String assets = op.read("GetAllAssets");

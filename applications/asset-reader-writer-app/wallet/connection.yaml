@@ -9,32 +9,32 @@ client:
         endorser: "300"
 organizations:
   peer660:
-    mspid: "peer660MSP"
+    mspid: "peer111MSP"
     peers:
-    - "peer0.peer660.kubernetes.research.dev.seeburger.de"
+    - "peer111"
     certificateAuthorities:
     - "ca.org1.example.com"
 peers:
-  peer0.peer660.kubernetes.research.dev.seeburger.de:
-    url: "grpcs://peer0.peer660.kubernetes.research.dev.seeburger.de:31060"
+  peer111:
+    url: "grpcs://peer0.peer111.kubernetes.research.dev.seeburger.de:32687"
     tlsCACerts:
-      pem: |
+      pem: |-
         -----BEGIN CERTIFICATE-----
-        MIICsjCCAlmgAwIBAgIQErRcjKAiP8QiiwLetdUpWDAKBggqhkjOPQQDAjCBozEL
-        MAkGA1UEBhMCREUxDjAMBgNVBAgTBUJhZGVuMRAwDgYDVQQHEwdCcmV0dGVuMTUw
-        MwYDVQQKEyxwZWVyNjYwLmt1YmVybmV0ZXMucmVzZWFyY2guZGV2LnNlZWJ1cmdl
-        ci5kZTE7MDkGA1UEAxMydGxzY2EucGVlcjY2MC5rdWJlcm5ldGVzLnJlc2VhcmNo
-        LmRldi5zZWVidXJnZXIuZGUwHhcNMjIwMjE4MTYwMzAwWhcNMzIwMjE2MTYwMzAw
-        WjCBozELMAkGA1UEBhMCREUxDjAMBgNVBAgTBUJhZGVuMRAwDgYDVQQHEwdCcmV0
-        dGVuMTUwMwYDVQQKEyxwZWVyNjYwLmt1YmVybmV0ZXMucmVzZWFyY2guZGV2LnNl
-        ZWJ1cmdlci5kZTE7MDkGA1UEAxMydGxzY2EucGVlcjY2MC5rdWJlcm5ldGVzLnJl
-        c2VhcmNoLmRldi5zZWVidXJnZXIuZGUwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC
-        AAQfmTJEJnncWRSnnWTfBmZ2Y4b8q26E6wIoNAt34SrDetmwG+srU7EDnBW5aO07
-        n0o25H3JktBExKzrXmAZQORAo20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYw
-        FAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIE
-        IE+7gmKX1br1Sjh8Eua1JOPoaZa+r/WeDWfJ4xrP0uU/MAoGCCqGSM49BAMCA0cA
-        MEQCIAGeK2Ejlg2eIzhTHxUNCj3DSiJVx4mzPUC+VeGE2ZVdAiARvRX5yXBjNSq4
-        YgL2uDljseYB4gBWiRjYU07/5BGaUA==
+        MIICszCCAlqgAwIBAgIRAPYcnsU3qk9CFNWgW4Bi+dMwCgYIKoZIzj0EAwIwgaMx
+        CzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJldHRlbjE1
+        MDMGA1UEChMscGVlcjExMS5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5zZWVidXJn
+        ZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIxMTEua3ViZXJuZXRlcy5yZXNlYXJj
+        aC5kZXYuc2VlYnVyZ2VyLmRlMB4XDTIyMDQwODExNTkwMFoXDTMyMDQwNTExNTkw
+        MFowgaMxCzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJl
+        dHRlbjE1MDMGA1UEChMscGVlcjExMS5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5z
+        ZWVidXJnZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIxMTEua3ViZXJuZXRlcy5y
+        ZXNlYXJjaC5kZXYuc2VlYnVyZ2VyLmRlMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+        QgAEaFoNK7zEI9mENCO2K29Eed/acG5PrYM4SqwEGL3WLW2tfjRwfwUxzA6dQkkG
+        G8goi1n4XZPnYbFsTayEYj0OdqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQW
+        MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQi
+        BCDxavQGyhSKlt/be0dMvLqzTZgeJhyAGI/KvpmGdkiPuzAKBggqhkjOPQQDAgNH
+        ADBEAiBqXmrNsu6AzTyXvDZ36JyIa5pdK26NCY34eOP5G/qyRQIgevcnH1EB3+3u
+        C1OuXRlxFNCKq6lgi/6l31zlaehTm+k=
         -----END CERTIFICATE-----
 grpcOptions:
   ssl-target-name-override: "peer0.peer660.kubernetes.research.dev.seeburger.de"
