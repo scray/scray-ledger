@@ -2,38 +2,38 @@
 
 ### Requirements
   * MAVEN
-  * openssl  
-  
-## Example workflow
+  * openssl
+
 
 ### Prerequisites
-```DATA_SHARE=10.15.130.111```
+
+``DATA_SHARE=10.15.130.111 ``  
+``WALLET_COMMON_NAME=otto``  
+``PEER_NAME=peer-42``  
 
 ### App side
-```cd scray-ledger/tools/wallet-creator```
-* ```./cert-creator.sh create_csr --common-name otto```
-* ```./cert-creator.sh push_csr --common-name otto --shared-fs-host $DATA_SHARE```
-* GOTO Peer side
-* ```./cert-creator.sh pull_signed_crt --common-name otto --shared-fs-host $DATA_SHARE```
-* ```./cert-creator.sh create_wallet --common-name otto --mspId peer2MSP``` 
 
+* ``cd scray-ledger/tools/wallet-creator``
+* ``./cert-creator.sh create_csr --common-name $WALLET_COMMON_NAME``
+* ``./cert-creator.sh push_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
+* GOTO Peer side
+* ``./cert-creator.sh pull_signed_crt --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
+* ``./cert-creator.sh create_wallet --common-name $WALLET_COMMON_NAME --mspId peer111MSP``
+
+The wallet is stored in ./wallet/$WALLET_COMMON_NAME.id
 
 ### Peer side
 ```
 PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
 ```
-* ```/mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name otto --shared-fs-host $DATA_SHARE```
 
-* ```
-  CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem
-  CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk
-  
-  /mnt/tools/wallet-creator/cert-creator.sh sign_csr --common-name otto --cacert $CA_CERT --cakey $CA_KEY
-   ```
+* ``WALLET_COMMON_NAME=otto``
+* ``/mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 
+* ``CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem``
+  ``CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk``
+  ``/mnt/tools/wallet-creator/cert-creator.sh sign_csr --common-name $WALLET_COMMON_NAME --cacert $CA_CERT --cakey $CA_KEY``
 
-* ```
-  /mnt/tools/wallet-creator/cert-creator.sh push_crt --common-name otto --shared-fs-host $DATA_SHARE
-  ````
+* ``/mnt/tools/wallet-creator/cert-creator.sh push_crt --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 * GOTO App side

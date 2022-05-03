@@ -1,4 +1,4 @@
-# Hyperledger Fabric Samples ERC-721 token scenario as external service
+# Hyperledger Fabric Samples ERC-721 token scranrio as external service
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))
 
 # Deploy smart contract
@@ -58,8 +58,6 @@ ORDERER_LISTEN_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.
 ORDERER_HOST=orderer.example.com
 EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}") 
 ```
-
-
 
 ```
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
