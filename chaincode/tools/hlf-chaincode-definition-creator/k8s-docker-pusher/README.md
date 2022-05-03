@@ -17,7 +17,8 @@ kubectl apply -f k8s-publish-description.sh
 ```
 
 ### Example app
-``-dockerfile-creator-exampl
+``
 kubectl apply -f k8s-dockerfile-creator-example.yaml
 kubectl exec --stdin --tty k8s-dockerfile-creator-example  -- /bin/bash
 ```
+* Edit /workspace/Dockerfile
