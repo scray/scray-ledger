@@ -1,12 +1,12 @@
 
-### Pushing to Docker Hub
+### Pushing image to Docker Registry
 
 ```
 DOCKER_USERNAME=[...]
 DOCKER_PASSWORD=[...]
 
 kubectl create configmap docker-push
-	--from-literal=registry=scrayorg/test1
+	--from-literal=registry=myregistry/scrayorg/test1
 
 kubectl create secret docker-registry regcred \
     --docker-username=${DOCKER_USERNAME} \
@@ -17,7 +17,7 @@ kubectl apply -f k8s-publish-description.sh
 ```
 
 ### Example app
-``
+```
 kubectl apply -f k8s-dockerfile-creator-example.yaml
 kubectl exec --stdin --tty k8s-dockerfile-creator-example  -- /bin/bash
 ```
