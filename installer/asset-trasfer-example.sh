@@ -1,12 +1,7 @@
 #!/bin/bash
 export WORKDIR=$(cd $(dirname $0) && pwd)
 
-NAMESPACE=scray-ledger-asset-transfer
-
-# Delete all deplyments
-function clean() {
-  kubectl delete --all deployments --namespace=$NAMESPACE
-}
+NAMESPACE=default
 
 prepare() {
   createEnv
@@ -140,15 +135,15 @@ run() {
 
 while [ "$1" != "" ]; do
     case $1 in
-         clean )   shift
-		clean                                
-	  ;;
-          prepare )shift
+        prepare )shift
 		  run prepare 
-          ;;
-         deploy )   	shift
+        ;;
+        deploy )   	shift
 		deployLedger	
-         ;;
+        ;;
+	create-orderer) shift
+		createOrderer
+	;;	
  	create-peer) shift
 		PEER_NAME=$1
 		"$WORKDIR/commands/create-peer.sh" "${@}" 
@@ -170,6 +165,9 @@ while [ "$1" != "" ]; do
 	;;
 	setup-example-ledger) shift
 		initAndRead $1
+	;;
+	clean) shift
+		"$WORKDIR/commands/clean.sh" "${@}"	
 	;;
         * )                     # usage
                                 exit 1

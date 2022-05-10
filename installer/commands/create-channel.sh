@@ -5,6 +5,8 @@ function createChannel() {
 
 CHANNEL_NAME=$1
 
+echo "Create channel $1"
+
 ORDERER_POD=$(kubectl get pod -l app=orderer-org1-scray-org -o jsonpath="{.items[0].metadata.name}")
 ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
 ORDERER_PORT=30081
