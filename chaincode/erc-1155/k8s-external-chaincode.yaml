@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erc-1155
+  labels:
+    app: erc-1155
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: erc-1155
+  template:
+    metadata:
+      labels:
+        app: erc-1155
+    spec:
+      containers:
+        - name: erc-1155
+          image: scrayorg/hlf-erc-1155
+          imagePullPolicy: Always
+          workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
+          env:
+            - name: FABRIC_LOGGING_SPEC
+              value: "DEBUG"
+            - name: CHAINCODE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: erc-1155
+                  key: chaincode_id
+            - name: CHAINCODE_SERVER_ADDRESS
+              value: "0.0.0.0:9999"

@@ -5,6 +5,11 @@
 CC_NAME=super-smart-contract
 ./create-cc-project.sh --name $CC_NAME  --docker-tag repo1/cc-example:0.1
 ```
+
+##  
+
+
+
 This script creates a go chaincode project with components to deploy this chaincode as external service in a K8s cluster.
 This project contains an example implementation for a ERC-721 token scenario.
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))  

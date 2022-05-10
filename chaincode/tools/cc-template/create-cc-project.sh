@@ -60,6 +60,8 @@ setValuesInLocalFile() {
   yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).env(name==CHAINCODE_ID).valueFrom.configMapKeyRef.name" "$CC_NAME"
   yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).name" "$CC_NAME"
 
+  yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).name" "$CC_NAME"
+
   echo DOCKER_IMAGE_TAG="$DOCKER_IMAGE_NAME" >> .env
 }
 

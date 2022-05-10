@@ -1,14 +1,6 @@
-# Hyperledger Fabric Samples ERC-721 token scranrio as external service
-[Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))
+# Hyperledger Fabric Samples ERC-1155 token scranrio as external service
+[Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-1155))
 
-
-# Publish smart contract
-
-### Publish to docker hub
-```bash
-export DOCKER_TOKEN=f13...
-./docker_deploy.sh -h
-```
 # Deploy smart contract
 
 ### Create Service
