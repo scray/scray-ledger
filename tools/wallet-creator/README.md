@@ -8,8 +8,8 @@
 ### Prerequisites
 
 ``DATA_SHARE=10.15.130.111 ``  
-``WALLET_COMMON_NAME=otto``  
-``PEER_NAME=peer-42``  
+``WALLET_COMMON_NAME=alice``  
+``PEER_NAME=peer200``  
 
 ### App side
 
@@ -28,7 +28,7 @@ PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.na
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
 ```
 
-* ``WALLET_COMMON_NAME=otto``
+* ``WALLET_COMMON_NAME=alice``
 * ``/mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 
 * ``CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem``

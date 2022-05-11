@@ -54,6 +54,20 @@ pushCsr() {
 }
 
 pullCsr() {
+  NEW_CERT_COMMON_NAME=$1
+  SHARED_FS_HOST=$2
+
+  if [ -z "$NEW_CERT_COMMON_NAME" ]
+  then
+   echo "Cert common name is missing"
+   exit 1
+  elif [ -z "$SHARED_FS_HOST" ]
+  then
+    echo "Value of --shared-fs-host is missing"
+    exit 1
+  else
+   installChaincode $PEER_NAME $CHANNEL_NAME $SHARED_FS
+  fi
   curl --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS_HOST/csrs_to_sign/$NEW_CERT_COMMON_NAME/user.csr > $NEW_CERT_COMMON_NAME.csr
 }
 
@@ -154,7 +168,7 @@ case $COMMAND in
     ;;
   pull_csr)
     echo  "pull_csr"
-    pullCsr
+    pullCsr "$NEW_CERT_COMMON_NAME" "$SHARED_FS_HOST"
     ;;
   sign_csr)
     echo  "sign_csr"
