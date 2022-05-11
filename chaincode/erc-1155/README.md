@@ -5,7 +5,7 @@
 
 ### Create Service
 ```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/erc-721/k8s-service-external-chaincode.yaml
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/chaincode/erc-1155/k8s-service-external-chaincode.yaml
 ```
 
 ### Publish chaincode definition
@@ -13,7 +13,7 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 
 ```
 CC_HOSTNAME=hl-fabric-erc-721-example.example.com
-CC_SERVICE_NAME=hl-fabric-erc-721-example
+CC_SERVICE_NAME=erc-1155
 CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
 CC_LABEL=basic_1.0
 
@@ -36,8 +36,8 @@ PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descr
 ### Start chaincode container
 Create configuration 
 ```
-kubectl delete configmap hl-fabric-erc-721-example
-kubectl create configmap hl-fabric-erc-721-example \
+kubectl delete configmap erc-1155
+kubectl create configmap erc-1155 \
  --from-literal=chaincode_id=$PKGID
 ```
 

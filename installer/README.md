@@ -1,3 +1,11 @@
+
+## Prerequisites
+Create data share
+```
+cd scray-ledger/containers
+kubectl apply -f k8s-hl-fabric-data-share.yaml
+```
+
 ### Setup example ledger
 ```bash
 DATA_SHARE=10.15.130.111
@@ -7,6 +15,11 @@ DATA_SHARE=10.15.130.111
 ./asset-trasfer-example.sh setup-example-ledger $DATA_SHARE
 ```
 
+### Create Orderer
+Create a example orderer
+```bash
+./asset-trasfer-example.sh create-orderer
+```
 
 ### Create peer
 
