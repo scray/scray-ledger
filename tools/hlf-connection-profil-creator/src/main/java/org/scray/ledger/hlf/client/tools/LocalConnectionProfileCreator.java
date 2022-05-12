@@ -37,7 +37,7 @@ public class LocalConnectionProfileCreator
             CertLoader certLoader = new CertLoader();
             String cert = certLoader.readFromFile(parms.getCaCertpath());
 
-            Peer peer = new Peer(parms.getPeerName(), parms.getPeerHostname(), cert);
+            Peer peer = new Peer(parms.getPeerName(), "grpc://" + parms.getPeerHostname() + ":" + parms.getPeerChaincodePort(), cert);
 
             ConnectionProfileCreator prof = new ConnectionProfileCreator();
             ObjectNode peerRawDoc = null;
@@ -46,6 +46,8 @@ public class LocalConnectionProfileCreator
             {
                 peerRawDoc = prof.readTemplate("src/main/resources/connection.yaml");
                 peerRawDoc.set("peers", peer.getJsonNode());
+
+
 
                 YAMLMapper mapper = new YAMLMapper();
                 mapper.configure(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE, true);

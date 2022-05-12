@@ -28,7 +28,9 @@ curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$DATA_SHARE/
 
 ```
  mvn install
- java -jar target/hlf-connection-profile-creator-1.0-jar-with-dependencies.jar --peer-name $PEER_NAME  --peer-hostname $PEER_HOSTNAME
+ PEER_CHAINCODE_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-chaincode')].nodePort}")
+ echo $PEER_CHAINCODE_PORT
+ java -jar target/hlf-connection-profile-creator-1.0-jar-with-dependencies.jar --peer-name $PEER_NAME  --peer-hostname $PEER_HOSTNAME --peer-chaincode-port $PEER_CHAINCODE_PORT
 ```
 
 Show connection profile

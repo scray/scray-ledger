@@ -9,6 +9,7 @@ public class OptionParameters
 
     private String peerName;
     private String peerHostname;
+    private int peerChaincodePort;
     private String caCertpath;
     private String outPath = "target/connection.yaml";
 
@@ -59,6 +60,18 @@ public class OptionParameters
     public String getOutPath()
     {
         return this.outPath;
+    }
+
+
+    public int getPeerChaincodePort()
+    {
+        return peerChaincodePort;
+    }
+
+
+    public void setPeerChaincodePort(int peerChaincodePort)
+    {
+        this.peerChaincodePort = peerChaincodePort;
     }
 
 }
