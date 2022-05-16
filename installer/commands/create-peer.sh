@@ -18,7 +18,8 @@ function createPeer() {
   PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
   EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
-  cd ~/git/scray-ledger/containers
+  cd ..
+  cd /containers
   ./configure-deployment.sh -n $PEER_NAME
   kubectl apply -f target/$PEER_NAME/k8s-peer-service.yaml
   GOSSIP_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
@@ -36,6 +37,9 @@ function createPeer() {
    --from-literal=CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.$PEER_HOST_NAME:$GOSSIP_PORT \
    --from-literal=CORE_PEER_LOCALMSPID=${PEER_NAME}MSP
   kubectl apply -f target/$PEER_NAME/k8s-peer.yaml
+
+  cd ../
+  cd installer
 }
 
 while [ "$1" != "" ]; do
