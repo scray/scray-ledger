@@ -43,6 +43,7 @@ dowloadYqBin() {
 setValuesInLocalFile() {
   yq w -i host-vol.yaml "metadata.name" $PEER_NAME-vol
   yq w -i host-vol.yaml "spec.hostPath.path" $LOCAL_FILE_PATH/$PEER_NAME
+  yq w -i host-vol.yaml "spec.capacity.storage" $STORRAGE_CAPACITY 
 }
 
 
@@ -60,6 +61,9 @@ while [ "$1" != "" ]; do
         -p | --local-path ) shift
           			LOCAL_FILE_PATH=$1
         ;;
+	-s | --storrage-capacity ) shift
+		STORRAGE_CAPACITY=$1
+				;;
         -i | --inplace )   	shift
 	       			PEER_NAME=$1
 				checkYqVersion
@@ -75,6 +79,13 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
+
+if [ -z "$STORRAGE_CAPACITY" ]
+then
+	STORRAGE_CAPACITY=200Mi
+	echo "Default storrage size of $STORRAGE_SIZE is used"
+fi 
+
 
 if [ -z "$PEER_NAME" ]
 then
