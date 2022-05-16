@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hl-fabric-data-share-service3
+  name: hl-fabric-data-share-service
   labels:
-    run: hl-fabric-data-share-service3
+    run: hl-fabric-data-share-service
 spec:
   type: LoadBalancer 
   selector:
