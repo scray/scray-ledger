@@ -19,6 +19,7 @@ function createDatashare() {
   # Data share
   BASE_PATH=..
 
+  kubectl apply -f $BASE_PATH/containers/data-share/data-share-pvc.yaml
   kubectl apply -f $BASE_PATH/containers/data-share/k8s-hl-fabric-data-share-service.yaml
   kubectl apply -f $BASE_PATH/containers/data-share/k8s-hl-fabric-data-share.yaml
 }
