@@ -28,10 +28,9 @@ function createDatashare() {
 createOrderer() {
   ORDERER_NAME=orderer
   HOST_NAME=example.com
-  START_DIR=$PWD
-  cd  ~/git/scray-ledger/containers/orderer/
+  BASE_PATH=..
 
-  kubectl apply -f k8s-orderer-service.yaml
+  kubectl apply -f $BASE_PATH/containers/orderer/k8s-orderer-service.yaml
 
   kubectl delete configmap hl-fabric-orderer
   kubectl create configmap hl-fabric-orderer \
@@ -40,9 +39,7 @@ createOrderer() {
 	 --from-literal=ORDERER_GENERAL_LOCALMSPID=${ORDERER_NAME}MSP \
 	 --from-literal=NODE_TYPE=orderer
 
-  kubectl apply -f k8s-orderer.yaml
-
-  cd $START_DIR
+  kubectl apply -f $BASE_PATH/containers/orderer/k8s-orderer.yaml
 }
 
 
