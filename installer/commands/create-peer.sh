@@ -19,7 +19,7 @@ function createPeer() {
   EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
   cd ..
-  cd /containers
+  cd containers
   ./configure-deployment.sh -n $PEER_NAME
   kubectl apply -f target/$PEER_NAME/k8s-peer-service.yaml
   GOSSIP_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
