@@ -1,9 +1,8 @@
 
 ## Prerequisites
-Create data share
+Create data share 
 ```
-cd scray-ledger/containers
-kubectl apply -f k8s-hl-fabric-data-share.yaml
+./asset-trasfer-example.sh prepare
 ```
 
 ### Setup example ledger

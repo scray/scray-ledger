@@ -17,9 +17,10 @@ createEnv() {
 
 function createDatashare() {
   # Data share
-  cd ~/git/scray-ledger/containers/data-share
-  kubectl apply -f k8s-hl-fabric-data-share-service.yaml
-  kubectl apply -f k8s-hl-fabric-data-share.yaml
+  BASE_PATH=..
+
+  kubectl apply -f $BASE_PATH/containers/data-share/k8s-hl-fabric-data-share-service.yaml
+  kubectl apply -f $BASE_PATH/containers/data-share/k8s-hl-fabric-data-share.yaml
 }
 
 
