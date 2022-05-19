@@ -16,7 +16,6 @@ pushLocal() {
         cd ../../
         docker build -t $REPO_URL/research/hl-fabric-node-configurator:$VERISON -f containers/hl-fabric-node-configurator/Dockerfile .
         docker push $REPO_URL/research/hl-fabric-node-configurator:$VERISON
-
 }
 
 # Remove runtime data

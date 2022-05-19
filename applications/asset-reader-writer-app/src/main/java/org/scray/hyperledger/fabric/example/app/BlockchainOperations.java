@@ -10,12 +10,21 @@ package org.scray.hyperledger.fabric.example.app;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
+
+import javax.json.JsonArray;
 
 import org.hyperledger.fabric.gateway.Contract;
 import org.hyperledger.fabric.gateway.Gateway;
 import org.hyperledger.fabric.gateway.Network;
 import org.hyperledger.fabric.gateway.Wallet;
 import org.hyperledger.fabric.gateway.Wallets;
+
+
+import  com.google.gson.JsonParser;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 public class BlockchainOperations
 {
@@ -58,7 +67,7 @@ public class BlockchainOperations
 
                 contract.submitTransaction("CreateAsset",
                         id,
-                            "x509::CN=otto\\ ,OU=admin,O=kubernetes.research.dev.seeburger.de\\ ::CN=ca.peer2.kubernetes.research.dev.seeburger.de,O=peer2.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE"
+                            "12"
                         );
             }
             catch (Exception e)
@@ -81,7 +90,22 @@ public class BlockchainOperations
                 // get the network and contract
                 Network network = gateway.getNetwork(channel);
                 Contract contract = network.getContract("basic");
-                data = new String(contract.evaluateTransaction(methodName));
+
+
+                data = new String(contract.evaluateTransaction(methodName)).replace("\\\\", "");
+
+                contract.addContractListener(new ContractListener());
+                network.addBlockListener(new MyBlockListener());
+
+
+                JsonParser jsonObject = new JsonParser();//.parse("{\"name\": \"John\"}").getAsJsonObject();
+                com.google.gson.JsonArray record = jsonObject.parse(data).getAsJsonArray();
+
+
+                System.out.println("ddddddddddddd" + record.get(0).getAsJsonObject().get("Record")); //John
+                System.out.println();
+
+
             }
             catch (Exception e)
             {

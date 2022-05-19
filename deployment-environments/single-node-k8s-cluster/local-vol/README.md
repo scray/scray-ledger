@@ -6,6 +6,11 @@ PEER_NAME=peer0
 ```
   
 ```bash
-./configure-vol.sh -p /tmp/peer-data -n $PEER_NAME
+./configure-vol.sh -p /tmp/peer-data -n $PEER_NAME 
+```
+
+### Capacity for datashare
+```bash
+./configure-vol.sh -p /tmp/peer-data -n datashare-vol --storrage-capacity 1Gi
 ```
 

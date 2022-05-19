@@ -8,6 +8,6 @@ public class ContractListener implements Consumer<ContractEvent> {
 
     @Override
     public void accept(ContractEvent contractEvent) {
-        System.out.println(contractEvent);
+        System.out.println("New contract event :  " + contractEvent);
     }
 }
