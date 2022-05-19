@@ -37,7 +37,7 @@ public class LocalConnectionProfileCreator
             CertLoader certLoader = new CertLoader();
             String cert = certLoader.readFromFile(parms.getCaCertpath());
 
-            Peer peer = new Peer(parms.getPeerName(), "grpc://" + parms.getPeerHostname() + ":" + parms.getPeerChaincodePort(), cert);
+            Peer peer = new Peer(parms.getPeerName(), "grpcs://" + parms.getPeerHostname() + ":" + parms.getPeerChaincodePort(), cert);
 
             ConnectionProfileCreator prof = new ConnectionProfileCreator();
             ObjectNode peerRawDoc = null;

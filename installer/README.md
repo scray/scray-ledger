@@ -2,7 +2,7 @@
 ## Prerequisites
 Create data share 
 ```
-./asset-trasfer-example.sh prepare
+./asset-trasfer-example.sh prepare --storrage-capacity 1Gi
 ```
 
 ### Setup example ledger

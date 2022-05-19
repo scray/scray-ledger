@@ -2,43 +2,27 @@
 name: "test-network-org1"
 version: "1.0.0"
 client:
-  organization: "peer660"
+  organization: "peer200"
   connection:
     timeout:
       peer:
         endorser: "300"
 organizations:
-  peer660:
-    mspid: "peer111MSP"
+  peer200:
+    mspid: "peer200MSP"
     peers:
-    - "peer111"
+    - "peer0.peer200.kubernetes.research.dev.seeburger.de"
     certificateAuthorities:
     - "ca.org1.example.com"
 peers:
-  peer111:
-    url: "grpcs://peer0.peer111.kubernetes.research.dev.seeburger.de:32687"
+  peer0.peer200.kubernetes.research.dev.seeburger.de:
+    url: "grpcs://peer0.peer200.kubernetes.research.dev.seeburger.de:31194"
     tlsCACerts:
-      pem: |-
-        -----BEGIN CERTIFICATE-----
-        MIICszCCAlqgAwIBAgIRAPYcnsU3qk9CFNWgW4Bi+dMwCgYIKoZIzj0EAwIwgaMx
-        CzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJldHRlbjE1
-        MDMGA1UEChMscGVlcjExMS5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5zZWVidXJn
-        ZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIxMTEua3ViZXJuZXRlcy5yZXNlYXJj
-        aC5kZXYuc2VlYnVyZ2VyLmRlMB4XDTIyMDQwODExNTkwMFoXDTMyMDQwNTExNTkw
-        MFowgaMxCzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJl
-        dHRlbjE1MDMGA1UEChMscGVlcjExMS5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5z
-        ZWVidXJnZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIxMTEua3ViZXJuZXRlcy5y
-        ZXNlYXJjaC5kZXYuc2VlYnVyZ2VyLmRlMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
-        QgAEaFoNK7zEI9mENCO2K29Eed/acG5PrYM4SqwEGL3WLW2tfjRwfwUxzA6dQkkG
-        G8goi1n4XZPnYbFsTayEYj0OdqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQW
-        MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQi
-        BCDxavQGyhSKlt/be0dMvLqzTZgeJhyAGI/KvpmGdkiPuzAKBggqhkjOPQQDAgNH
-        ADBEAiBqXmrNsu6AzTyXvDZ36JyIa5pdK26NCY34eOP5G/qyRQIgevcnH1EB3+3u
-        C1OuXRlxFNCKq6lgi/6l31zlaehTm+k=
-        -----END CERTIFICATE-----
-grpcOptions:
-  ssl-target-name-override: "peer0.peer660.kubernetes.research.dev.seeburger.de"
-  hostnameOverride: "peer0.peer660.kubernetes.research.dev.seeburger.de"
+      path: C:\Users\st.obermeier\git\scray-ledger\tools\hlf-connection-profil-creator\target\peer200.kubernetes.research.dev.seeburger.de-tlsca.pem
+    grpcOptions:
+      ssl-target-name-override: "peer0.peer200.kubernetes.research.dev.seeburger.de"
+      hostnameOverride: "peer0.peer200.kubernetes.research.dev.seeburger.de"
+      allow-insecure: true
 orderers:
   orderer.example.com:
     url: "grpc://orderer.example.com:31081"
@@ -50,21 +34,21 @@ certificateAuthorities:
       pem:
       - |
         -----BEGIN CERTIFICATE-----
-        MIICsDCCAlegAwIBAgIQDrL2aNqrxP9YpBaKq/zNlTAKBggqhkjOPQQDAjCBojEL
-        MAkGA1UEBhMCREUxDjAMBgNVBAgTBUJhZGVuMRAwDgYDVQQHEwdCcmV0dGVuMTYw
-        NAYDVQQKEy1wZWVyNDA4OS5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5zZWVidXJn
-        ZXIuZGUxOTA3BgNVBAMTMGNhLnBlZXI0MDg5Lmt1YmVybmV0ZXMucmVzZWFyY2gu
-        ZGV2LnNlZWJ1cmdlci5kZTAeFw0yMTA4MDYwODM5MDBaFw0zMTA4MDQwODM5MDBa
-        MIGiMQswCQYDVQQGEwJERTEOMAwGA1UECBMFQmFkZW4xEDAOBgNVBAcTB0JyZXR0
-        ZW4xNjA0BgNVBAoTLXBlZXI0MDg5Lmt1YmVybmV0ZXMucmVzZWFyY2guZGV2LnNl
-        ZWJ1cmdlci5kZTE5MDcGA1UEAxMwY2EucGVlcjQwODkua3ViZXJuZXRlcy5yZXNl
-        YXJjaC5kZXYuc2VlYnVyZ2VyLmRlMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE
-        IBriY5YjzHvJJD21adfxF6qQUEaPBNCsrugrd4Yy9JM9M/htuH225GTLIc18fhbB
-        eER+CmM4IEU73cZMsv2QraNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQG
-        CCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCBw
-        CVt6VxZciGtE6bX5n7sYj1ZcribbufdtmlKlRGHRjzAKBggqhkjOPQQDAgNHADBE
-        AiBvY1k52PqB7qaZP398KjfxihLQ6FdOhsjh4rI/7JOlzgIgWEZzLoIgcwNlsBCe
-        dRKofpE3vAmDyMa0A4bXXsWZMNQ=
+        MIICtTCCAlqgAwIBAgIRAMIQ1Vhx9Y634IHZ2PLxRdcwCgYIKoZIzj0EAwIwgaMx
+        CzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJldHRlbjE1
+        MDMGA1UEChMscGVlcjIwMC5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5zZWVidXJn
+        ZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIyMDAua3ViZXJuZXRlcy5yZXNlYXJj
+        aC5kZXYuc2VlYnVyZ2VyLmRlMB4XDTIyMDUxMTE5NDQwMFoXDTMyMDUwODE5NDQw
+        MFowgaMxCzAJBgNVBAYTAkRFMQ4wDAYDVQQIEwVCYWRlbjEQMA4GA1UEBxMHQnJl
+        dHRlbjE1MDMGA1UEChMscGVlcjIwMC5rdWJlcm5ldGVzLnJlc2VhcmNoLmRldi5z
+        ZWVidXJnZXIuZGUxOzA5BgNVBAMTMnRsc2NhLnBlZXIyMDAua3ViZXJuZXRlcy5y
+        ZXNlYXJjaC5kZXYuc2VlYnVyZ2VyLmRlMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+        QgAEwhJrKI+SYltb8Pv/kbiCbp8wY5kVRoUOLOhS/UNxq3EvEKxarFimLghNX2Ro
+        wjloGq07gz9gyaFWi/Hj4G9rcqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQW
+        MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQi
+        BCCkZdVt6WkXWRZdeN3MJ5bpJ1fUMF+Kz/3361P64lWvQjAKBggqhkjOPQQDAgNJ
+        ADBGAiEA96yzfBRJW3PGpdFrBh1U02A0PqUJq5ThwXPCqJ2TLuACIQCpH3mC67Fs
+        CPZmUb1Hkp9kISMFXzGcCdpkl0sBBwc16Q==
         -----END CERTIFICATE-----
     httpOptions:
       verify: false
