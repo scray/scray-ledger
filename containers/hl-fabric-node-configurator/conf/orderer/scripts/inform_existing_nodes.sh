@@ -21,7 +21,7 @@ echo $EXTERNAL_IP peer0.${HOSTNAME} >> /etc/hosts
 echo $EXT_PEER_IP $PEER_HOST_NAME >> /etc/hosts
 
 # Export existing channel configuration
-peer channel fetch config config_block.pb -o orderer.example.com:30081 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
+peer channel fetch config config_block.pb -o orderer1.dlt.see-hsa.s-node.de:30081 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 configtxlator proto_decode --input config_block.pb --type common.Block | jq .data.data[0].payload.data.config > config.json
 
 # Upload CA cert

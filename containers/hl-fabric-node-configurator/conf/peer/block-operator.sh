@@ -8,7 +8,7 @@ fetchBlock() {
 
   echo "Execute: " fetchBlock $CHANNEL_ID $BLOCK_NUMBER
 
-  peer channel fetch $BLOCK_NUMBER $CHANNEL_ID-block-$BLOCK_NUMBER.block  -c $CHANNEL_ID --orderer  orderer.example.com:30081 --tls --cafile /tmp/tlsca.example.com-cert.pem
+  peer channel fetch $BLOCK_NUMBER $CHANNEL_ID-block-$BLOCK_NUMBER.block  -c $CHANNEL_ID --orderer  orderer1.dlt.see-hsa.s-node.de:30081 --tls --cafile /tmp/tlsca.example.com-cert.pem
   configtxgen -inspectBlock $CHANNEL_ID-block-$BLOCK_NUMBER.block > $CHANNEL_ID-block-$BLOCK_NUMBER.block.json
   cat $CHANNEL_ID-block-$BLOCK_NUMBER.block.json
 }
