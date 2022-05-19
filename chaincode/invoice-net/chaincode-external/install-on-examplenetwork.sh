@@ -6,7 +6,7 @@ export PKGID=basic_1.0:5a294a12a1a89cd4eed3d4234fbc79f42eab2ac20cd176bc8ebbc07c5
 
 # Set hostname of external chaincode node
 echo $EXT_CC_IP asset-transfer-basic.org1.example.com >> /etc/hosts
-echo $HOST_IP peer0.org1.example.com peer0.org2.example.com orderer.example.com >> /etc/hosts
+echo $HOST_IP peer0.org1.example.com peer0.org2.example.com orderer1.dlt.see-hsa.s-node.de >> /etc/hosts
 
 # Get chaincode description
 

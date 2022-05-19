@@ -5,7 +5,7 @@ export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_LOCALMSPID="AdminOrgMSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/peers/peer0.kubernetes.research.dev.seeburger.de/msp/cacerts/ca.kuber
 export CORE_PEER_MSPCONFIGPATH=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/users/Admin\@kubernetes.research.dev.seeburger.de/msp/
-export ORDERER_CA=/mnt/conf/orderer/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem #Fixme use orderer name
+export ORDERER_CA=/mnt/conf/orderer/organizations/ordererOrganizations/dlt.see-hsa.s-node.de/orderers/orderer1.dlt.see-hsa.s-node.de/msp/tlscacerts/tlsca.dlt.see-hsa.s-node.de-cert.pem #Fixme use orderer name
 
 
 # Export existing channel configuration
