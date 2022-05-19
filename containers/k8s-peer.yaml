@@ -141,7 +141,7 @@ spec:
               name: dockersocket
       initContainers:
         - name: cert-creator
-          image: scrayorg/hl-fabric-node-configurator:1.3
+          image: scrayorg/hl-fabric-node-configurator:1.4
           env:
             - name: NODE_TYPE
               value: "peer"
