@@ -306,6 +306,7 @@ func main() {
 
 	if err != nil {
 		log.Panicf("error create asset-transfer-basic chaincode: %s", err)
+		log.Println("CHAINCODE_ID=...")
 	}
 
 	server := &shim.ChaincodeServer{
