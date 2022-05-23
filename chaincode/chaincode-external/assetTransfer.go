@@ -79,6 +79,8 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		return fmt.Errorf("the asset %s already exists", id)
 	}
 
+    ctx.GetStub().SetEvent("CreateAsset ", []byte("New transaction to create an asset arrived"));
+
 	// Get ID of submitting client identity
 	clientID, err := s.GetSubmittingClientIdentity(ctx)
 	if err != nil {

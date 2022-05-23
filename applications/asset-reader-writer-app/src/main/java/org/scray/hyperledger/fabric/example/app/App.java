@@ -10,6 +10,7 @@
 package org.scray.hyperledger.fabric.example.app;
 
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 public class App {
@@ -23,7 +24,7 @@ public class App {
 
 
 	    for(int i=0; i < 100; i++) {
-	        op.write(new Date() + "");
+	        op.write(new Date() + "", "value" + new Random().nextInt());
 	          op.read("GetAllAssets");
 
 	        Thread.sleep(10000);
