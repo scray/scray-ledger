@@ -261,6 +261,8 @@ func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 		return nil, err
 	}
 	defer resultsIterator.Close()
+	
+	ctx.GetStub().SetEvent("GetAllAssetsEvent ", []byte("eventdata123"))
 
 	var results []QueryResult
 
