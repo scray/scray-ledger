@@ -451,6 +451,13 @@ func LocalStoreAsset(ctx contractapi.TransactionContextInterface, id string, ass
 	return ctx.GetStub().PutState(id, assetJSON)
 }
 
+func (s *SmartContract) ReceivedEvent(ctx contractapi.TransactionContextInterface) error {
+
+	ctx.GetStub().SetEvent("ReceivedInvoice", []byte("eventdata123"))
+
+	return nil
+}
+
 func (s *SmartContract) ReceivedInvoice(ctx contractapi.TransactionContextInterface, id string) error {
 
 	var asset, err = s.ListInvoice(ctx, id)
