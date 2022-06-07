@@ -471,6 +471,9 @@ func (s *SmartContract) ReceivedInvoice(ctx contractapi.TransactionContextInterf
 
 	if clientID == asset.Buyer {
 		asset.Received = true
+
+		ctx.GetStub().SetEvent("ReceivedInvoice", []byte("eventdata123"))
+
 		return LocalStoreAsset(ctx, id, asset)
 	}
 
