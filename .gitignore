@@ -81,3 +81,8 @@ local.properties
 .project
 .classpath
 /chaincode/tools/cc-template/bin/
+
+# Idea
+.idea
+
+wallet

@@ -17,13 +17,18 @@ public class EventConsumerApp
 
         BlockchainOperations blockchainOperations = new BlockchainOperations("channel-1", "basic", "alice", walletPath);
 
-        blockchainOperations.addEventListener();
+        //blockchainOperations.addEventListener();
 
+        while(true) {
         blockchainOperations.write(
                                    "key " + (new Date()).toString(),
                                    "value" + new Random().nextInt());
 
-        Thread.sleep(5000);
+        Thread.sleep(1000);
+
+        }
+
+        //Thread.sleep(5000);
 
     }
 }

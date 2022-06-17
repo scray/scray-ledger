@@ -7,6 +7,14 @@ ARG ALPINE_VER=3.12
 
 FROM golang:${GO_VER}-alpine${ALPINE_VER}
 
+# Install ssh server
+RUN apk add --update --no-cache openssh
+RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+
+# Add ssh dev user
+RUN adduser -h /home/dev -s /bin/sh -D dev
+RUN echo -n 'dev:some_password_here' | chpasswd
+
 WORKDIR /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
 COPY . .
 
@@ -14,5 +22,6 @@ RUN go get -d -v ./...
 RUN go install -v ./...
 
 EXPOSE 9999
-# CMD ["chaincode-external"]
+EXPOSE 22
+
 CMD ["sh", "-c", "chaincode-external; tail -f /dev/null"]

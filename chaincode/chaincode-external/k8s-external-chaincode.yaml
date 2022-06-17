@@ -30,4 +30,5 @@ spec:
                 key: chaincode_id
           - name: CHAINCODE_SERVER_ADDRESS
             value: "0.0.0.0:9999"
-
+          command: [ "/bin/sh" ]
+          args: [ "-c", "[ ! -z \"$DEV_USER_PW\" ] && echo \"Set dev user password\" && dev:$(DEV_USER_PW) | chpasswd; tail -f /dev/null " ]

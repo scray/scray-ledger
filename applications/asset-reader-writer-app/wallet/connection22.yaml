@@ -9,19 +9,34 @@ client:
         endorser: "300"
 organizations:
   peer200:
-    mspid: "peer200MSP"
+    mspid: "aubonmoulinMSP"
     peers:
-    - "peer0.peer200.kubernetes.research.dev.seeburger.de"
+    - "peer0.aubonmoulin.fr"
     certificateAuthorities:
     - "ca.org1.example.com"
 peers:
-  peer0.peer200.kubernetes.research.dev.seeburger.de:
-    url: "grpcs://peer0.peer200.kubernetes.research.dev.seeburger.de:31194"
+  peer0.aubonmoulin.fr:
+    url: "grpcs://peer0.aubonmoulin.fr:32432"
     tlsCACerts:
-      path: C:\Users\st.obermeier\git\scray-ledger\tools\hlf-connection-profil-creator\target\peer200.kubernetes.research.dev.seeburger.de-tlsca.pem
+      pem: |-
+        -----BEGIN CERTIFICATE-----
+        MIICWTCCAf+gAwIBAgIQWhFTZD40PrqqFPICxnDgyzAKBggqhkjOPQQDAjB3MQsw
+        CQYDVQQGEwJGUjEcMBoGA1UECBMTUHJvdmVuY2UtQWxwZXMtQ290ZTESMBAGA1UE
+        BxMJTWFsYXVjZW5lMRcwFQYDVQQKEw5hdWJvbm1vdWxpbi5mcjEdMBsGA1UEAxMU
+        dGxzY2EuYXVib25tb3VsaW4uZnIwHhcNMjIwNTE4MDkyMDAwWhcNMzIwNTE1MDky
+        MDAwWjB3MQswCQYDVQQGEwJGUjEcMBoGA1UECBMTUHJvdmVuY2UtQWxwZXMtQ290
+        ZTESMBAGA1UEBxMJTWFsYXVjZW5lMRcwFQYDVQQKEw5hdWJvbm1vdWxpbi5mcjEd
+        MBsGA1UEAxMUdGxzY2EuYXVib25tb3VsaW4uZnIwWTATBgcqhkjOPQIBBggqhkjO
+        PQMBBwNCAASfOg9ZlJCtxsiuP9dB1Ord+2sEeWo7ZCx3yHiAhep4HQcfkv+e1ohA
+        rFw77ZxLfNmCc4IL8IeQRw0uLsW6/VQ3o20wazAOBgNVHQ8BAf8EBAMCAaYwHQYD
+        VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYD
+        VR0OBCIEIHyk6Ws1wbwW9K3FcNnW68hiUONFKKV+cBoHL+EtwvxJMAoGCCqGSM49
+        BAMCA0gAMEUCIQD8KMA9tT9AwvPtWuD8ME1Lygc4PrCNprbtx5Kxmu3PHQIgdHrB
+        S1x+442htHubAkVx1NeB3onP1Y0Mi3q9dluOJAk=
+        -----END CERTIFICATE-----
     grpcOptions:
-      ssl-target-name-override: "peer0.peer200.kubernetes.research.dev.seeburger.de"
-      hostnameOverride: "peer0.peer200.kubernetes.research.dev.seeburger.de"
+      ssl-target-name-override: "peer0.aubonmoulin.fr"
+      hostnameOverride: "peer0.aubonmoulin.fr"
       allow-insecure: true
 orderers:
   orderer.example.com:

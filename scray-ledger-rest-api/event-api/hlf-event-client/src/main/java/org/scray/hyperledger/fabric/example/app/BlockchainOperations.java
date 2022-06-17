@@ -10,7 +10,6 @@ import org.hyperledger.fabric.gateway.Gateway;
 import org.hyperledger.fabric.gateway.Network;
 import org.hyperledger.fabric.gateway.Wallet;
 import org.hyperledger.fabric.gateway.Wallets;
-import org.scray.hyperledger.fabric.example.app.events.ContractListener;
 
 
 public class BlockchainOperations
@@ -32,26 +31,6 @@ public class BlockchainOperations
     static
     {
         System.setProperty("org.hyperledger.fabric.sdk.service_discovery.as_localhost", "false");
-    }
-
-    public void addEventListener() {
-        if (gateway == null)
-        {
-            try
-            {
-                gateway = connect(userName);
-
-                // get the network and contract
-                Network network = gateway.getNetwork(channel);
-                Contract contract = network.getContract(smartContract);
-
-                contract.addContractListener(new ContractListener());
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void addEventListener(org.scray.hyperledger.fabric.example.app.event.buffer.ContractListener listener) {
