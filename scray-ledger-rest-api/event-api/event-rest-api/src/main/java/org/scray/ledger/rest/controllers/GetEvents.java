@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.scray.hyperledger.fabric.example.app.event.buffer.EventBuffer;
+import org.scray.hyperledger.fabric.client.EventBuffer;
 import org.scray.ledger.rest.RestApplication;
 import org.scray.ledger.rest.modules.Event;
-import org.scray.ledger.rest.modules.Subscription;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,10 +44,10 @@ public class GetEvents
     ResponseEntity<List<Event>> eventsGet(@PathVariable String subscriptionid) {
 
         List<Event> events = new ArrayList<Event>();
-        events.add(new Event("e1", "id1", "abwwc".getBytes()));
+        events.add(new Event("e1", "id1", "abwwc".getBytes(), 1L));
 
         RestApplication.blockchainClient.getEvents()
-        .forEach(event -> {events.add(new Event(event.getName(), event.getChaincodeId(), event.getPayload().orElse("".getBytes())));});
+        .forEach(event -> {events.add(new Event(event.getName(), event.getChaincodeId(), event.getPayload().orElse("".getBytes()), 1L));});
 
         return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
     }

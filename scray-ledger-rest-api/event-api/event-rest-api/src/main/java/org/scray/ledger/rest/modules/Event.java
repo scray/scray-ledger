@@ -12,16 +12,20 @@ public class Event
     @JsonProperty("chaincodeId")
     private String chaincodeId;
 
+    @JsonProperty("blockNumber")
+    private Long blockNumber;
+
     @JsonProperty("eventPayload")
     private byte[] eventPayload;
 
 
-    public Event(String name, String chaincodeId, byte[] eventPayload)
+    public Event(String name, String chaincodeId, byte[] eventPayload, Long blockNumber)
     {
         super();
         this.name = name;
         this.chaincodeId = chaincodeId;
         this.eventPayload = eventPayload;
+        this.blockNumber = blockNumber;
     }
 
     /**

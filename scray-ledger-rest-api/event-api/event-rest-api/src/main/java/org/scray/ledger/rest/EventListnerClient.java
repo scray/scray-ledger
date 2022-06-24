@@ -7,7 +7,10 @@
  */
 package org.scray.ledger.rest;
 
-import org.scray.hyperledger.fabric.example.app.event.buffer.Client;
+import java.nio.file.Paths;
+import java.util.Optional;
+
+import org.scray.hyperledger.fabric.client.EventSubscriptionClient;
 
 public class EventListnerClient
 {
@@ -18,7 +21,7 @@ public class EventListnerClient
         //String walletPath = "/home/ubuntu/wallet/";
         String walletPath = "C:\\Users\\st.obermeier\\git\\scray-ledger\\applications\\asset-reader-writer-app\\wallet";
 
-        Client client = new Client(walletPath);
+        EventSubscriptionClient client = new EventSubscriptionClient(Paths.get( walletPath), "alice", "channel-1", "basic", Optional.of("connection33.yaml"));
 
         client.run();
 

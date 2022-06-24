@@ -8,8 +8,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.nio.file.Paths;
+import java.util.Optional;
+
 import org.apache.commons.cli.ParseException;
-import org.scray.hyperledger.fabric.example.app.event.buffer.Client;
+import org.scray.hyperledger.fabric.client.EventSubscriptionClient;
 import org.scray.ledger.rest.cli.CLIOptions;
 import org.scray.ledger.rest.cli.CLIOptionsParser;
 import org.springframework.boot.SpringApplication;
@@ -29,7 +32,7 @@ description = "Bearer token for the project.")
 
 public class RestApplication {
 
-    public static Client blockchainClient = null;
+    public static EventSubscriptionClient blockchainClient = null;
 
 	public static void main(String[] args) throws ParseException {
 
@@ -39,7 +42,7 @@ public class RestApplication {
 
         String walletPath = options.getWalletPath();
 
-        RestApplication.blockchainClient = new Client(walletPath);
+        RestApplication.blockchainClient = new EventSubscriptionClient(Paths.get(walletPath), "channel-1", "basic", "alice", Optional.of("connection33.yaml"));
         RestApplication.blockchainClient.run();
 
 		SpringApplication.run(RestApplication.class, args);

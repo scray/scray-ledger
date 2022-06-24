@@ -35,7 +35,6 @@ public class OptionParser
             help();
         }
 
-        String[] options = { "--ca-cert-path", "target/peer101.example.scray.org.tlsca.pem" };
 
         OptionParameters params = new OptionParameters();
 

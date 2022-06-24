@@ -1,4 +1,4 @@
-package org.scray.hyperledger.fabric.example.app.event.buffer;
+package org.scray.hyperledger.fabric.client;
 
 import java.util.Optional;
 
@@ -7,15 +7,18 @@ public class Event
     private String name;
     private String chaincodeId;
 
+    Long blockNumber;
+
     private Optional<byte[]> eventPayload;
 
 
-    public Event(String name, String chaincodeId, Optional<byte[]> eventPayload)
+    public Event(String name, String chaincodeId, Optional<byte[]> eventPayload, Long blockNumber)
     {
         super();
         this.name = name;
         this.chaincodeId = chaincodeId;
         this.eventPayload = eventPayload;
+        this.blockNumber = blockNumber;
     }
 
     /**
