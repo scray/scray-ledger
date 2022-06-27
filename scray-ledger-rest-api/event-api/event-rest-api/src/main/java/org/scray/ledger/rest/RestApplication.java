@@ -12,7 +12,10 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.apache.commons.cli.ParseException;
+import org.scray.hyperledger.fabric.client.BlockchainOperations;
+import org.scray.hyperledger.fabric.client.EventBuffer;
 import org.scray.hyperledger.fabric.client.EventSubscriptionClient;
+import org.scray.hyperledger.fabric.client.listener.ContractListener;
 import org.scray.ledger.rest.cli.CLIOptions;
 import org.scray.ledger.rest.cli.CLIOptionsParser;
 import org.springframework.boot.SpringApplication;
@@ -31,19 +34,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 description = "Bearer token for the project.")
 
 public class RestApplication {
+    public static Optional<Subscriptions> subscriptions = Optional.empty();
 
-    public static EventSubscriptionClient blockchainClient = null;
 
 	public static void main(String[] args) throws ParseException {
 
 	    CLIOptionsParser optionsParser = new CLIOptionsParser();
 
 	    CLIOptions options = optionsParser.parseParameters(args);
-
-        String walletPath = options.getWalletPath();
-
-        RestApplication.blockchainClient = new EventSubscriptionClient(Paths.get(walletPath), "channel-1", "basic", "alice", Optional.of("connection33.yaml"));
-        RestApplication.blockchainClient.run();
 
 		SpringApplication.run(RestApplication.class, args);
 	}

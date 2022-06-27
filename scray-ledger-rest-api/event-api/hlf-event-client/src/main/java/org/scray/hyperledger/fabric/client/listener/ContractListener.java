@@ -12,17 +12,15 @@ public class ContractListener implements Consumer<ContractEvent> {
     private static final Logger logger = LoggerFactory.getLogger(ContractListener.class);
     EventBuffer buf = null;
 
-
     public ContractListener(EventBuffer buf)
     {
         super();
         this.buf = buf;
     }
 
-
     @Override
     public void accept(ContractEvent contractEvent) {
-        System.out.println("New contract event: " + contractEvent.getName());
+        logger.debug("Store new contract event ");
         buf.addEvent(contractEvent);
     }
 }

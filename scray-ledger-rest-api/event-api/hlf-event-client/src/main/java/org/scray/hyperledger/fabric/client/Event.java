@@ -2,17 +2,24 @@ package org.scray.hyperledger.fabric.client;
 
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Event
 {
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("chaincodeId")
     private String chaincodeId;
 
-    Long blockNumber;
+    @JsonProperty("blockNumber")
+    private Long blockNumber;
 
-    private Optional<byte[]> eventPayload;
+    @JsonProperty("eventPayload")
+    private byte[] eventPayload;
 
 
-    public Event(String name, String chaincodeId, Optional<byte[]> eventPayload, Long blockNumber)
+    public Event(String name, String chaincodeId, byte[] eventPayload, Long blockNumber)
     {
         super();
         this.name = name;
@@ -25,7 +32,7 @@ public class Event
      * Get the name of the event emitted by the contract.
      * @return An event name.
      */
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -33,7 +40,7 @@ public class Event
      * Get the identifier of the chaincode that emitted the event.
      * @return A chaincode ID.
      */
-    public String getChaincodeId() {
+    String getChaincodeId() {
         return chaincodeId;
     }
 
@@ -42,11 +49,7 @@ public class Event
      * Any binary data associated with this event by the chaincode.
      * @return A binary payload.
      */
-    public Optional<byte[]> getPayload() {
-        System.out.println("AAD: payload" + new String(this.eventPayload.orElse("ff".getBytes())) );
+    byte[] getPayload() {
         return eventPayload;
     }
 }
-
-
-

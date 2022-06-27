@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.scray.hyperledger.fabric.client.EventSubscriptionClient;
 
+
 public class EventListnerClient
 {
 
@@ -27,7 +28,7 @@ public class EventListnerClient
 
         for (int i = 0; i < 1000; i++)
         {
-            System.out.println("Event count  " + client.getEvents().size());
+            System.out.println("Event count  ");
 
             try
             {

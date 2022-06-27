@@ -24,7 +24,7 @@ public class BlockchainOperations
     Gateway gateway = null;
     Optional<String> connectionProfile;
 
-    public BlockchainOperations(String channel, String smartContract, String userName, String walletPath,  Optional<String> connectionProfile)
+    public BlockchainOperations(String walletPath, String userName , String channel, String smartContract, Optional<String> connectionProfile)
     {
         this.channel = channel;
         this.smartContract = smartContract;
