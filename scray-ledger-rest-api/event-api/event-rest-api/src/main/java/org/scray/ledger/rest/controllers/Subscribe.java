@@ -93,4 +93,26 @@ public class Subscribe
 
         return new ResponseEntity<List<Event>>(latestEvent, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get block",
+                    description = "Get block of blockchain",
+                    security =
+                    { @SecurityRequirement(name = "BearerJWT") },
+                    tags =
+                    { "Block-API" })
+         @ApiResponses(value =
+         {
+           @ApiResponse(responseCode = "200",
+                        description = "OK",
+                        content = @Content(
+                                           mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                           schema = @Schema(implementation = Event.class))) })
+         @GetMapping(value = "/blocks/{chanel}/{blocknumber}")
+         ResponseEntity<String> glockGet(@PathVariable String chanel, @PathVariable String blocknumber)
+         {
+
+             //java.util.List<Event> latestEvent = RestApplication.subscriptions.get().getLastEvents(UUID.fromString(subscriptionid));
+
+             return new ResponseEntity<String>("", HttpStatus.OK);
+         }
 }
