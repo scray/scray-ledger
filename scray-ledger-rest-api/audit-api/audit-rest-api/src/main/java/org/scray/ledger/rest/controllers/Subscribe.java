@@ -1,6 +1,7 @@
 package org.scray.ledger.rest.controllers;
 
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.scray.hyperledger.fabric.client.EventSubscriptionClient;
-import org.scray.ledger.rest.Block;
 import org.scray.ledger.rest.RestApplication;
+import org.scray.hyperledger.fabric.client.Block;
+import org.scray.hyperledger.fabric.client.BlockReaderClient;
 import org.scray.hyperledger.fabric.client.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,25 +38,33 @@ public class Subscribe
 {
     private static final Logger logger = LoggerFactory.getLogger(Subscribe.class);
 
-
     @Operation(summary = "Get block",
-                    description = "Get block of blockchain",
-                    security =
-                    { @SecurityRequirement(name = "BearerJWT") },
-                    tags =
-                    { "Block-API" })
-         @ApiResponses(value =
-         {
-           @ApiResponse(responseCode = "200",
-                        description = "OK",
-                        content = @Content(
-                                           mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                           schema = @Schema(implementation = Block.class))) })
-         @GetMapping(value = "/blocks/{channel}/{blocknumber}")
-         ResponseEntity<String> glockGet(@PathVariable String channel, @PathVariable String blocknumber)
-         {
+               description = "Get block of blockchain",
+               security =
+               { @SecurityRequirement(name = "BearerJWT") },
+               tags =
+               { "Block-API" })
+    @ApiResponses(value =
+    {
+      @ApiResponse(responseCode = "200",
+                   description = "OK",
+                   content = @Content(
+                                      mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                      schema = @Schema(implementation = Block.class))) })
+    @GetMapping(value = "/blocks/{channel}/{blocknumber}")
+    ResponseEntity<Block> glockGet(@PathVariable String channel, @PathVariable Long blocknumber)
+    {
+        String user = "alice";
+        String connectionKey = channel + "_" + user;
 
+        // Path walletPath, String chanelName, String chaincodeName, String userId, Optional<String> connectionProfil
+        if (RestApplication.blockClients.get(connectionKey) == null)
+        {
+            RestApplication.blockClients.put(connectionKey, new BlockReaderClient(RestApplication.options.getWalletPath(), channel, "basic",
+                                                                                  user, Optional.of("connection33.yaml")));
+        }
 
-             return new ResponseEntity<String>("", HttpStatus.OK);
-         }
+        var blockClient = RestApplication.blockClients.get(connectionKey);
+        return new ResponseEntity<Block>(blockClient.getBlock(blocknumber), HttpStatus.OK);
+    }
 }

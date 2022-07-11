@@ -1,8 +1,6 @@
 package org.scray.hyperledger.fabric.client.test.apps;
 
-import java.util.Date;
 import java.util.Optional;
-import java.util.Random;
 
 import org.scray.hyperledger.fabric.client.BlockchainOperations;
 
@@ -14,7 +12,11 @@ public class BlockReaderApp
 
         BlockchainOperations op = new BlockchainOperations(walletPath, "alice", "channel-1", "basic", Optional.of("connection33.yaml"));
 
-        op.queryBlock(1);
+        var block = op.queryBlock(1003);
+
+        System.out.println("Cur hash " + block.getDataHash());
+        System.out.println("Prev hash " + block.getPreviousHash());
+        System.out.println(block.getTransaktionData());
     }
 
 }

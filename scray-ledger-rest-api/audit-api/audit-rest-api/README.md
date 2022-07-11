@@ -6,7 +6,12 @@
 
 
 ## Swagger definition
-  [Swagger UI](http://localhost:8083/swagger-ui/index.html)
+  [Swagger UI](http://localhost:8082/swagger-ui/index.html)
+
+
+## Example query
+
+![Query Block](./swagger-screenshot-block-api-query.png)
 
 
 
