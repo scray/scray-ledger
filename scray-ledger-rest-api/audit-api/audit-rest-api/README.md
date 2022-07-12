@@ -11,7 +11,7 @@
 
 ## Example query
 
-![Query Block](./swagger-screenshot-block-api-query.png)
+![Query Block](../swagger-screenshot-block-api-query.png)
 
 
 
