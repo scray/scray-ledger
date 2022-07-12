@@ -2,7 +2,7 @@
 
 
 ## Run Server
-  ``java -jar -Dserver.port=8083 audit-rest-api-0.0.1-SNAPSHOT.jar  --wallet ~/wallet/``
+  ``java -jar -Dserver.port=8082 audit-rest-api-0.0.1-SNAPSHOT.jar  --wallet ~/wallet/``
 
 
 ## Swagger definition
