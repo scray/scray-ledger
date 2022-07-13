@@ -6,14 +6,13 @@
 
 ### Publish to docker hub
 ```bash
-export DOCKER_TOKEN=f13...
-./docker_deploy.sh -h
+./docker_deploy.sh -l
 ```
 # Deploy smart contract
 
 ### Create Service
 ```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/erc-721/k8s-service-external-chaincode.yaml
+kubectl.exe apply -f k8s-service-external-chaincode.yaml
 ```
 
 ### Publish chaincode definition
@@ -21,10 +20,11 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 
 ```
 CC_HOSTNAME=hl-fabric-erc-721-example.example.com
-CC_SERVICE_NAME=hl-fabric-erc-721-example
 CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
 CC_LABEL=basic_1.0
+export $(cat .env | xargs)
 
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
 CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
 kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
 ```
@@ -44,8 +44,8 @@ PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descr
 ### Start chaincode container
 Create configuration 
 ```
-kubectl delete configmap hl-fabric-erc-721-example
-kubectl create configmap hl-fabric-erc-721-example \
+kubectl delete configmap $CC_NAME
+kubectl create configmap $CC_NAME \
  --from-literal=chaincode_id=$PKGID
 ```
 

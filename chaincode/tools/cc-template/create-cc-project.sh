@@ -47,9 +47,11 @@ setValuesInLocalFile() {
   DOCKER_IMAGE_NAME=$2
 
   # Configure service
-  yq w -i k8s-service-external-chaincode.yaml "metadata.name" "$CC_NAME"
-  yq w -i k8s-service-external-chaincode.yaml "metadata.labels.run" "$CC_NAME"
-  yq w -i k8s-service-external-chaincode.yaml "spec.selector.app" "$CC_NAME"
+  yq w -i k8s-service-external-chaincode.yaml "metadata.name" "$CC_NAME-service"
+  yq w -i k8s-service-external-chaincode.yaml "metadata.labels.run" "$CC_NAME-service"
+  yq w -i k8s-service-external-chaincode.yaml "spec.selector.app" "$CC_NAME-service"
+
+  echo CC_SERVICE_NAME="$CC_NAME-service"
 
   # Configure deployment descriptor
   yq w -i  k8s-external-chaincode.yaml "metadata.name" "$CC_NAME"
@@ -63,6 +65,8 @@ setValuesInLocalFile() {
   yq w  -i k8s-external-chaincode.yaml "spec.template.spec.containers(name==hl-fabric-erc-721-example).name" "$CC_NAME"
 
   echo DOCKER_IMAGE_TAG="$DOCKER_IMAGE_NAME" >> .env
+
+  echo CC_NAME="$CC_NAME" >> .env
 }
 
 
