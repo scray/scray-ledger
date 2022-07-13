@@ -68,7 +68,7 @@ setValuesInLocalFile() {
 
   echo CC_NAME="$CC_NAME" >> .env
 
-  # Set default credentials for datashare
+  # Set default credentials for data share
   echo SHARED_FS_USER=scray >> .env
   echo SHARED_FS_PW=scray >> .env
 }

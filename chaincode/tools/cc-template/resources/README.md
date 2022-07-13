@@ -2,56 +2,9 @@
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))
 
 
-# Publish smart contract
-
-### Publish to docker hub
+## Deploy created smart contract
 ```bash
-./docker_deploy.sh -l
-```
-# Deploy smart contract
-
-### Create Service
-```
-kubectl.exe apply -f k8s-service-external-chaincode.yaml
-```
-
-### Publish chaincode definition
-[Start required container](../tools/hlf-chaincode-definition-creator/README.md#start-container)
-
-```
-CC_HOSTNAME=hl-fabric-erc-721-example.example.com
-CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
-CC_LABEL=basic_1.0
-export $(cat .env | xargs)
-
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
-CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
-kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
-```
-
-
-### Get hash code form share [for testing]
-```
-SHARED_FS=10.15.130.111
-CC_HOSTNAME=hl-fabric-erc-721-example.example.com
-CC_LABEL=basic_1.0
-
-SHARED_FS_USER=scray
-SHARED_FS_PW=scray
-PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
-```
-
-### Start chaincode container
-Create configuration 
-```
-kubectl delete configmap $CC_NAME
-kubectl create configmap $CC_NAME \
- --from-literal=chaincode_id=$PKGID
-```
-
-Start chaincode
-```
-kubectl apply -f k8s-external-chaincode.yaml
+./target/$CC_NAME/cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
 ```
 
 # Install external chaincode on k8s peer
