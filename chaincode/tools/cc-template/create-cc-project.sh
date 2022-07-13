@@ -67,6 +67,10 @@ setValuesInLocalFile() {
   echo DOCKER_IMAGE_TAG="$DOCKER_IMAGE_NAME" >> .env
 
   echo CC_NAME="$CC_NAME" >> .env
+
+  # Set default credentials for datashare
+  echo SHARED_FS_USER=scray >> .env
+  echo SHARED_FS_PW=scray >> .env
 }
 
 
