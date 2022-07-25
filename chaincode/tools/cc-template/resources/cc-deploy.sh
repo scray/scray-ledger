@@ -11,7 +11,7 @@ deploy() {
     ./docker_deploy.sh -l
 
     echo "Create k8s service for smart contract"
-    kubectl.exe apply -f k8s-service-external-chaincode.yaml
+    kubectl apply -f k8s-service-external-chaincode.yaml
 
     CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
     CC_LABEL=basic_1.0
