@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +55,7 @@ public class Subscribe
                                                                                                       mediaType = MediaType.APPLICATION_JSON_VALUE)),
                security =
                { @SecurityRequirement(name = "BearerJWT") })
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> createSubscription(@RequestBody Subscription subscription)
     {
         logger.debug("Subscripton parameters: " + subscription);
@@ -107,7 +109,8 @@ public class Subscribe
                         content = @Content(
                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
                                            schema = @Schema(implementation = Event.class))) })
-         @GetMapping(value = "/blocks/{chanel}/{blocknumber}")
+           @GetMapping(value = "/blocks/{chanel}/{blocknumber}")
+         @CrossOrigin(origins = "*")
          ResponseEntity<String> glockGet(@PathVariable String chanel, @PathVariable String blocknumber)
          {
 

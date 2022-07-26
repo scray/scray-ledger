@@ -15,8 +15,8 @@ public class Subscription
         this.chanelName = chanelName;
         this.chaincodeId = chaincodeId;
         this.userId = userId;
-        this.wallet = wallet;
         this.connectionProfil = connectionProfil;
+        this.wallet = wallet;
     }
 
     public String getChanelName()
