@@ -10,6 +10,8 @@ PORT=$2
 CC_LABEL=$3
 SHARED_FS_HOST=$4
 
+
+
 create_description_file() {
   java -jar ./target/hlf-chaincode-definition-creator-1.0-jar-with-dependencies.jar $HOSTNAME $PORT $CC_LABEL
   cd target/${HOSTNAME}_$CC_LABEL/

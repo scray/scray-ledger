@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,17 +52,17 @@ public class Subscribe
                    content = @Content(
                                       mediaType = MediaType.APPLICATION_JSON_VALUE,
                                       schema = @Schema(implementation = Block.class))) })
+    @CrossOrigin(origins = "*")
     @GetMapping(value = "/blocks/{channel}/{blocknumber}")
     ResponseEntity<Block> glockGet(@PathVariable String channel, @PathVariable Long blocknumber)
     {
-        String user = "alice";
+        String user = "aubonmoulin"; // FIXME add to client management
         String connectionKey = channel + "_" + user;
 
-        // Path walletPath, String chanelName, String chaincodeName, String userId, Optional<String> connectionProfil
         if (RestApplication.blockClients.get(connectionKey) == null)
         {
             RestApplication.blockClients.put(connectionKey, new BlockReaderClient(RestApplication.options.getWalletPath(), channel, "basic",
-                                                                                  user, Optional.of("connection33.yaml")));
+                                                                                  user, Optional.of("connection.yaml"))); // FIXME add to client management
         }
 
         var blockClient = RestApplication.blockClients.get(connectionKey);

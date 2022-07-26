@@ -3,12 +3,13 @@
 ## Create project
 ```bash
 CC_NAME=super-smart-contract
-./create-cc-project.sh --name $CC_NAME  --docker-tag repo1/cc-example:0.1
+./create-cc-project.sh --name $CC_NAME  --docker-tag repo1:5000/cc-example:0.1
 ```
 
 ## Deploy created smart contract
 ```bash
-./target/$CC_NAME/cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
+cd ./target/$CC_NAME/
+./cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
 ```
 
 ##  Extend example chaincode
