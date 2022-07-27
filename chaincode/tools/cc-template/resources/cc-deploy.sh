@@ -4,7 +4,7 @@ WORKDIR=$(cd $(dirname $0) && pwd)
 
 deploy() {
 
-	SHARED_FS=$1
+	  SHARED_FS=$1
     CC_HOSTNAME=$2
 
     echo "Push image to local registry"
@@ -13,11 +13,19 @@ deploy() {
     echo "Create k8s service for smart contract"
     kubectl apply -f k8s-service-external-chaincode.yaml
 
-    CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
+    CC_PORT=$(kubectl get service "$CC_SERVICE_NAME" -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
     CC_LABEL=basic_1.0
+
+    if [ -z "$CC_PORT" ]
+    then
+        echo "No CC port  found"
+        exit 1
+    fi
 
     kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
     CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
+
+
 
     if [ ! -z "$CC_DEPLOYER_POD" ]
     then
@@ -42,7 +50,7 @@ startChaincode() {
     SHARED_FS_USER=scray
     SHARED_FS_PW=scray
 
-    CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
+    CC_PORT=$(kubectl get service "$CC_SERVICE_NAME" -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
     PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
 
     if [ ! -z "$PKGID" ]
