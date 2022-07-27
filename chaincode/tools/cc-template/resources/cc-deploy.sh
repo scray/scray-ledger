@@ -1,7 +1,6 @@
 #!/bin/sh
 
 WORKDIR=$(cd $(dirname $0) && pwd)
-
 deploy() {
 
 	  SHARED_FS=$1
@@ -43,12 +42,10 @@ startChaincode() {
     CC_HOSTNAME=$2
 
     # Clean up
-    kubectl delete deployment invoice-chaincode-external
+    kubectl delete deployment "$CC_NAME"
 
     # Get configuration
     CC_LABEL=basic_1.0
-    SHARED_FS_USER=scray
-    SHARED_FS_PW=scray
 
     CC_PORT=$(kubectl get service "$CC_SERVICE_NAME" -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
     PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
@@ -57,13 +54,15 @@ startChaincode() {
     then
         kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
     else
-        echo "Package id is emty"
+        echo "Package id is empty"
         exit 1
     fi
 
-    kubectl delete configmap $CC_NAME
-    kubectl create configmap $CC_NAME \
-        --from-literal=chaincode_id=$PKGID
+    kubectl delete configmap "$CC_NAME"
+    echo "create configmap" "$CC_NAME"
+
+    kubectl create configmap "$CC_NAME" \
+        --from-literal=chaincode_id="$PKGID"
 
 	kubectl apply -f k8s-external-chaincode.yaml
 }

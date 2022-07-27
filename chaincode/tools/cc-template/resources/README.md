@@ -1,7 +1,8 @@
 # Hyperledger Fabric Samples ERC-721 token scranrio as external service
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))
 
-
+### Prerequisite
+    Install jq
 ## Deploy created smart contract
 ```bash
 ./target/$CC_NAME/cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
