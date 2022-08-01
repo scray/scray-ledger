@@ -8,7 +8,8 @@ CC_NAME=super-smart-contract
 
 ## Deploy created smart contract
 ```bash
-./target/$CC_NAME/cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
+cd target/$CC_NAME
+./cc-deploy.sh --data-share 10.15.130.111 --caincode-hostname chaincode.host.example.com
 ```
 
 ##  Extend example chaincode
