@@ -51,7 +51,7 @@ setValuesInLocalFile() {
   yq w -i k8s-service-external-chaincode.yaml "metadata.labels.run" "$CC_NAME-service"
   yq w -i k8s-service-external-chaincode.yaml "spec.selector.app" "$CC_NAME-service"
 
-  echo CC_SERVICE_NAME="$CC_NAME-service"
+  echo CC_SERVICE_NAME="$CC_NAME-service" >> .env
 
   # Configure deployment descriptor
   yq w -i  k8s-external-chaincode.yaml "metadata.name" "$CC_NAME"
