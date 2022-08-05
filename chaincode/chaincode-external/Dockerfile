@@ -13,7 +13,6 @@ RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
 
 # Add ssh dev user
 RUN adduser -h /home/dev -s /bin/sh -D dev
-RUN echo -n 'dev:some_password_here' | chpasswd
 
 WORKDIR /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external
 COPY . .

@@ -42,7 +42,7 @@ startChaincode() {
 	kubectl create configmap invoice-chaincode-external \
 		 --from-literal=chaincode_id="$PKGID"
 
-	kubectl apply -f $WORKDIR/../../chaincode/chaincode-external/k8s-external-chaincode.yaml
+	kubectl apply -f "$WORKDIR"/../../chaincode/chaincode-external/k8s-external-chaincode.yaml
 
 }
 

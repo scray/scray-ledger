@@ -31,4 +31,4 @@ spec:
           - name: CHAINCODE_SERVER_ADDRESS
             value: "0.0.0.0:9999"
           command: [ "/bin/sh" ]
-          args: [ "-c", "[ ! -z \"$DEV_USER_PW\" ] && echo \"Set dev user password\" && dev:$(DEV_USER_PW) | chpasswd; tail -f /dev/null " ]
+          args: [ "-c", "[ ! -z \"$DEV_USER_PW\" ] && echo \"DEV_USER_PW variable found. Set dev user password\" && echo dev:$DEV_USER_PW | chpasswd; chaincode-external; tail -f /dev/null " ]
