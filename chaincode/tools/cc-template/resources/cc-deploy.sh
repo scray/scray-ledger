@@ -58,7 +58,7 @@ startChaincode() {
         exit 1
     fi
 
-    kubectl delete configmap "$CC_NAME"
+    kubectl delete configmap --ignore-not-found=true "$CC_NAME"
     echo "create configmap" "$CC_NAME"
 
     kubectl create configmap "$CC_NAME" \

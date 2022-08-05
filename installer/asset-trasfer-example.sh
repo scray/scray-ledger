@@ -32,7 +32,7 @@ createOrderer() {
 
   kubectl apply -f $BASE_PATH/containers/orderer/k8s-orderer-service.yaml
 
-  kubectl delete configmap hl-fabric-orderer
+  kubectl delete configmap --ignore-not-found=true hl-fabric-orderer
   kubectl create configmap hl-fabric-orderer \
   	 --from-literal=hostname=$HOST_NAME \
 	 --from-literal=org_name=$ORDERER_NAME \

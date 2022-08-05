@@ -38,7 +38,7 @@ SHARED_FS_USER=scray
 SHARED_FS_PW=scray
 PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
 echo $PKGID
-	kubectl delete configmap invoice-chaincode-external
+	kubectl delete configmap --ignore-not-found=true invoice-chaincode-external
 	kubectl create configmap invoice-chaincode-external \
 		 --from-literal=chaincode_id=$PKGID
 

@@ -41,7 +41,7 @@ CHANNEL_NAME=channel-1
 
 ### Add peer to channel
 ```bash
-PEER_NAME=peer401
+PEER_NAME=peer403
 CHANNEL_NAME=channel-1
 ```
 
