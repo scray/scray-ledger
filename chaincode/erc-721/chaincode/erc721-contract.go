@@ -408,8 +408,8 @@ func (c *TokenERC721Contract) SetOption(ctx contractapi.TransactionContextInterf
 	clientMSPID, err := ctx.GetClientIdentity().GetMSPID()
 	if err != nil {
 		return false, fmt.Errorf("failed to get clientMSPID: %v", err)
-	} else if clientMSPID != "Org1MSP" {
-		return false, fmt.Errorf("client is not authorized to set the name and symbol of the token")
+	} else if clientMSPID != "peer403MSP" {
+		return false, fmt.Errorf("client is not authorized to set the name and symbol of the token. Only peer403MSP is allowed to set options")
 	}
 
 	err = ctx.GetStub().PutState(nameKey, []byte(name))
@@ -438,8 +438,8 @@ func (c *TokenERC721Contract) MintWithTokenURI(ctx contractapi.TransactionContex
 		return nil, fmt.Errorf("failed to get clientMSPID: %v", err)
 	}
 
-	if clientMSPID != "Org1MSP" {
-		return nil, fmt.Errorf("client is not authorized to set the name and symbol of the token")
+	if clientMSPID != "peer403MSP" {
+		return nil, fmt.Errorf("client is not authorized to set the name and symbol of the token. Only peer403MSP is allowed to set options")
 	}
 
 	// Get ID of submitting client identity
