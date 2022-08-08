@@ -34,5 +34,31 @@ upload_ccdescription() {
   curl --user $SHARED_FS_USER:$SHARED_FS_PW -T description-hash.json      http://$SHARED_FS_HOST/cc_descriptions/${HOSTNAME}_$CC_LABEL/
 }
 
+
+
+if [ -z "$HOSTNAME" ]
+then
+  >&2 "HOSTNAME should not be empty."
+  exit 1
+fi
+
+if [ -z "$PORT" ]
+then
+  >&2 "PORT should not be empty."
+  exit 1
+fi
+
+if [ -z "$CC_LABEL" ]
+then
+  >&2 "CC_LABEL should not be empty."
+  exit 1
+fi
+
+if [ -z "$SHARED_FS_HOST" ]
+then
+  >&2 "SHARED_FS_HOST should not be empty."
+  exit 1
+fi
+
 create_description_file
 upload_ccdescription
