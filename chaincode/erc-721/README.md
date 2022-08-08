@@ -1,6 +1,17 @@
 # Hyperledger Fabric Samples ERC-721 token scenario as external service
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-721))
 
+### Create peer
+
+```bash
+PEER_NAME=peer403
+```
+
+```bash
+cd ../../installer/
+./scray-ledger.sh create-peer -n $PEER_NAME
+```
+
 # Deploy smart contract
 
 ### Create Service
