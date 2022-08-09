@@ -56,21 +56,21 @@ initAndRead() {
   createOrderer
 
   echo "Create peer $PEER_NAME"
-  ./asset-trasfer-example.sh create-peer -n $PEER_NAME
+  ./scray-ledger.sh create-peer -n $PEER_NAME
   echo "Create channel $CHANNEL_NAME"
-  ./asset-trasfer-example.sh create-channel --name $CHANNEL_NAME
+  ./scray-ledger.sh create-channel --name $CHANNEL_NAME
 
   sleep 10s
   echo "Add peer $PEER_NAME to channel $CHANNEL_NAME"
-  ./asset-trasfer-example.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
+  ./scray-ledger.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
  
   sleep 10s
   echo "Deploy chaincode "
-  ./asset-trasfer-example.sh deploy-chaincode --data-share $SHARED_FS
+  ./scray-ledger.sh deploy-chaincode --data-share $SHARED_FS
  
   sleep 15
   echo "Install chaincode on peer $PEER_NAME"
-  ./asset-trasfer-example.sh install-chaincode --peer-name $PEER_NAME --channel-name $CHANNEL_NAME --data-share $SHARED_FS
+  ./scray-ledger.sh install-chaincode --peer-name $PEER_NAME --channel-name $CHANNEL_NAME --data-share $SHARED_FS
 
   sleep 5
 

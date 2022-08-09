@@ -4,12 +4,12 @@
 ### Create peer
 
 ```bash
-PEER_NAME=peer403
+PEER_1=peer403
 ```
 
 ```bash
 cd ../../installer/
-./scray-ledger.sh create-peer -n $PEER_NAME
+./scray-ledger.sh create-peer -n $PEER_1
 ```
 
 # Deploy smart contract
@@ -105,3 +105,11 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/examples/cc-erc-721-mint-token.sh $CHANNEL_NAME $PKGID
 ```
 [Request details](../../containers/hl-fabric-node-configurator/conf/peer/examples/cc-erc-721-mint-token.sh)
+
+
+# Add second user and peer to transfer token
+
+```
+  PEER_2=peer404
+  ./scray-ledger.sh create-peer -n $PEER_2
+```
