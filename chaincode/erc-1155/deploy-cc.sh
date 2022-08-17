@@ -12,6 +12,7 @@ function publicChaincodeDefinition() {
 
 function createChannelAndJoinPeer() {
   cd ../../installer/
+
   ./scray-ledger.sh create-channel --name "$CHANNEL_NAME"
   ./scray-ledger.sh add-peer  --peer-name $PEER_NAME --channel-name $CHANNEL_NAME
 }
@@ -57,15 +58,43 @@ function installOnPeer() {
   kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/examples/cc-erc-1155-mint-token.sh $CHANNEL_NAME $PKGID
 }
 
-PEER_NAME=$1
-CHANNEL_NAME=$2
-SHARED_FS=$3
+function usage() {
+    echo "deploy-cc.sh --peer-name peer403 --channel-name channel-erc-1155 --share 10.15.130.111"
+}
+while [ "$1" != "" ]; do
+    case $1 in
+        --peer-name )   shift
+ 	   PEER_NAME=$1
+	;;
+        --channel-name )   shift
+           CHANNEL_NAME=$1
+	;;
+        --share )   shift
+	   SHARED_FS_HOST=$1
+        ;;
 
-PEER_NAME=peer403
-CHANNEL_NAME=channel-erc-1155-2
-SHARED_FS=10.15.130.111
+    esac
+    shift
+done
 
-publicChaincodeDefinition
-createChannelAndJoinPeer
-getPKGID
-installOnPeer
+if [ -z "$PEER_NAME" ]
+then
+ echo "peer name is missing" "${usage}"
+ exit 1
+elif [ -z "$CHANNEL_NAME" ]
+then
+  echo "channel name is missing" "${usage}"
+  exit 1
+elif [ -z "$SHARED_FS_HOST" ]
+then
+  echo "SHARED_FS_HOST is missing" "${usage}"
+  exit 1
+else
+ publicChaincodeDefinition
+ createChannelAndJoinPeer
+ getPKGID
+ installOnPeer
+fi
+
+
+
