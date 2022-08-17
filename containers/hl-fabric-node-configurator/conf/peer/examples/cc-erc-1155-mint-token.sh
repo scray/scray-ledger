@@ -21,7 +21,7 @@ echo "Mint token"
 TOKEN_ID="$RANDOM"
 
 
-peer chaincode invoke orderer.example.com:30081  --waitForEventTimeout 60s  --tls --cafile /tmp/tlsca.example.com-cert.pem  -C $CHANNEL_ID -n basic -c "{\"function\":\"MintBatch\",\"Args\":[\"$ACCOUNT_ID\",\"[1,
+peer chaincode invoke orderer.example.com:30081  --waitForEventTimeout 60s  --tls --cafile /tmp/tlsca.example.com-cert.pem  -C $CHANNEL_ID -n basic -c "{\"function\":\"MintBatch\",\"Args\":[\"$ACCOUNT_ID\",\"[1,2,3,4,5,6]\",\"[100,200,300,150,100,100]\"]}"
 
 echo Mint  token with ID: $TOKEN_ID
 mint_command="{\"function\":\"MintWithTokenURI\",\"Args\":[\"$TOKEN_ID\", \"https://example.com/nft$TOKEN_ID.json\"]}"
@@ -29,4 +29,5 @@ mint_command="{\"function\":\"MintWithTokenURI\",\"Args\":[\"$TOKEN_ID\", \"http
 
 
 echo "Show balance of token 3"
+# shellcheck disable=SC1073
 peer chaincode query -C $CHANNEL_ID -n basic  -c "{\"function\":\"BalanceOf\",\"Args\":[\"$ACCOUNT_ID\",\"3\"]}"

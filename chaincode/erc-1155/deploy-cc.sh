@@ -54,7 +54,6 @@ function installOnPeer() {
           $SHARED_FS
 
   kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID
-
   kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/examples/cc-erc-1155-mint-token.sh $CHANNEL_NAME $PKGID
 }
 
@@ -63,7 +62,7 @@ CHANNEL_NAME=$2
 SHARED_FS=$3
 
 PEER_NAME=peer403
-CHANNEL_NAME=channel-erc-1155
+CHANNEL_NAME=channel-erc-1155-2
 SHARED_FS=10.15.130.111
 
 publicChaincodeDefinition
