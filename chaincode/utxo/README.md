@@ -1,4 +1,4 @@
-# Hyperledger Fabric Samples ERC-1155 token scenario
+# Hyperledger Fabric Samples token-utxo token scenario
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-1155))
 
 
