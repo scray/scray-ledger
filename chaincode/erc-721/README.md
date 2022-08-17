@@ -5,6 +5,7 @@
 
 ```bash
 PEER_1=peer403
+CHANNEL_NAME=channel-1
 ```
 
 ```bash
@@ -12,7 +13,11 @@ cd ../../installer/
 ./scray-ledger.sh create-peer -n $PEER_1
 ```
 
-# Deploy smart contract
+# Create channel
+```
+./scray-ledger.sh create-channel --name $CHANNEL_NAME 
+```
+# Deploy smart contract 
 
 ### Create Service
 ```

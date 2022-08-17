@@ -1,11 +1,25 @@
 # Hyperledger Fabric Samples ERC-1155 token scranrio as external service
 [Original implementation]((https://github.com/hyperledger/fabric-samples/tree/main/token-erc-1155))
 
+
+```bash
+PEER_NAME=peer403
+CHANNEL_NAME=channel-erc-1155
+SHARED_FS=10.15.130.111
+```
+
+
+# Create channel
+```
+./scray-ledger.sh create-channel --name $CHANNEL_NAME 
+```
+
+
 # Deploy smart contract
 
 ### Create Service
 ```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/chaincode/erc-1155/k8s-service-external-chaincode.yaml
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/erc-1155/k8s-service-external-chaincode.yaml
 ```
 
 ### Publish chaincode definition
@@ -43,7 +57,7 @@ kubectl create configmap erc-1155 \
 
 Start chaincode
 ```
-kubectl apply -f k8s-external-chaincode.yaml
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/erc-1155/k8s-external-chaincode.yaml
 ```
 
 # Install external chaincode on k8s peer
