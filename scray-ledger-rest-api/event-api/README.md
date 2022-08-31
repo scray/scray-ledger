@@ -8,7 +8,7 @@ REST-API to consume chaincode events.
 
 More technical information can be found [here](event-rest-api)
 
-## Deploy API in K8s
+## Deploy API in K8s cluster
 ```
 LOCAL_WALLET_PATH=/home/ubuntu/event-api/hlf-event-client/wallet
 WALLET_ID=alice.id
