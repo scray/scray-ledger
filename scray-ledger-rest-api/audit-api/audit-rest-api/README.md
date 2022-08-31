@@ -17,18 +17,18 @@ kubectl create secret generic audit-rest-api-i1 --from-file=connection.yaml=$LOC
 
 ## Start
 ```
-kubectl apply -f k8s-event-rest-api.yaml
+kubectl apply -f  k8s-audit-api.yaml
 ```
 
 ### Query API port
 ```
-EVENT-API-PORT=$(kubectl get service scray-ledger-event-api -o jsonpath="{.spec.ports[?(@.name=='api-port')].nodePort}")
+AUDIT_API_PORT=$(kubectl get service scray-ledger-event-api -o jsonpath="{.spec.ports[?(@.name=='api-port')].nodePort}")
 ```
 
 ### Swagger UI
 
 ```
-$EVENT-API-PORT/swagger-ui/index.html
+$AUDIT_API_PORT/swagger-ui/index.html
 ```
 
 
