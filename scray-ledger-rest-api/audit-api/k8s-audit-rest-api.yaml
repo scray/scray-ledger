@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scray-ledger-audit-api
+  labels:
+    app: scray-ledger-audit-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scray-ledger-audit-api
+  template:
+    metadata:
+      labels:
+        app: scray-ledger-audit-api
+    spec:
+      containers:
+        - name: scray-ledger-audit-api
+          image: scrayorg/audit-rest-api:1.3
+          volumeMounts:
+            - name: secret-conf-vol
+              mountPath: /etc/secret-conf-vol
+      volumes:
+        - name: secret-conf-vol
+          secret:
+            secretName: audit-rest-api-i1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scray-ledger-audit-api
+  labels:
+    run: scray-ledger-audit-api
+spec:
+  type: NodePort
+  selector:
+    app: scray-ledger-audit-api
+  ports:
+    - name: api-port
+      port: 8080
+      protocol: TCP
