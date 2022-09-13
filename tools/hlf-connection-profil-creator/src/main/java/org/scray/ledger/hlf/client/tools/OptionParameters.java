@@ -11,7 +11,7 @@ public class OptionParameters
     private String peerHostname;
     private int peerChaincodePort;
     private String caCertpath;
-    private String outPath = "target/connection.yaml";
+    private String outPath = "connection-profiles/connection-profile.yaml";
 
     private static final Logger logger = LoggerFactory.getLogger(OptionParameters.class);
 
@@ -43,7 +43,7 @@ public class OptionParameters
     {
         if (this.caCertpath == null)
         {
-            String defaultPath = "target/" + this.getPeerHostname() + "-tlsca.pem";
+            String defaultPath = "certs/" + this.getPeerHostname() + "-tlsca.pem";
             logger.debug("CA cert path not set. Default {} is used", defaultPath);
             return defaultPath;
         }

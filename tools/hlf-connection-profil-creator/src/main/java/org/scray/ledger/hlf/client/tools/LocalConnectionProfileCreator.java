@@ -4,12 +4,14 @@ package org.scray.ledger.hlf.client.tools;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.scray.ledger.hlf.connectionprofile.nodes.CertLoader;
+import org.scray.ledger.hlf.connectionprofile.nodes.Organisation;
 import org.scray.ledger.hlf.connectionprofile.nodes.Peer;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -34,10 +36,15 @@ public class LocalConnectionProfileCreator
         {
             parms = parser.parseParameters(args);
 
+            // Configure peers node
             CertLoader certLoader = new CertLoader();
             String cert = certLoader.readFromFile(parms.getCaCertpath());
+            Peer peer = new Peer(parms.getPeerName(), "grpcs://" + parms.getPeerHostname() + ":" + parms.getPeerChaincodePort(), cert, parms.getPeerHostname());
 
-            Peer peer = new Peer(parms.getPeerName(), "grpcs://" + parms.getPeerHostname() + ":" + parms.getPeerChaincodePort(), cert);
+            // Configure organizations node
+            Organisation org = new Organisation(parms.getPeerName(), parms.getPeerName() + "MSP",
+                    Arrays.asList(parms.getPeerHostname()),
+                    Arrays.asList("tlsca." + parms.getPeerName() + "." + parms.getPeerHostname()));
 
             ConnectionProfileCreator prof = new ConnectionProfileCreator();
             ObjectNode peerRawDoc = null;
@@ -45,9 +52,21 @@ public class LocalConnectionProfileCreator
             try
             {
                 peerRawDoc = prof.readTemplate("src/main/resources/connection.yaml");
+
                 peerRawDoc.set("peers", peer.getJsonNode());
 
+                // Set org name
+                ((ObjectNode)peerRawDoc.get("client")).put("organization", parms.getPeerName());
+                peerRawDoc.set("organizations", org.getJsonNode());
 
+                // Update grpc options
+                ((ObjectNode)peerRawDoc.get("grpcOptions")).put(
+                        "ssl-target-name-override",
+                        "peer0." + parms.getPeerName() + "." + parms.getPeerHostname());
+
+                ((ObjectNode)peerRawDoc.get("grpcOptions")).put(
+                        "hostnameOverride",
+                        "peer0." + parms.getPeerName() + "." + parms.getPeerHostname());
 
                 YAMLMapper mapper = new YAMLMapper();
                 mapper.configure(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE, true);

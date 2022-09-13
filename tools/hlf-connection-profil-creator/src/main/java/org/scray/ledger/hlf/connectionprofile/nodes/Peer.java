@@ -9,15 +9,17 @@ public class Peer {
 	private String peerName;
 	private String url;
 	private String tlsCACerts;
+	private  String peerHostname;
 
-	public Peer(String peerName, String url, String tlsCACerts) {
+	public Peer(String peerName, String url, String tlsCACerts, String peerHostname) {
 		super();
 		this.peerName = peerName;
 		this.url = url;
 		this.tlsCACerts = tlsCACerts;
+		this.peerHostname = peerHostname;
 	}
 
-	public ObjectNode getJsonNode( ) {
+	public ObjectNode getJsonNode() {
 		ObjectMapper mapper = new ObjectMapper();
 
 		ObjectNode peerAttributes = mapper.createObjectNode();
@@ -31,7 +33,7 @@ public class Peer {
 		peerAttributes.set("tlsCACerts", pemNode);
 
 		ObjectNode peerNode = mapper.createObjectNode();
-		peerNode.set(peerName, peerAttributes);
+		peerNode.set(this.peerHostname, peerAttributes);
 
 		return peerNode;
 	}
