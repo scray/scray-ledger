@@ -9,7 +9,7 @@ DATA_SHARE=10.15.130.111
 SHARED_FS_USER=scray
 SHARED_FS_PW=scray
 
-PEER_NAME=peer111
+PEER_NAME=peer200
 PEER_HOSTNAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
 ```
 
