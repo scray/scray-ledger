@@ -16,7 +16,7 @@
 * ``cd scray-ledger/tools/wallet-creator``
 * ``./cert-creator.sh create_csr --common-name $WALLET_COMMON_NAME``
 * ``./cert-creator.sh push_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
-* GOTO Peer side
+* GOTO [Peer side](#peer-side)
 * ``./cert-creator.sh pull_signed_crt --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 * ``./cert-creator.sh create_wallet --common-name $WALLET_COMMON_NAME --mspId ${PEER_NAME}MSP``
 
@@ -28,7 +28,7 @@ PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.na
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
 ```
 
-* ``WALLET_COMMON_NAME=alice2``
+* ``WALLET_COMMON_NAME=alice``
 * ``DATA_SHARE=10.15.130.111``
 * ``/mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 
@@ -39,4 +39,4 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
     ```
 
 * ``/mnt/tools/wallet-creator/cert-creator.sh push_crt --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
-* GOTO App side
+* GOTO [App side](#app-side)
