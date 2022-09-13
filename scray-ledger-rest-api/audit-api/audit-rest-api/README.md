@@ -10,12 +10,12 @@ LOCAL_WALLET_PATH=/home/ubuntu/event-api/hlf-event-client/wallet
 WALLET_ID=alice.id
 ```
 
-## Provide configuration and wallet
+### Provide configuration and wallet
 ```
 kubectl create secret generic audit-rest-api-i1 --from-file=connection.yaml=$LOCAL_WALLET_PATH/connection.yaml --from-file=$WALLET_ID=$LOCAL_WALLET_PATH/$WALLET_ID
 ```
 
-## Start
+### Start deployment
 ```
 kubectl apply -f  k8s-audit-api.yaml
 ```

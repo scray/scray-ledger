@@ -86,3 +86,4 @@ local.properties
 .idea
 
 wallet
+/tools/hlf-connection-profil-creator/certs/

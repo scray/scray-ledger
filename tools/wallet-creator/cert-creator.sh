@@ -159,9 +159,6 @@ case $COMMAND in
     echo  "create_csr"
     readParameters "$@"
     createKeyAndCsr
-    ;;
-  push_csr)
-    echo  "push_csr"
     pushCsr "$NEW_CERT_COMMON_NAME" "$SHARED_FS_HOST"
     ;;
   pull_csr)
@@ -170,7 +167,9 @@ case $COMMAND in
     ;;
   sign_csr)
     echo  "sign_csr"
+    pullCsr "$NEW_CERT_COMMON_NAME" "$SHARED_FS_HOST"
     signCsr "$NEW_CERT_COMMON_NAME"
+    pushCrt "$NEW_CERT_COMMON_NAME" "$SHARED_FS_HOST"
     ;;
   push_crt)
     echo  "publish_crt"
@@ -181,7 +180,8 @@ case $COMMAND in
     pullCrt
     ;;
   create_wallet)
-    echo ""
+    echo "Pull crt and create wallet"
+    pullCrt
     createWallet
     ;;
 esac
