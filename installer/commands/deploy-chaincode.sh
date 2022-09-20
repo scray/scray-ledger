@@ -6,6 +6,7 @@ WORKDIR=$(cd $(dirname $0) && pwd)
 deploy() {
 
 	SHARED_FS=$1
+	INSTANCE_NAME=$2
 
   kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-eternal-chaincode.yaml
 

@@ -1,7 +1,7 @@
 # Start external chaincode 
 ### Create Service
 ```
-kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-eternal-chaincode.yaml
+kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-external-chaincode.yaml
 ```
 
 ### Publish chaincode definition
@@ -135,4 +135,13 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 #### Read invoice
 ```
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/get-my-invoices.sh  $CHANNEL_NAME $INVOICE_ID
+```
+
+## Create individual service 
+
+```bash
+CC_INSTANCE_NAME=cc-i202
+./configure-service.sh -i $CC_INSTANCE_NAME
+
+kubectl apply -f target/$CC_INSTANCE_NAME/k8s-service-external-chaincode-$CC_INSTANCE_NAME.yaml
 ```
