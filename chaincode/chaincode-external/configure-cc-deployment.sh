@@ -31,6 +31,7 @@ downloadYqBin() {
 createEnvForNewConf() {
   mkdir -p target/$CC_INSTANCE_NAME
   cp k8s-service-external-chaincode.yaml ./target/$CC_INSTANCE_NAME/k8s-service-external-chaincode-$CC_INSTANCE_NAME.yaml
+  cp k8s-external-chaincode.yaml ./target/$CC_INSTANCE_NAME/k8s-external-chaincode-$CC_INSTANCE_NAME.yaml
   cp configure-service.sh ./target/$CC_INSTANCE_NAME
 }
 
@@ -41,8 +42,22 @@ setServiceName() {
   yq w -i "$SERVICE_YAML" "spec.selector.app" $CC_INSTANCE_NAME
 }
 
+setDeploymentDescriptorParameters() {
+  DEPLOYMENT_YAML=./target/$CC_INSTANCE_NAME/k8s-external-chaincode-$CC_INSTANCE_NAME.yaml
+
+  yq w -i "$DEPLOYMENT_YAML" "metadata.name" $CC_INSTANCE_NAME
+  yq w -i "$DEPLOYMENT_YAML" "metadata.labels.app" $CC_INSTANCE_NAME
+  yq w -i "$DEPLOYMENT_YAML" "spec.selector.matchLabels.app" $CC_INSTANCE_NAME
+  yq w -i "$DEPLOYMENT_YAML" "spec.template.metadata.labels.app" $CC_INSTANCE_NAME
+
+  yq w -i "$DEPLOYMENT_YAML" "spec.template.spec.containers(name==invoice-chaincode-external).name" $CC_INSTANCE_NAME
+  yq w -i "$DEPLOYMENT_YAML" "spec.template.spec.containers(name==$CC_INSTANCE_NAME).env(name==CHAINCODE_ID).valueFrom.configMapKeyRef.name" $CC_INSTANCE_NAME
+}
+
+
+
 usage() {
-    echo "usage: configure chaincode k8s service"
+    echo "usage: configure chaincode k8s components. --instance-name examplecc"
 }
 
 while [ "$1" != "" ]; do
@@ -50,7 +65,7 @@ while [ "$1" != "" ]; do
         -i | --instance-name )   shift
                                 CC_INSTANCE_NAME=$1
                                 ;;
-        * )                     usage
+        --help )                usage
                                 exit 1
     esac
     shift
@@ -63,4 +78,9 @@ then
 fi
 
 createEnvForNewConf
+
+echo "Configure service description"
 setServiceName
+
+echo "Configure deployment descriptor"
+setDeploymentDescriptorParameters

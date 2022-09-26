@@ -141,7 +141,33 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 
 ```bash
 CC_INSTANCE_NAME=cc-i202
-./configure-service.sh -i $CC_INSTANCE_NAME
+./configure-cc-deployment.sh -i $CC_INSTANCE_NAME
 
 kubectl apply -f target/$CC_INSTANCE_NAME/k8s-service-external-chaincode-$CC_INSTANCE_NAME.yaml
 ```
+
+### Create cc description
+```bash
+
+SHARED_FS=10.15.130.111
+CC_HOSTNAME=$CC_INSTANCE_NAME-cc.org1.example.com
+CC_SERVICE_NAME=$CC_INSTANCE_NAME
+CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
+CC_LABEL=basic_1.0
+
+CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
+kubectl exec --stdin --tty $CC_DEPLOYER_POD -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME $CC_PORT $CC_LABEL $SHARED_FS
+```
+
+### Start chaincode
+
+```bash
+PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://"$SHARED_FS"/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
+
+kubectl delete configmap --ignore-not-found=true $CC_INSTANCE_NAME
+kubectl create configmap $CC_INSTANCE_NAME --from-literal=chaincode_id="$PKGID"
+
+kubectl apply -f ./target/$CC_INSTANCE_NAME/k8s-external-chaincode-$CC_INSTANCE_NAME.yaml
+
+```
+

@@ -10,7 +10,7 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 ### Publish deployment description
 ```
 SHARED_FS=10.15.130.111
-CC_HOSTNAME=asset-transfer-basic.org1.example.com
+CC_HOSTNAME=$CC_INSTANCE_NAME-cc.org1.example.com
 CC_INSTANCE_NAME=hl-fabric-cc-external-invoice
 CC_SERVICE_NAME=$CC_INSTANCE_NAME
 CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
