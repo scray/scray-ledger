@@ -118,12 +118,13 @@ docker exec cli /bin/bash /opt/scray/scripts/example_network_commit_cc.sh $IP_CC
 PEER_NAME=peer50
 CHANNEL_NAME=c3
 PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
+PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
 INVOICE_ID=ID-$RANDOM
 PRODUCT_BUYER="x509::CN=User1@kubernetes.research.dev.seeburger.de,OU=client,L=San Francisco,ST=California,C=US::CN=ca.kubernetes.research.dev.seeburger.de,O=kubernetes.research.dev.seeburger.de,L=San Francisco,ST=California,C=US"
 ```
 #### Create invoice
 ```
-kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/add-invoice.sh  $CHANNEL_NAME $INVOICE_ID $PRODUCT_BUYER
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/add-invoice.sh  $CHANNEL_NAME $PKGID $INVOICE_ID $PRODUCT_BUYER
 ```
 
 #### Transfer invoice
@@ -140,7 +141,7 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 ## Create individual service 
 
 ```bash
-CC_INSTANCE_NAME=cc-i202
+CC_INSTANCE_NAME=cc-i211
 ./configure-cc-deployment.sh -i $CC_INSTANCE_NAME
 
 kubectl apply -f target/$CC_INSTANCE_NAME/k8s-service-external-chaincode-$CC_INSTANCE_NAME.yaml
@@ -168,6 +169,40 @@ kubectl delete configmap --ignore-not-found=true $CC_INSTANCE_NAME
 kubectl create configmap $CC_INSTANCE_NAME --from-literal=chaincode_id="$PKGID"
 
 kubectl apply -f ./target/$CC_INSTANCE_NAME/k8s-external-chaincode-$CC_INSTANCE_NAME.yaml
+```
 
+### Install chaincode
+
+```bash
+ORDERER_NAME=orderer.example.com
+IP_CC_SERVICE=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")   
+EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")       
+PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
+ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
+ORDERER_LISTEN_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
+ORDERER_HOST=orderer.example.com
+
+ORDERER_PORT=$(kubectl get service orderer-org1-scray-org -o jsonpath="{.spec.ports[?(@.name=='orderer-listen')].nodePort}")
+ORDERER_PORT=30081
+ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
+
+CC_LABEL=basic_1.0
+
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh \
+    /mnt/conf/install_and_approve_cc.sh \
+        $IP_CC_SERVICE \
+        $ORDERER_IP \
+        $ORDERER_HOST \
+        $ORDERER_PORT \
+        $CHANNEL_NAME \
+        $PKGID \
+        $CC_HOSTNAME \
+        $CC_LABEL \
+        $SHARED_FS
+```
+
+Commit chaincode
+```
+kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/cc_commit.sh  $CHANNEL_NAME $PKGID
 ```
 
