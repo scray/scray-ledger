@@ -32,7 +32,6 @@ createEnvForNewConf() {
   mkdir -p target/$CC_INSTANCE_NAME
   cp k8s-service-external-chaincode.yaml ./target/$CC_INSTANCE_NAME/k8s-service-external-chaincode-$CC_INSTANCE_NAME.yaml
   cp k8s-external-chaincode.yaml ./target/$CC_INSTANCE_NAME/k8s-external-chaincode-$CC_INSTANCE_NAME.yaml
-  cp configure-service.sh ./target/$CC_INSTANCE_NAME
 }
 
 setServiceName() {
