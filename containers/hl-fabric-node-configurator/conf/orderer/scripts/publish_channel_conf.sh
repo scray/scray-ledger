@@ -9,7 +9,7 @@ export ORDERER_CA=/mnt/conf/orderer/organizations/ordererOrganizations/example.c
 
 
 # Export existing channel configuration
-peer channel fetch config config_block.pb -o orderer.example.com:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
+peer channel fetch config config_block.pb -o orderer.example.com:30081 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 configtxlator proto_decode --input config_block.pb --type common.Block > config.json
 
 # Upload CA cert
