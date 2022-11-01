@@ -32,6 +32,7 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
   * ```
     CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem
     CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk
+    /mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE
     /mnt/tools/wallet-creator/cert-creator.sh sign_csr --common-name $WALLET_COMMON_NAME --cacert $CA_CERT --cakey $CA_KEY  --shared-fs-host $DATA_SHARE
     ```
 
