@@ -16,11 +16,12 @@ cd scray-ledger/containers/data-share
    ```
 
 ### Start data share
-    ```
+
     kubectl apply -f k8s-hl-fabric-data-share-service.yaml 
     kubectl apply -f k8s-hl-fabric-data-share.yaml
-    ```
+
    
+### Clean up
 
 ```
 kubectl delete pod task-pv-pod
