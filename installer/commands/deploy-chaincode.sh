@@ -8,6 +8,9 @@ deploy() {
 	SHARED_FS=$1
 	INSTANCE_NAME=$2
 
+  # Create service for external chaincode
+  echo "Create service for external chaincode"
+  kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-service-external-chaincode.yaml
   kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/chaincode-external/k8s-external-chaincode.yaml
 
   kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/chaincode/tools/hlf-chaincode-definition-creator/k8s-cc-deployer.yaml
