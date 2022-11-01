@@ -20,8 +20,8 @@ deploy() {
   CC_PORT=$(kubectl get service $CC_SERVICE_NAME -o jsonpath="{.spec.ports[?(@.name=='chaincode')].nodePort}")
   CC_LABEL=basic_1.0
 
-  while [[ $(kubectl get pods $CC_DEPLOYER_POD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 1; done
-  CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}")
+
+  while [[ $(kubectl get pods $CC_DEPLOYER_POD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for cc deployer pod $CC_DEPLOYER_POD" && CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}") && sleep 1; done
 
   echo "Publish deployment description"
   kubectl exec --stdin --tty "$CC_DEPLOYER_POD" -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME "$CC_PORT" "$CC_LABEL" "$SHARED_FS"
