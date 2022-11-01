@@ -16,7 +16,7 @@
 * ``cd scray-ledger/tools/wallet-creator``
 * ``./cert-creator.sh create_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 * GOTO [Peer side](#peer-side)
-* ``./cert-creator.sh create_wallet --common-name $WALLET_COMMON_NAME --mspId ${PEER_NAME}MSP``
+* ``./cert-creator.sh create_wallet --common-name $WALLET_COMMON_NAME --mspId ${PEER_NAME}MSP --shared-fs-host $DATA_SHARE``
 
 The wallet is stored in ./wallet/$WALLET_COMMON_NAME.id
 
