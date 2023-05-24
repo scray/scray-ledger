@@ -86,7 +86,8 @@ pushCrt() {
 }
 
 pullCrt() {
-  mkdir  -p crt_target/$NEW_CERT_COMMON_NAME
+  echo mkdir  -p crt_target/$NEW_CERT_COMMON_NAME
+  echo "--user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS_HOST/signed_certs/$NEW_CERT_COMMON_NAME/$NEW_CERT_COMMON_NAME.crt > crt_target/$NEW_CERT_COMMON_NAME/user.crt"
   curl --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS_HOST/signed_certs/$NEW_CERT_COMMON_NAME/$NEW_CERT_COMMON_NAME.crt > crt_target/$NEW_CERT_COMMON_NAME/user.crt
 }
 
@@ -99,7 +100,8 @@ createWallet() {
 	then
 		echo "Wallet creator program does not exists. In path: $WALLET_CREATOR_JAR_PATH/" >&2
 	fi
-	java -jar $WALLET_CREATOR_JAR_PATH/wallet-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar crt_target/$NEW_CERT_COMMON_NAME/key.pem crt_target/$NEW_CERT_COMMON_NAME/user.crt $NEW_CERT_COMMON_NAME $MSP_ID
+	echo java -jar $WALLET_CREATOR_JAR_PATH/wallet-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar crt_target/$NEW_CERT_COMMON_NAME/key.pem crt_target/$NEW_CERT_COMMON_NAME/user.crt $NEW_CERT_COMMON_NAME $MSP_ID
+  java -jar $WALLET_CREATOR_JAR_PATH/wallet-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar crt_target/$NEW_CERT_COMMON_NAME/key.pem crt_target/$NEW_CERT_COMMON_NAME/user.crt $NEW_CERT_COMMON_NAME $MSP_ID
 }
 
 usage()

@@ -87,3 +87,6 @@ local.properties
 
 wallet
 /tools/hlf-connection-profil-creator/certs/
+tools/hlf-connection-profil-creator/connection-profils/
+chaincode/chaincode-external/bin/
+tools/
