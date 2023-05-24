@@ -45,7 +45,7 @@ configureService() {
   yq w -i k8s-orderer-service.yaml "metadata.name" $ORDERER_NAME
   yq w -i k8s-orderer-service.yaml "metadata.labels.run" $ORDERER_NAME
   yq w -i k8s-orderer-service.yaml "spec.selector.app" $ORDERER_NAME
-  yq w  -i k8s-orderer-service.yaml "spec.ports(name==$ORDERER_NAME)" port-$ORDERER_NAME
+  yq w -i k8s-orderer-service.yaml "spec.ports(name==$ORDERER_NAME)" port-$ORDERER_NAME
 }
 
 configureOrdererDeployment() {

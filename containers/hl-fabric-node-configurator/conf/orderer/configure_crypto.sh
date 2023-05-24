@@ -2,6 +2,7 @@
 BASE_PATH=$PWD
 ORG_NAME=$1
 DOMAINE=$2
+SANS=""
 ORG_CRYPTO_CONFIG_FILE=crypto-config-orderer.yaml
 YQ_VERSON=4.4.1
 
@@ -52,13 +53,24 @@ customozeConfigFile() {
 
 	# Update Domain 
 	yq -i eval ".OrdererOrgs[0].Domain=\"$DOMAINE\"" $ORG_CRYPTO_CONFIG_FILE
-	
 	yq -i eval ".OrdererOrgs[0].Specs[0].Hostname=\"$ORG_NAME\"" $ORG_CRYPTO_CONFIG_FILE
 	
 	# Add SANS
 	echo "source ../yq_lib.sh" > update_SANS.sh
-	YQ_CHANGE_COMMAND=$(echo \''.OrdererOrgs[0].Specs[0].SANS += '\"$DOMAINE\"\') 
-	echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto-config-orderer.yaml " >> update_SANS.sh
+  YQ_CHANGE_COMMAND=$(echo \''.OrdererOrgs[0].Specs[0].SANS += '\"$DOMAINE\"\')
+  echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto-config-orderer.yaml " >> update_SANS.sh
+
+	if [ "$SANS" != "" ]
+  then
+        IFS=',' read -ra SANS <<< "$SANS"
+
+        for san in "${SANS[@]}"
+        do
+          YQ_CHANGE_COMMAND=$(echo \''.OrdererOrgs[0].Specs[0].SANS += '\"$san\"\')
+          echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto-config-orderer.yaml " >> update_SANS.sh
+        done
+  fi
+
 	chmod u+x update_SANS.sh
 	./update_SANS.sh
 
@@ -68,6 +80,7 @@ customozeConfigFile() {
 usage()
 {
     echo "usage: Crypto creator script [[[-o ] [-d]] | [-h]]"
+    echo "Example: configure_crypto.sh  -o org1 -d orderer.example.com -s localhost,orderer.internal.example.com"
 }
 
 
@@ -76,9 +89,13 @@ while [ "$1" != "" ]; do
         -o | --organization )   shift
                     ORG_NAME=$1
                     ;;
-        -d | --domain )   	shift
+        -d | --domain ) shift
 	       			DOMAINE=$1	
 	       			;;
+	      -s | --sans )   	shift
+	          SANS=$1
+	        ;;
+
 	    -c | --clean )   shift
                    clean
                     ;;

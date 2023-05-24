@@ -1,4 +1,8 @@
 #!/bin/bash
+BASE_PATH=$PWD
+SANS=""
+
+YQ_VERSON2=4.4.1
 
 
 yq() {
@@ -30,6 +34,21 @@ dowloadYqBin() {
   fi
 }
 
+dowloadYqBin2() {
+  if [[ ! -f "./bin/yq-${YQ_VERSON}" ]]
+  then
+    echo "yq does not exists"
+    echo "download linux_amd64 yq binary"
+
+    mkdir bin
+    curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSON2}/yq_linux_amd64 -o ./bin/yq-${YQ_VERSON2}
+    chmod u+x ./bin/yq-${YQ_VERSON2}
+  fi
+}
+
+yq_path() {
+  echo $BASE_PATH/bin/yq-${YQ_VERSON2} $1 $2 $3 $4 $5
+}
 
 readParameters()
 {
@@ -55,6 +74,9 @@ readParameters()
           --ca_locality)	shift
                   LOCALITY=$1
                             ;;
+           -s | --sans )   	shift
+                  SANS=$1
+                    ;;
           --upload) shift
             CURL_UPLOAD_URL=$1
                           ;;
@@ -85,6 +107,7 @@ fi
 
 
 checkYqVersion
+dowloadYqBin2
 
 cp $ORG_CRYPTO_CONFIG_FILE $CRYPTO_CONFIG_FILE
 echo $CRYPTO_CONFIG_FILE
@@ -101,3 +124,23 @@ yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].Domain" $DOMAIN
 yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Country"  $COUNTRY
 yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Province" $PROVICE
 yq w -i $CRYPTO_CONFIG_FILE  "PeerOrgs[0].CA.Locality" $LOCALITY
+
+yq w -i $CRYPTO_CONFIG_FILE "PeerOrgs[0].Specs[0].Hostname" $DOMAIN
+
+# Add SANS
+echo "source ../yq_lib.sh" > update_SANS.sh
+YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Specs[0].SANS += '\"$DOMAIN\"\')
+echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto.yaml " >> update_SANS.sh
+
+if [ "$SANS" != "" ]
+then
+      IFS=',' read -ra SANS <<< "$SANS"
+      for san in "${SANS[@]}"
+      do
+        YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Specs[0].SANS += '\"$san\"\')
+        echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto.yaml" >> update_SANS.sh
+      done
+fi
+
+	chmod u+x update_SANS.sh
+	./update_SANS.sh

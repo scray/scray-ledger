@@ -17,9 +17,9 @@ PeerOrgs:
       Country: DE
       Province: Baden
       Locality: Bretten
-    Template:
-      Count: 1
-      SANS:
-        - localhost
+    Specs:
+      - Hostname: orderer
+        SANS:
+          - localhost
     Users:
       Count: 3
