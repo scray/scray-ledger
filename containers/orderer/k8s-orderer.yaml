@@ -60,6 +60,11 @@ spec:
             - name: ORDERER_GENERAL_CLUSTER_ROOTCAS
               value: "[/var/hyperledger/orderer/tls/ca.crt]"
             - name: CONFIGTX_ORDERER_ADDRESSES
+            - name: HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-orderer
+                  key: hostname
           volumeMounts:
             - name: orderer-conf
               mountPath: /var/hyperledger/orderer/orderer.genesis.block
