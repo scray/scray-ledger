@@ -20,6 +20,7 @@ cd scray-ledger/containers/orderer/
    kubectl delete configmap hl-fabric-orderer
    kubectl create configmap hl-fabric-orderer \
     --from-literal=hostname=example.com \
+    --from-literal=sans=orderer1.internal.example.com,orderer1.external.example.com \
     --from-literal=org_name=$ORDERER_NAME \
     --from-literal=ORDERER_GENERAL_LOCALMSPID=${ORDERER_NAME}MSP \
     --from-literal=NODE_TYPE=orderer

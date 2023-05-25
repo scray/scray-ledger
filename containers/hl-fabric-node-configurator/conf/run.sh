@@ -1,6 +1,7 @@
 
 INPUT_PARAMETERS=$@
 DOMAINE=org1.fabric.hyperledger.projects.scray.org
+SANS=""
 ORG_NAME=OrgScrayMSP
 CHANNEL_NAME=mychannel
 GROUP=000
@@ -75,8 +76,11 @@ while [ "$1" != "" ]; do
                                 ORG_NAME=$1
                                 ;;
         -d | --domain )    shift
-	       			DOMAINE=$1	
+	       			DOMAINE=$1
                                 ;;
+        -s | --sans )   	shift
+            SANS=$1
+        ;;
         --ca_country )   	  shift
                   CA_COUNTRY=$1
                                 ;;
@@ -109,6 +113,8 @@ echo "Configuration"
 echo "  NODE_TYPE: ${NODE_TYPE}"
 echo "  ORG_NAME: ${ORG_NAME}"
 echo "  DOMAINE: ${DOMAINE}"
+echo "  SANS: ${SANS}"
+
 
 checkYqVersion
 
@@ -116,7 +122,7 @@ if [ "$NODE_TYPE" = orderer ]
 then
 	echo "Configure node as orderer"
 	cd orderer
-	./configure_orderer.sh -o $ORG_NAME -d $DOMAINE
+	./configure_orderer.sh -o "$ORG_NAME" -d "$DOMAINE" -s "$SANS"
 elif [ "$NODE_TYPE" = peer ]
 then
   echo "Configure node as peer"

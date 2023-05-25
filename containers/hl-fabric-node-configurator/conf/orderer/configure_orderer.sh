@@ -2,6 +2,7 @@
 
 GEN_BLOCK_PATH=./system-genesis-block
 CREATE_ADMIN_ORG=true
+SANS=""
 
 copyCertsToDefaultDir() {
     cp -r organizations/ordererOrganizations/${DOMAINE}/orderers/$ORG_NAME.${DOMAINE}/msp ./
@@ -18,7 +19,7 @@ function createCryptos() {
     fi
 
     export PATH=~/git/fabric-samples/bin:$PATH
-    ./configure_crypto.sh -o $ORG_NAME -d $DOMAINE
+    ./configure_crypto.sh -o "$ORG_NAME" -d "$DOMAINE" -s "$SANS"
     cryptogen generate --config=./target/crypto-config-orderer.yaml --output="organizations"
 
     
@@ -69,10 +70,13 @@ while [ "$1" != "" ]; do
     case $1 in
         -o | --organization )   shift
                                 ORG_NAME=$1
-                                ;;
+        ;;
         -d | --domain )   	shift
 	       			DOMAINE=$1	
-                                ;;
+        ;;
+	      -s | --sans )   	shift
+	            SANS=$1
+	      ;;
         -g | --gennesis.block-path )         shift
                                 GEN_BLOCK_PATH=$1
 				;;
@@ -81,7 +85,7 @@ while [ "$1" != "" ]; do
 				;;
         -h | --help )           usage
                                 exit
-                                ;;
+        ;;
         * )                     # usage
                                 exit 1
     esac
