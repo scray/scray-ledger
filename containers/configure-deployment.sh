@@ -53,7 +53,7 @@ setValuesInLocalFile() {
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==$PEER_NAME).env(name==CORE_PEER_GOSSIP_BOOTSTRAP).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME 
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==$PEER_NAME).env(name==CORE_PEER_GOSSIP_EXTERNALENDPOINT).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME 
   yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==$PEER_NAME).env(name==CORE_PEER_LOCALMSPID).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME 
-
+  yq w  -i k8s-peer.yaml "spec.template.spec.containers(name==$PEER_NAME).env(name==SANS).valueFrom.configMapKeyRef.name" hl-fabric-peer-$PEER_NAME
 
   # Configure persistent volumes
 
