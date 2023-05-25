@@ -34,6 +34,7 @@ kubectl delete configmap hl-fabric-peer-$PEER_NAME
 kubectl create configmap hl-fabric-peer-$PEER_NAME \
  --from-literal=hostname=$PEER_HOST_NAME \
  --from-literal=org_name=$PEER_NAME \
+ --from-literal=sans=orderer1.internal.example.com,orderer1.external.example.com \
  --from-literal=data_share=hl-fabric-data-share-service:80 \
  --from-literal=ca_country=DE \
  --from-literal=ca_province=Baden \

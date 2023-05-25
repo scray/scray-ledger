@@ -69,6 +69,11 @@ spec:
                 configMapKeyRef:
                   name: hl-fabric-peer
                   key: CORE_PEER_LOCALMSPID
+            - name: SANS
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-peer
+                  key: sans
           volumeMounts:
             - name: peer-conf
               mountPath: /etc/hyperledger/fabric/msp

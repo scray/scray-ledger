@@ -65,6 +65,11 @@ spec:
                 configMapKeyRef:
                   name: hl-fabric-orderer
                   key: hostname
+            - name: SANS
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-orderer
+                  key: sans
           volumeMounts:
             - name: orderer-conf
               mountPath: /var/hyperledger/orderer/orderer.genesis.block
