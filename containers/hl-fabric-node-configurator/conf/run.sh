@@ -78,7 +78,7 @@ while [ "$1" != "" ]; do
         -d | --domain )    shift
 	       			DOMAINE=$1
                                 ;;
-        -s | --sans )   	shift
+       --sans )   	shift
             SANS=$1
         ;;
         --ca_country )   	  shift
