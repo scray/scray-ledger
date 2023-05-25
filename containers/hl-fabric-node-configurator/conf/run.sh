@@ -40,12 +40,12 @@ dowloadYqBin() {
 createPeerConfig() {
     
     export PATH=~/git/fabric-samples/test-network/fabric-samples/bin:$PATH
-    ./configure_crypto.sh --org_name $ORG_NAME --domain $DOMAINE --ca_country "$CA_COUNTRY" --ca_province "$CA_PROVINCE" --ca_locality "$CA_LOCALITY"
+    ./configure_crypto.sh --org_name $ORG_NAME --domain $DOMAINE --ca_country "$CA_COUNTRY" --ca_province "$CA_PROVINCE" --ca_locality "$CA_LOCALITY" -s "$SANS"
     cryptogen generate --config=crypto.yaml --output=./organizations
     export FABRIC_CFG_PATH=$PWD
 
     ./configure_configtx.sh  $ORG_NAME  $DOMAINE
-    configtxgen -configPath $PWD  -printOrg ${ORG_NAME}MSP > organizations/peerOrganizations/$DOMAINE/${ORG_NAME}.json
+    configtxgen -configPath "$PWD"  -printOrg ${ORG_NAME}MSP > organizations/peerOrganizations/$DOMAINE/${ORG_NAME}.json
     zip -q -r $ORG_NAME.zip organizations/
     
     copyCertsToDefaultDir
