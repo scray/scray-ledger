@@ -23,3 +23,7 @@ PeerOrgs:
         - localhost
     Users:
       Count: 3
+    Specs:
+        - Hostname: orderer
+          SANS:
+            - localhost
