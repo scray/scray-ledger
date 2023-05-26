@@ -180,6 +180,11 @@ spec:
                 configMapKeyRef:
                   name: hl-fabric-peer
                   key: ca_locality
+            - name: SANS
+              valueFrom:
+                configMapKeyRef:
+                  name: hl-fabric-peer
+                  key: sans
           # command: ['/bin/sh', '-c']
           # args: ['cd /mnt/hl-fabric-conf/ && wget https://mft.seeburger.de:443/portal-seefx/~public/ZDEwZTlmMTEtYjg2NC00NWVlLWE1YWEtNWI2OGZhM2NjMDg2?download -O config.zip &&  unzip config.zip']
           volumeMounts:
