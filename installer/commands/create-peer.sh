@@ -1,5 +1,6 @@
 echo "${@}" 
 PEER_NAME=
+PEER_HOST_NAME=
 
 function createPeer() {
   PEER_NAME=$1
@@ -15,7 +16,7 @@ function createPeer() {
 
   # createOrderer
 
-  PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
+  PEER_HOST_NAME=$PEER_NAME
   EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
   cd ..
@@ -46,6 +47,11 @@ while [ "$1" != "" ]; do
     case $1 in
         -n | --name )   shift
  	   PEER_NAME=$1
+     ;;
+        -hostname) shift
+           PEER_HOST_NAME=$1
+      ;;
+
     esac
     shift
 done
@@ -57,3 +63,11 @@ then
 else
  createPeer $PEER_NAME
 fi
+
+if [ -z "$PEER_HOST_NAME" ]
+then
+ echo "use peername as hostname " $PEER_HOST_NAME
+ PEER_HOST_NAME=$PEER_NAME
+fi
+ createPeer $PEER_NAME
+

@@ -11,7 +11,7 @@ kubectl apply -f k8s-hl-fabric-data-share.yaml
 ### Create configuration for new peer
 
 ```
-PEER_NAME=peer48
+PEER_NAME=peer50
 PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de 
 EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
@@ -24,11 +24,12 @@ EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.typ
 
 ### Create peer configuration
 
-   ```
-   GOSSIP_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
-   PEER_LISTEN_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
-   PEER_CHAINCODE_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-chaincode')].nodePort}")
-  ```
+```
+GOSSIP_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
+PEER_LISTEN_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-listen')].nodePort}")
+PEER_CHAINCODE_PORT=$(kubectl get service $PEER_NAME -o jsonpath="{.spec.ports[?(@.name=='peer-chaincode')].nodePort}")
+```
+
 ```
 kubectl delete configmap hl-fabric-peer-$PEER_NAME 
 kubectl create configmap hl-fabric-peer-$PEER_NAME \

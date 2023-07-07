@@ -142,7 +142,7 @@ then
       done
 fi
 
-YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Template[0].SANS += '\"$DOMAIN\"\')
+YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Template.SANS += '\"$DOMAIN\"\')
 echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto.yaml " >> update_SANS.sh
 
 if [ "$SANS" != "" ]
@@ -150,7 +150,7 @@ then
       IFS=',' read -ra SANS <<< "$SANS"
       for san in "${SANS[@]}"
       do
-        YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Template[0].SANS += '\"$san\"\')
+        YQ_CHANGE_COMMAND=$(echo \''.PeerOrgs[0].Template.SANS += '\"$san\"\')
         echo "$(yq_path) -i eval $YQ_CHANGE_COMMAND crypto.yaml" >> update_SANS.sh
       done
 fi
