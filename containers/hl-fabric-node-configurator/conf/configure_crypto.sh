@@ -38,11 +38,19 @@ dowloadYqBin2() {
   if [[ ! -f "./bin/yq-${YQ_VERSON}" ]]
   then
     echo "yq does not exists"
-    echo "download linux_amd64 yq binary"
-
-    mkdir bin
-    curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSON2}/yq_linux_amd64 -o ./bin/yq-${YQ_VERSON2}
-    chmod u+x ./bin/yq-${YQ_VERSON2}
+    if [ "$OSTYPE" == "linux-gnu" ]
+    then
+      echo "download linux_amd64 yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSON2}/yq_linux_amd64 -o ./bin/yq-${YQ_VERSON2}
+      chmod u+x ./bin/yq-${YQ_VERSON2}
+    elif [ "$OSTYPE" == "msys" ]
+    then
+      echo "download yq_windows_amd64  yq binary"
+      mkdir bin
+      curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSON2}/yq_windows_amd64.exe -o ./bin/yq-${YQ_VERSON2}
+      chmod u+x ./bin/yq
+    fi
   fi
 }
 
