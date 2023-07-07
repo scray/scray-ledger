@@ -36,6 +36,7 @@ createOrderer() {
   kubectl create configmap hl-fabric-orderer \
   	 --from-literal=hostname=$HOST_NAME \
 	 --from-literal=org_name=$ORDERER_NAME \
+	 --from-literal=sans=peer1.internal.hsa.blockchain.s-node.de,peer1.hsa.blockchain.s-node.de,orderer1.hsa.blockchain.s-node.de,orderer1.internal.hsa.blockchain.s-node.de \
 	 --from-literal=ORDERER_GENERAL_LOCALMSPID=${ORDERER_NAME}MSP \
 	 --from-literal=NODE_TYPE=orderer
 
