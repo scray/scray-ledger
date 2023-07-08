@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SHARED_FS=hl-fabric-data-share-service:80
 WORKDIR=$(cd $(dirname $0) && pwd)
@@ -21,7 +21,9 @@ deploy() {
   CC_LABEL=basic_1.0
 
 
-  while [[ $(kubectl get pods $CC_DEPLOYER_POD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for cc deployer pod $CC_DEPLOYER_POD" && CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}") && sleep 1; done
+  while [[ $(kubectl get pods $CC_DEPLOYER_POD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do 
+	  echo "waiting for cc deployer pod $CC_DEPLOYER_POD" && CC_DEPLOYER_POD=$(kubectl get pod -l app=cc-deployer -o jsonpath="{.items[0].metadata.name}") && sleep 1; 
+  done
 
   echo "Publish deployment description"
   kubectl exec --stdin --tty "$CC_DEPLOYER_POD" -c cc-deployer -- /bin/sh /opt/create-archive.sh $CC_HOSTNAME "$CC_PORT" "$CC_LABEL" "$SHARED_FS"
