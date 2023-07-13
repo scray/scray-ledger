@@ -126,8 +126,19 @@ then
 elif [ "$NODE_TYPE" = peer ]
 then
   echo "Configure node as peer"
-  createPeerConfig
+  
+  if [ -d "$CRYPTO_OUTPUT_FOLDER" ]; then
+  echo "WARNING: Idendities exis in the mounted volume. No cypto infromations will be created"
+  else
+    createPeerConfig
+  fi
+  
 else
   echo "Unknown node type. Treat it as a peer"
-  createPeerConfig
+  
+  if [ -d "$CRYPTO_OUTPUT_FOLDER" ]; then
+  echo "WARNING: Idendities exis in the mounted volume. No cypto infromations will be created"
+  else
+    createPeerConfig
+  fi
 fi

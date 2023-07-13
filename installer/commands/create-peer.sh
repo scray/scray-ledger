@@ -70,5 +70,6 @@ then
  echo "use peername as hostname " $PEER_HOST_NAME
  PEER_HOST_NAME=$PEER_NAME
 fi
+
  createPeer $PEER_NAME
 

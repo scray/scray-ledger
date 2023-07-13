@@ -4,6 +4,8 @@ GEN_BLOCK_PATH=./system-genesis-block
 CREATE_ADMIN_ORG=true
 SANS=""
 
+CRYPTO_OUTPUT_FOLDER="organizations"
+
 copyCertsToDefaultDir() {
     cp -r organizations/ordererOrganizations/${DOMAINE}/orderers/$ORG_NAME.${DOMAINE}/msp ./
     cp -r organizations/ordererOrganizations/${DOMAINE}/orderers/$ORG_NAME.${DOMAINE}/tls ./
@@ -16,11 +18,11 @@ function createCryptos() {
    if [ "$CREATE_ADMIN_ORG"=true ];
    then
      createAdminOrg
-    fi
+   fi
 
     export PATH=~/git/fabric-samples/bin:$PATH
     ./configure_crypto.sh -o "$ORG_NAME" -d "$DOMAINE" -s "$SANS"
-    cryptogen generate --config=./target/crypto-config-orderer.yaml --output="organizations"
+    cryptogen generate --config=./target/crypto-config-orderer.yaml --output=$CRYPTO_OUTPUT_FOLDER
 
     
     res=$?
@@ -78,16 +80,16 @@ while [ "$1" != "" ]; do
 	            SANS=$1
 	      ;;
         -g | --gennesis.block-path )         shift
-                                GEN_BLOCK_PATH=$1
+              GEN_BLOCK_PATH=$1
 				;;
         -a | --create-admin-org )	shift
-                                CREATE_ADMIN_ORG=$1
+              CREATE_ADMIN_ORG=$1
 				;;
-        -h | --help )           usage
-                                exit
+        -h | --help )  usage
+           exit
         ;;
-        * )                     # usage
-                                exit 1
+        * ) # usage
+          exit 1
     esac
     shift
 done
@@ -96,5 +98,10 @@ echo "Configuration"
 echo "  ORG_NAME: ${ORG_NAME}"
 echo "  DOMAINE: ${DOMAINE}"
 
-createCryptos
-createConsortium
+if [ -d "$CRYPTO_OUTPUT_FOLDER" ]; then
+  echo "WARNING: Idendities exis in the mounted volume. No cypto infromations will be created"
+else
+  createCryptos
+  createConsortium
+fi
+
