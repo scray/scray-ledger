@@ -22,7 +22,7 @@ kubectl exec --stdin --tty $PEER_POD_NAME  -c scray-peer-cli -- /bin/sh /mnt/con
 
 #### Download Peer TLS CA cert
 ```
-curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$DATA_SHARE/peer-tlsca-certs/"$PEER_HOSTNAME"/tlsca.pem -o target/$PEER_HOSTNAME-tlsca.pem
+curl --user $SHARED_FS_USER:$SHARED_FS_PW -T "$CA_CERT_PATH" http://$DATA_SHARE/peer-tlsca-certs/"$PEER_HOSTNAME"/tlsca.pem -o certs/$PEER_HOSTNAME-tlsca.pem
 ```
 #### Create connection profile
 
