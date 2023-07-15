@@ -6,7 +6,7 @@ RUN mkdir /mnt/peer-conf && mkdir /mnt/scripts/
 COPY containers/hl-fabric-node-configurator/conf /tmp/conf
 COPY tools /tmp/tools
 
-CMD [ -z "$(ls -A /mnt/peer-conf/conf)" ] &&
+CMD [ -z "$(ls -A /mnt/peer-conf/conf)" ] &&\
     cp -r /tmp/conf /mnt/peer-conf/ &&\
     cp -r /tmp/tools /mnt/peer-conf/ &&\
     cd /mnt/peer-conf/conf/ &&\
