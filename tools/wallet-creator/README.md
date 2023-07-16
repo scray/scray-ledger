@@ -26,15 +26,15 @@ PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.na
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh
 ```
 
-* ``WALLET_COMMON_NAME=alice``
-* ``DATA_SHARE=10.15.130.111``
+* ```WALLET_COMMON_NAME=alice```
+* ```DATA_SHARE=10.15.130.111```
 
-  * ```
-    CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem
-    CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk
-    /mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE
-    /mnt/tools/wallet-creator/cert-creator.sh sign_csr --common-name $WALLET_COMMON_NAME --cacert $CA_CERT --cakey $CA_KEY  --shared-fs-host $DATA_SHARE
-    ```
+* ```
+  CA_CERT=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/ca.*.pem
+  CA_KEY=/mnt/conf/organizations/peerOrganizations/$HOSTNAME/ca/priv_sk
+  /mnt/tools/wallet-creator/cert-creator.sh pull_csr --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE
+  /mnt/tools/wallet-creator/cert-creator.sh sign_csr --common-name $WALLET_COMMON_NAME --cacert $CA_CERT --cakey $CA_KEY  --shared-fs-host $DATA_SHARE
+ ``` 
 
 * ``/mnt/tools/wallet-creator/cert-creator.sh push_crt --common-name $WALLET_COMMON_NAME --shared-fs-host $DATA_SHARE``
 * GOTO [App side](#app-side)
