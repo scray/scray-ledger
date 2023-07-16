@@ -8,7 +8,7 @@ pushDockerHub() {
 	echo "$DOCKER_TOKEN"
 	echo "$DOCKER_USERNAME"
     
-    cd ../../
+        cd ../../
 	docker build -t scrayorg/hl-fabric-node-configurator:$VERISON -f containers/hl-fabric-node-configurator/Dockerfile  .
 	docker push scrayorg/hl-fabric-node-configurator:$VERISON
 }
