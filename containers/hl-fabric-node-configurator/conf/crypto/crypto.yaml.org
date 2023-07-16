@@ -22,4 +22,8 @@ PeerOrgs:
       SANS:
         - localhost
     Users:
-      Count: 2
+      Count: 3
+    Specs:
+        - Hostname: orderer
+          SANS:
+            - localhost
