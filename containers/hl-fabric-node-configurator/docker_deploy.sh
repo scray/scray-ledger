@@ -19,6 +19,15 @@ pushLocal() {
         docker push $REPO_URL/research/hl-fabric-node-configurator:$VERISON
 }
 
+importMicrok8s() {
+
+        cd ../../
+	docker build -t scrayorg/hl-fabric-node-configurator:$VERISON -f containers/hl-fabric-node-configurator/Dockerfile  .
+	docker save scrayorg/hl-fabric-node-configurator:$VERISON  > /tmp/hl-fabric-node-configurator:$VERISON.tar 
+	microk8s ctr image import  /tmp/hl-fabric-node-configurator:$VERISON.tar
+        rm /tmp/hl-fabric-node-configurator:$VERISON.tar	
+}
+
 # Remove runtime data
 cleanUp() {
 	 echo "Remove generated configuratios before building docker container"
@@ -45,7 +54,13 @@ while [ "$1" != "" ]; do
         						cleanUp
 								pushDockerHub
                                 ;;
-        * )                     usage
+        
+        -m | -microk8s )      shift
+                                   cleanUp
+                                   importMicrok8s 
+												                                ;;
+
+	* )                     usage
                                 exit 1
     esac
     shift
