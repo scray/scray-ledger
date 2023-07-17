@@ -65,4 +65,7 @@ yq w -i $CONFIGTX_TMP --style=double  "Organizations[0].Policies.Endorsement.Rul
 
 yq w -i $CONFIGTX_TMP "Orderer.Addresses" $DOMAINE:30081
 
+# Set orderer endpoints TODO
+#yq w -i $CONFIGTX_TMP --style=double "Organizations[0].OrdererEndpoints" superEndpoin1 bis n
+
 cat $CONFIGTX_TMP 
