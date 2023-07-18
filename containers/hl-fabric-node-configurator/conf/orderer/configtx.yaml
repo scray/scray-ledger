@@ -43,6 +43,8 @@ Organizations:
 
         OrdererEndpoints:
             - orderer.example.com:30081
+            - orderer1.int.hsa.ledger.s-node.de:31944
+            - orderer1.hsa.ledger.s-node.de:31944
 
     - &AdminOrg
         # DefaultOrg defines the organization which is used in the sampleconfig
