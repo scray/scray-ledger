@@ -8,7 +8,12 @@ function installChaincode() {
   SHARED_FS_USER=scray
   SHARED_FS_PW=scray
 
-CC_HOSTNAME=asset-transfer-basic.org1.example.com
+
+  if [ -z "$CC_HOSTNAME" ]
+  then
+    CC_HOSTNAME=logbook-cc.hsa.ledger.s-node.de
+    echo "Use default CC_HOSTNAME $CC_HOSTNAME"
+  fi
 
 ORDERER_NAME=orderer.example.com
 IP_CC_SERVICE=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")         # Host where the chaincode is running
@@ -57,6 +62,9 @@ while [ "$1" != "" ]; do
         --data-share )   shift
 	   SHARED_FS=$1
         ;;
+	--cc-hostname )   shift
+	   CC_HOSTNAME=$1
+	;;
 
     esac
     shift
