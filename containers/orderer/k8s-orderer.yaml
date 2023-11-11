@@ -80,6 +80,8 @@ spec:
             - name: orderer-conf
               mountPath: /var/hyperledger/orderer/tls
               subPath: conf/orderer/tls
+            - name: orderer-data
+              mountPath: /var/hyperledger/production/orderer/
         - name: scray-orderer-cli
           stdin: true
           tty: true
