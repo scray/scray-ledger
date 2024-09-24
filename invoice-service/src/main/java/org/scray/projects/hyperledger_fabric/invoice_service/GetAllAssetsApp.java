@@ -35,7 +35,7 @@ public class GetAllAssetsApp {
 	    params.setNetworkConfigPath(System.getProperty("user.home") + "/git/scray/projects/invoice-hyperledger-fabric/invoice-service/conf/connection-org1.yaml");
 	    //params.setNetworkConfigPath("/home/stefan/libs/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.yaml");
 	    params.setCaCertPem(System.getProperty("user.home") + "/git/scray/projects/invoice-hyperledger-fabric/invoice-service/conf/peer-ca.pem");
-	    params.setHyperlederHost("kubernetes.research.dev.seeburger.de");
+	    params.setHyperlederHost("kubernetes.research.dev.example.com");
 
 	    System.out.println(params);
 

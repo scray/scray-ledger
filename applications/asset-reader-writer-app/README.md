@@ -6,7 +6,7 @@ Write new asset to blockchain and read all assets.
 Prerequisites
 ``` 
 PEER_NAME=peer48
-PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de 
+PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.example.com 
 ```
 * Example to get ca path
     ```

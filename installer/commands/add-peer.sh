@@ -7,7 +7,7 @@ function addPeer() {
   SHARED_FS_HOST=$3
 
   # Add peer to channel
-  PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.seeburger.de
+  PEER_HOST_NAME=$PEER_NAME.kubernetes.research.dev.example.com
   EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
   ORDERER_IP=$(kubectl get pods  -l app=orderer-org1-scray-org -o jsonpath='{.items[*].status.podIP}')
   ORDERER_HOSTNAME=orderer.example.com

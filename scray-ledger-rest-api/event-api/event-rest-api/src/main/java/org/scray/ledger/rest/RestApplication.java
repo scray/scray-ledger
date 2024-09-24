@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		info = @Info(title = "Scray-Ledger Event-API", version = "1.0.0"
 		, description = "This a REST-API to access events from Scray-Ledger",
 		license = @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")),
-		servers = {@Server(url = "http://localhost:8080"), @Server(url = "http://events.blockchain.research.dev.seeburger.de:8080")},
+		servers = {@Server(url = "http://localhost:8080"), @Server(url = "http://events.blockchain.research.dev.example.com:8080")},
 		tags = {@Tag(name = "Event-API", description = "Resources to consume Scray-Ledger events")}
 )
 

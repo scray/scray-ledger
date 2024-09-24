@@ -10,7 +10,7 @@ echo $HOST_IP peer0.org1.example.com peer0.org2.example.com orderer.example.com 
 
 # Get chaincode description
 
-curl https://mft.seeburger.de:443/portal-seefx/~public/MDI0Mjk4ZTQtZGQ3ZS00M2Y4LWIyMDktZjY1YzljN2MwMTlm?download > chaincode_description.tgz
+curl https://mft.example.com:443/portal-seefx/~public/MDI0Mjk4ZTQtZGQ3ZS00M2Y4LWIyMDktZjY1YzljN2MwMTlm?download > chaincode_description.tgz
 
 
 CERT_BASE_PATH=/opt/gopath/src/github.com/hyperledger/fabric/peer

@@ -9,8 +9,8 @@ PEER_HOST_NAME=$6
 
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_LOCALMSPID="AdminOrgMSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/peers/peer0.kubernetes.research.dev.seeburger.de/msp/cacerts/ca.kubernetes.research.dev.seeburger.de-cert.pem 
-export CORE_PEER_MSPCONFIGPATH=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/users/Admin\@kubernetes.research.dev.seeburger.de/msp/
+export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/peers/peer0.kubernetes.research.dev.example.com/msp/cacerts/ca.kubernetes.research.dev.example.com-cert.pem 
+export CORE_PEER_MSPCONFIGPATH=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/users/Admin\@kubernetes.research.dev.example.com/msp/
 export ORDERER_CA=/mnt/conf/orderer/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem #Fixme use orderer name
 
 
@@ -55,7 +55,7 @@ peer channel signconfigtx -f org3_update_in_envelope.pb
 
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_LOCALMSPID="OrdererMSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/peers/peer0.kubernetes.research.dev.seeburger.de/msp/cacerts/ca.kuber
+export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/peers/peer0.kubernetes.research.dev.example.com/msp/cacerts/ca.kuber
 export CORE_PEER_MSPCONFIGPATH=/mnt/conf/orderer/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/
 export ORDERER_CA=/mnt/conf/orderer/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem #Fixme use orderer name
 

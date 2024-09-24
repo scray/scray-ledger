@@ -11,8 +11,8 @@ export FABRIC_CFG_PATH=/mnt/conf/
 
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_LOCALMSPID="AdminOrgMSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/peers/peer0.kubernetes.research.dev.seeburger.de/msp/cacerts/ca.kubernetes.research.dev.seeburger.de-cert.pem 
-export CORE_PEER_MSPCONFIGPATH=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/users/Admin\@kubernetes.research.dev.seeburger.de/msp/
+export CORE_PEER_TLS_ROOTCERT_FILE=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/peers/peer0.kubernetes.research.dev.example.com/msp/cacerts/ca.kubernetes.research.dev.example.com-cert.pem 
+export CORE_PEER_MSPCONFIGPATH=/mnt/conf/admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/users/Admin\@kubernetes.research.dev.example.com/msp/
 
 export CORE_PEER_ADDRESS=$ORDERER_HOST:$ORDERER_PORT
 

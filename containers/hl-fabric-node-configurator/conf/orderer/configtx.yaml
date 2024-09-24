@@ -54,7 +54,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: AdminOrgMSP
 
-        MSPDir: ../admin/organizations/peerOrganizations/kubernetes.research.dev.seeburger.de/msp
+        MSPDir: ../admin/organizations/peerOrganizations/kubernetes.research.dev.example.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually

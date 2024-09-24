@@ -78,11 +78,11 @@ def deleteConfig(peername=''):
 def createConfig(peername='',peer_listen_port='',peer_gossip_port=''):
     try:  
         output  = subprocess.check_output(['/home/jovyan/work/usr/bin/kubectl', 'create','configmap','hl-fabric-peer-' + peername,
-                                          '--from-literal=hostname=kubernetes.research.dev.seeburger.de',
+                                          '--from-literal=hostname=kubernetes.research.dev.example.com',
                                           '--from-literal=org_name=' + peername,
                                           '--from-literal=data_share=hl-fabric-data-share-service:80',
-                                          '--from-literal=CORE_PEER_ADDRESS=kubernetes.research.dev.seeburger.de:' + peer_listen_port,
-                                          '--from-literal=CORE_PEER_GOSSIP_EXTERNALENDPOINT=kubernetes.research.dev.seeburger.de:' + peer_gossip_port,
+                                          '--from-literal=CORE_PEER_ADDRESS=kubernetes.research.dev.example.com:' + peer_listen_port,
+                                          '--from-literal=CORE_PEER_GOSSIP_EXTERNALENDPOINT=kubernetes.research.dev.example.com:' + peer_gossip_port,
                                           '--from-literal=CORE_PEER_LOCALMSPID=' + peername + 'MSP'])
         return str(output)
     except Exception as e:

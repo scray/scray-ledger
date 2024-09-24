@@ -18,7 +18,7 @@ public class Bootstrap extends HttpServlet {
       .description("API to interact with hyperleder fabric invoce example")
       .termsOfService("")
       .contact(new Contact()
-        .email("st.obermeier@seeburger.de"))
+        .email("st.obermeier@example.com"))
       .license(new License()
         .name("Apache 2.0")
         .url("http://www.apache.org/licenses/LICENSE-2.0.html"));

@@ -10,7 +10,7 @@ kubectl apply -f https://raw.githubusercontent.com/scray/scray-ledger/develop/ch
 
 ### Get hash code form share [for testing]
 ```
-SHARED_FS=kubernetes.research.dev.seeburger.de:30080
+SHARED_FS=kubernetes.research.dev.example.com:30080
 CC_HOSTNAME=asset-transfer-basic.org1.example.com
 CC_LABEL=basic_1.0
 
@@ -120,7 +120,7 @@ CHANNEL_NAME=c3
 PEER_POD=$(kubectl get pod -l app=$PEER_NAME -o jsonpath="{.items[0].metadata.name}")
 PKGID=$(curl -s  --user $SHARED_FS_USER:$SHARED_FS_PW http://$SHARED_FS/cc_descriptions/${CC_HOSTNAME}_$CC_LABEL/description-hash.json 2>&1 | jq -r '."description-hash"')
 INVOICE_ID=ID-$RANDOM
-PRODUCT_BUYER="x509::CN=User1@kubernetes.research.dev.seeburger.de,OU=client,L=San Francisco,ST=California,C=US::CN=ca.kubernetes.research.dev.seeburger.de,O=kubernetes.research.dev.seeburger.de,L=San Francisco,ST=California,C=US"
+PRODUCT_BUYER="x509::CN=User1@kubernetes.research.dev.example.com,OU=client,L=San Francisco,ST=California,C=US::CN=ca.kubernetes.research.dev.example.com,O=kubernetes.research.dev.example.com,L=San Francisco,ST=California,C=US"
 ```
 #### Create invoice
 ```
@@ -129,7 +129,7 @@ kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer
 
 #### Transfer invoice
 ```
-NEW_OWNER="x509::CN=User1@kubernetes.research.dev.seeburger.de,OU=client,L=San Francisco,ST=California,C=US::CN=ca.kubernetes.research.dev.seeburger.de,O=kubernetes.research.dev.seeburger.de,L=San Francisco,ST=California,C=US"
+NEW_OWNER="x509::CN=User1@kubernetes.research.dev.example.com,OU=client,L=San Francisco,ST=California,C=US::CN=ca.kubernetes.research.dev.example.com,O=kubernetes.research.dev.example.com,L=San Francisco,ST=California,C=US"
 kubectl exec --stdin --tty $PEER_POD -c scray-peer-cli -- /bin/sh /mnt/conf/peer/transfer_invoice.sh  $CHANNEL_NAME $INVOICE_ID $NEW_OWNER
 ```
 

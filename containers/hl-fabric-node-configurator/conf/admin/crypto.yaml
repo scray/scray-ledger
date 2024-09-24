@@ -11,7 +11,7 @@ PeerOrgs:
   # OrgScray
   # ---------------------------------------------------------------------------
   - Name: AdminOrg
-    Domain: kubernetes.research.dev.seeburger.de
+    Domain: kubernetes.research.dev.example.com
     EnableNodeOUs: true
     Template:
       Count: 1

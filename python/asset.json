@@ -1,7 +1,7 @@
 {
     "ID": "asset10",
-    "owner": "x509::CN=User1@aabby-0.kubernetes.research.dev.seeburger.de,OU=client,L=Bretten,ST=Baden,C=DE::CN=ca.aabby-0.kubernetes.research.dev.seeburger.de,O=aabby-0.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
-    "buyer": "x509::CN=User1@aabby-1.kubernetes.research.dev.seeburger.de,OU=client,L=Bretten,ST=Baden,C=DE::CN=ca.aabby-1.kubernetes.research.dev.seeburger.de,O=aabby-1.kubernetes.research.dev.seeburger.de,L=Bretten,ST=Baden,C=DE",
+    "owner": "x509::CN=User1@aabby-0.kubernetes.research.dev.example.com,OU=client,L=Bretten,ST=Baden,C=DE::CN=ca.aabby-0.kubernetes.research.dev.example.com,O=aabby-0.kubernetes.research.dev.example.com,L=Bretten,ST=Baden,C=DE",
+    "buyer": "x509::CN=User1@aabby-1.kubernetes.research.dev.example.com,OU=client,L=Bretten,ST=Baden,C=DE::CN=ca.aabby-1.kubernetes.research.dev.example.com,O=aabby-1.kubernetes.research.dev.example.com,L=Bretten,ST=Baden,C=DE",
     "hash": 0,
     "invoiceNumber": "",
     "tax": 0,

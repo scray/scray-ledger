@@ -152,7 +152,7 @@ spec:
                   name: hl-fabric-orderer
                   key: sans
                   # command: ['/bin/sh', '-c']
-          # args: ['cd /mnt/hl-fabric-conf/ && wget https://mft.seeburger.de:443/portal-seefx/~public/ZDEwZTlmMTEtYjg2NC00NWVlLWE1YWEtNWI2OGZhM2NjMDg2?download -O config.zip &&  unzip config.zip']
+          # args: ['cd /mnt/hl-fabric-conf/ && wget https://mft.example.com:443/portal-seefx/~public/ZDEwZTlmMTEtYjg2NC00NWVlLWE1YWEtNWI2OGZhM2NjMDg2?download -O config.zip &&  unzip config.zip']
           volumeMounts:
             - name: orderer-conf
               mountPath: /mnt/peer-conf/
