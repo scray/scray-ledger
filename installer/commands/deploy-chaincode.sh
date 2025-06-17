@@ -63,3 +63,4 @@ done
 
 deploy "$SHARED_FS"
 startChaincode "$SHARED_FS"
+

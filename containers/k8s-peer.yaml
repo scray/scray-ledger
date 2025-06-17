@@ -193,7 +193,7 @@ spec:
       volumes:
         - name: peer-conf
           persistentVolumeClaim:
-            claimName: peer0-conf-pv-claim
+            claimName: peer0-conf-pv-claim-data
         - name: peer0-data
           persistentVolumeClaim:
             claimName: peer0-pv-claim
@@ -204,24 +204,22 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: peer0-pv-claim
+  name: peer0-pv-claim-data
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 200Mi
+      storage: 10Gi 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: peer0-pv-claim
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Mi
+      storage: 1Gi 
 

@@ -5,7 +5,7 @@ metadata:
   labels:
     run: peer-id 
 spec:
-  type: NodePort
+  type: NodePort 
   selector:
     app: peer-id 
   ports:

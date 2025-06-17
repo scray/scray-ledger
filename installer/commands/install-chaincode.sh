@@ -11,7 +11,7 @@ function installChaincode() {
 
   if [ -z "$CC_HOSTNAME" ]
   then
-    CC_HOSTNAME=logbook-cc.hsa.ledger.s-node.de
+    CC_HOSTNAME=asset-transfer-basic.org1.example.com
     echo "Use default CC_HOSTNAME $CC_HOSTNAME"
   fi
 
@@ -81,3 +81,4 @@ then
 else
  installChaincode $PEER_NAME $CHANNEL_NAME $SHARED_FS 
 fi
+

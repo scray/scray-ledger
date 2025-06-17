@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: invoice-chaincode-external 
-          image: scrayorg/hl-fabric-external-invoice-example:1.2 
-          imagePullPolicy: Always
-          workingDir: /go/src/github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-external 
+          image: scrayorg/logbook-app-chaincode:1.0 
+          imagePullPolicy: IfNotPresent 
+          workingDir: /usr/local/lib/logbook-app/chaincode/ 
           env:
           - name: FABRIC_LOGGING_SPEC 
             value: "DEBUG"
@@ -31,4 +31,4 @@ spec:
           - name: CHAINCODE_SERVER_ADDRESS
             value: "0.0.0.0:9999"
           command: [ "/bin/sh" ]
-          args: [ "-c", "[ ! -z \"$DEV_USER_PW\" ] && echo \"DEV_USER_PW variable found. Set dev user password\" && echo dev:$DEV_USER_PW | chpasswd; chaincode-external; tail -f /dev/null " ]
+          args: [ "-c", "npm install &&  npm start; tail -f /dev/null" ]

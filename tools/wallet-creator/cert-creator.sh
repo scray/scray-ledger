@@ -7,8 +7,9 @@ export MSYS_NO_PATHCONV=1 # Dont expand / as path
 
 CA_CERT="../ca.org1.example.com-cert.pem"
 CA_KEY="../priv_sk"
-NEW_CERT_COMMON_NAME="user1"
+NEW_CERT_COMMON_NAME="berta2"
 ORGANIZATIONAL_UNIT="admin"
+# ORGANIZATIONAL_UNIT="insurance_services"
 CREATE_WALLET=false
 WALLET_CREATOR_JAR_PATH=./target
 MSP_ID="org1MSP"

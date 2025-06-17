@@ -16,8 +16,8 @@ function createPeer() {
 
   # createOrderer
 
-  PEER_HOST_NAME=$PEER_NAME
-  EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
+  PEER_HOST_NAME=peer801.hso.dlt.s-node.de
+  #EXT_PEER_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
 
   cd ..
   cd containers
@@ -30,7 +30,7 @@ function createPeer() {
   kubectl create configmap hl-fabric-peer-$PEER_NAME \
    --from-literal=hostname=$PEER_HOST_NAME \
    --from-literal=org_name=$PEER_NAME \
-   --from-literal=sans=peer200.hsa.blockchain.s-node.de \
+   --from-literal=sans=peer801.hso.dlt.s-node.de,peer801.int.hso.dlt.s-node.de,localhost \
    --from-literal=data_share=hl-fabric-data-share-service:80 \
    --from-literal=ca_country=DE \
    --from-literal=ca_province=Baden \
@@ -72,4 +72,5 @@ then
 fi
 
  createPeer $PEER_NAME
+
 

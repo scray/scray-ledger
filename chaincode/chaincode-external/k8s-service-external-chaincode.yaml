@@ -5,7 +5,7 @@ metadata:
   labels:
     run: hl-fabric-cc-external-invoice
 spec:
-  type: NodePort
+  type: NodePort 
   selector:
     app: invoice-chaincode-external
   ports:

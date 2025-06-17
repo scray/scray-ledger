@@ -169,21 +169,19 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer0-conf-pv-claim
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 200Mi
+      storage: 1Gi 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: orderer0-data-pv-claim
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 10Gi 
